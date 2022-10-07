@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "studybuddy",
+    "studybuddy.apps.StudybuddyConfig",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
