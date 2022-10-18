@@ -3,7 +3,7 @@
 <body>
 <h1>My Study Buddy</h1>
 {% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
+  <p>Welcome, to you account details {{ user.username }}</p>
   <a href="{% url 'studybuddy:account'%}">View Account Details</a>
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
