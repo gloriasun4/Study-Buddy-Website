@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Study Buddy</title>
+</head>
+
+<style>
+li {
+  border: 1px solid black;
+  padding: 10px;
+  width: 50px;
+  border-radius: 5px;
+  text-align: center;
+}
+</style>
+
+<body>
+<h3>Choose the department of the class you would like to find a study buddy in</h3>
+
+{% if departments_list %}
+    <ul style="list-style-type: none">
+    {% for department in departments_list %}
+        <li><a href="/studybuddy/{{ department.dept }}">{{ department.dept }}</a></li>
+        <br>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No departments are available.</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course }}</title>
+</head>
+
+<style>
+ul#nav li {
+  display:inline;
+}
+
+li {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  text-align : center;
+}
+
+</style>
+
+<nav class="nav justify-content-center">
+    <ul id="nav" class="list-unstyled">
+       <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
+        &nbsp &nbsp &nbsp<li> <a href=/studybuddy/{{ dept }}>Choose another class in the same department</a></li>
+    </ul>
+</nav>
+
+<body>
+<h2>Find study buddy for: {{ course }}</h2>
+</body>
+</html>
