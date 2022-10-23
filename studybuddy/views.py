@@ -19,8 +19,16 @@ def addAccount(request, email):
 
 
 def account(request, email):
+    user = User.objects.get(email=email)
+    context = {
+        'Email': user.email,
+        'FirstName': user.firstName,
+        'LastName': user.lastName,
+        'ZoomLink': user.zoomLink,
+        'AboutMe': user.blurb
 
-    return render(request, 'studybuddy/Account.html')
+    }
+    return render(request, 'studybuddy/account.html', context)
 
 def EditAccount(request, email):
 
