@@ -3,8 +3,8 @@
 <body>
 <h1>My Study Buddy</h1>
 <p>Welcome User  {{ user.username }}, {{ user.email }}</p>
-  <a href="{% url 'studybuddy:editAccount'%}">Edit Account Details</a>
-  <--check if in model
+  <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
+  <!--check if in model
       if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
 
 </body>

@@ -5,8 +5,9 @@ from . import views
 app_name = 'studybuddy'
 urlpatterns = [
 
-    path('', views.index, name='index'),
+    path('<str:email>/', views.index, name='index'),
     #path('', TemplateView.as_view(template_name="index.html")),
-    path('account/', views.account, name='account'),
-    path('account/edit/', views.EditAccount, name='editAccount'),
+    path('<str:email>/account/', views.account, name='account'),
+    path('<str:email>/account/add/', views.addAccount, name='addAccount'),
+    path('<str:email>/account/edit/', views.EditAccount, name='editAccount'),
 ]
