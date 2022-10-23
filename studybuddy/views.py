@@ -5,26 +5,17 @@ from .models import Departments, Course
 import requests
 import json
 from django.shortcuts import get_object_or_404
-
-class index(generic.TemplateView):
-    template_name = 'homepage.html'
-    # return HttpResponse("Welcome to the Study Buddy App!")
-
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import SnippetForm
 from .models import Snippet
 from django.contrib import messages
 
+class index(generic.TemplateView):
+    template_name = 'homepage.html'
+    # return HttpResponse("Welcome to the Study Buddy App!")
 
-# Create your views here.
-def usblog(request):
-    snipps = Snippet.objects.all()
-    return render(request, 'indexg.html', {'snipps': snipps})
-
-
-def snippet_detail(request, dept, course_number):
+def makepost(request, dept, course_number):
     form = SnippetForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
 

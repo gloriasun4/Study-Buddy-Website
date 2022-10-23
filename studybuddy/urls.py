@@ -9,6 +9,5 @@ urlpatterns = [
     path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
     path('<str:dept>/', views.department, name='department'),
     path('<str:dept>/<int:course_number>/', views.coursefeed, name = 'coursefeed'),
-    path("<str:dept>/<int:course_number>/makepost", views.snippet_detail),
-    path('', views.usblog, name='usblog')
+    path("<str:dept>/<int:course_number>/makepost", views.makepost, name = 'makepost'),
 ]
