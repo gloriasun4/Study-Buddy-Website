@@ -4,12 +4,17 @@ from django.shortcuts import render
 from .models import User
 
 def index(request):
-    return HttpResponse("Welcome to the Study Buddy App!")
+    return render(request, 'studybuddy/home.html')
 
 
 
 
 def account(request):
 
-    return HttpResponse("Hey welcome to account page you are logged in as {{ user.username }}" )
+    return render(request, 'studybuddy/Account.html')
+
+def EditAccount(request):
+
+    return HttpResponse("Edit account details")
+
 

@@ -2,11 +2,10 @@
 <html>
 <body>
 <h1>My Study Buddy</h1>
-{% if user.is_authenticated %}
-  <p>Welcome, to you account details {{ user.username }}</p>
-  <a href="{% url 'studybuddy:account'%}">View Account Details</a>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
+<p>Welcome User  {{ user.username }}, {{ user.email }}</p>
+  <a href="{% url 'studybuddy:editAccount'%}">Edit Account Details</a>
+  <--check if in model
+      if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
+
 </body>
 </html>

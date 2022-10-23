@@ -1,0 +1,10 @@
+{% load socialaccount %}
+<html>
+<body>
+<h1>My Study Buddy</h1>
+
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+  <a href="{% url 'studybuddy:account'%}">View Account Details</a>
+
+</body>
+</html>
