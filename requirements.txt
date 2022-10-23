@@ -9,5 +9,3 @@ django-heroku
 
 #all-auth for google login
 django-allauth
-
-pip install pillow
