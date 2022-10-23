@@ -13,7 +13,7 @@ class Departments(models.Model):
     def __str__(self):
         return self.dept
 
-class Department(models.Model):
+class Course(models.Model):
     subject = models.CharField(max_length = 4)
     catalog_number = models.CharField(max_length = 4)
     instructor = models.CharField(max_length = 30)

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
-from .models import Departments, Department
+from .models import Departments, Course
 import requests
 import json
 from django.shortcuts import get_object_or_404
@@ -33,7 +33,7 @@ class alldepartments(generic.ListView):
     # return HttpResponse("here are the departments")
 
 def department(request, dept):
-    model = Department
+    model = Course
     template_name = ('department.html')
 
     # Get the json file for the request department
@@ -43,22 +43,22 @@ def department(request, dept):
     dept_classes_json = json.loads(dept_classes.text)
 
     #
-    if (Department.objects.exists()):
-        Department.objects.all().delete()
+    if (Course.objects.exists()):
+        Course.objects.all().delete()
 
     # Get all of the classes in the requested department
     for i in range(len(dept_classes_json)):
         current_class = dept_classes_json[i]
-        newClass = Department(subject = dept,
-                              catalog_number = current_class.get('catalog_number'),
-                              instructor = current_class.get('instructor').get('name'),
-                              section = current_class.get('course_section'),
-                              course_number = current_class.get('course_number'))
+        newClass = Course(subject = dept,
+                          catalog_number = current_class.get('catalog_number'),
+                          instructor = current_class.get('instructor').get('name'),
+                          section = current_class.get('course_section'),
+                          course_number = current_class.get('course_number'))
 
         # print(newClass)
         newClass.save()
 
-    return render(request, template_name, {'department_list' : Department.objects.all(), 'dept' : dept})
+    return render(request, template_name, {'department_list' : Course.objects.all(), 'dept' : dept})
     # return HttpResponse(dept_classes_json)
 
     # return HttpResponse("choose the class you want to find a study buddy in")
@@ -66,10 +66,17 @@ def department(request, dept):
 def coursefeed (request, dept, course_number):
     template_name = 'course_feed.html'
 
-    context = {
-        'dept' : dept,
-        'course' : Department.objects.get(course_number = course_number)
-    }
+    # print(Departments.objects.filter(dept))
+    if(Course.objects.filter(course_number = course_number).exists()):
+        context = {
+            'dept' : dept.upper(),
+            'course' : Course.objects.get(course_number = course_number),
+            'valid' : 'true'
+        }
+    else:
+        context = {
+            'dept': dept.upper(),
+            'course': course_number,
+        }
 
     return render(request, template_name, context)
-    # return HttpResponse("You can look for a study buddy here!")

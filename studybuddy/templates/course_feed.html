@@ -17,6 +17,14 @@ li {
   text-align : center;
 }
 
+li#post {
+  border: 1px solid black;
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  text-align : center;
+}
+
 </style>
 
 <nav class="nav justify-content-center">
@@ -28,5 +36,11 @@ li {
 
 <body>
 <h2>Find study buddy for: {{ course }}</h2>
+
+{% if valid %}
+    <li id="post" class="list-unstyled"> Make a post to find a study buddy </li>
+{% else %}
+    <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
+{% endif %}
 </body>
 </html>
