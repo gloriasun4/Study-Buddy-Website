@@ -10,4 +10,5 @@ urlpatterns = [
     path('<str:email>/account/', views.account, name='account'),
     path('<str:email>/account/add/', views.addAccount, name='addAccount'),
     path('<str:email>/account/edit/', views.EditAccount, name='editAccount'),
+    path('<str:email>/account/update/', views.UpdateAccount, name='updateAccount'),
 ]

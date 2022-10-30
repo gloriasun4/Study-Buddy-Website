@@ -31,7 +31,27 @@ def account(request, email):
     return render(request, 'studybuddy/account.html', context)
 
 def EditAccount(request, email):
+    user = User.objects.get(email=email)
+    context = {
+        'Email': user.email,
+        'FirstName': user.firstName,
+        'LastName': user.lastName,
+        'ZoomLink': user.zoomLink,
+        'AboutMe': user.blurb
 
-    return HttpResponse("Edit account details")
+    }
+    return render(request, 'studybuddy/EditAccount.html', context)
+
+def UpdateAccount(request, email):
+    account = User.objects.get(email=email)
+
+    account.firstName=request.POST['fname']
+    account.lastName=request.POST['lname']
+    account.zoomLink = request.POST['zlink']
+    account.blurb = request.POST['blurb']
+
+    account.save()
+
+    return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
 
 
