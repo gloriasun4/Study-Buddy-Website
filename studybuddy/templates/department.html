@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load socialaccount %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,9 +20,10 @@ li {
 }
 </style>
 
+{% if user.is_authenticated %}
 <nav class="nav justify-content-center">
     <ul id="nav" class="list-unstyled">
-       <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
+       <li><a href="{% url 'studybuddy:alldepartments' user.email%}"> Choose another department </a></li>
     </ul>
 </nav>
 
@@ -39,4 +41,9 @@ li {
     <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
 {% endif %}
 </body>
+
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
 </html>

@@ -5,8 +5,11 @@ import json
 
 # Create your models here.
 class User(models.Model):
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
+    email = models.CharField(primary_key=True, max_length=30, default="")
+    firstName = models.CharField(max_length=30, default="")
+    lastName = models.CharField(max_length=30, default="")
+    zoomLink = models.URLField(max_length=300, default="")
+    blurb = models.TextField(default="")
 
 class Departments(models.Model):
     dept = models.CharField(max_length = 4)

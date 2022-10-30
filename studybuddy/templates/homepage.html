@@ -1,3 +1,5 @@
+{% load socialaccount %}
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -195,11 +197,13 @@
     </style>
 </head>
 
+{% if user.is_authenticated %}
+
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/studybuddy"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -210,8 +214,8 @@
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href=""> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href=""> Sign In </a></li>
+                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
             </div>
@@ -223,7 +227,7 @@
                         <h1 class="title">Welcome to the Study Buddy App!</h1>
                       </div>
                       <div class="form-group">
-                        <button class="btn btn-lg" id="myBtn" name="myBtn" type="submit" formaction="alldepartments">
+                        <button class="btn btn-lg" type="submit" formaction="alldepartments">
                         <a name="myBtn">Find a study buddy</a></button>
                       </div>
                 </form> 
@@ -239,6 +243,11 @@
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 </body>
+
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
 </html>
 
 {% comment %} Claire:

@@ -1,21 +1,32 @@
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.views import generic
 from .models import Departments, Course
 import requests
 import json
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.http import HttpResponse
 from .forms import SnippetForm
 from .models import Snippet
 from django.contrib import messages
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
+from .models import User
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
     # return HttpResponse("Welcome to the Study Buddy App!")
 
-def makepost(request, dept, course_number):
+# def index(request, email):
+#
+#    return render(request, 'studybuddy/home.html')
+
+def addAccount(request, email):
+    exist = User.objects.filter(email=email).exists()
+    if not exist:
+        newAcc = User(email=email)
+        newAcc.save()
+
+    return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
+
+def makepost(request, email, dept, course_number):
     form = SnippetForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
 
@@ -27,6 +38,42 @@ def makepost(request, dept, course_number):
             messages.success(request, "Successfully created")
 
     return render(request, 'form.html', {'form': form})
+
+def account(request, email):
+    user = User.objects.get(email=email)
+    context = {
+        'Email': user.email,
+        'FirstName': user.firstName,
+        'LastName': user.lastName,
+        'ZoomLink': user.zoomLink,
+        'AboutMe': user.blurb
+
+    }
+    return render(request, 'studybuddy/account.html', context)
+
+def EditAccount(request, email):
+    user = User.objects.get(email=email)
+    context = {
+        'Email': user.email,
+        'FirstName': user.firstName,
+        'LastName': user.lastName,
+        'ZoomLink': user.zoomLink,
+        'AboutMe': user.blurb
+
+    }
+    return render(request, 'studybuddy/EditAccount.html', context)
+
+def UpdateAccount(request, email):
+    account = User.objects.get(email=email)
+
+    account.firstName=request.POST['fname']
+    account.lastName=request.POST['lname']
+    account.zoomLink = request.POST['zlink']
+    account.blurb = request.POST['blurb']
+
+    account.save()
+
+    return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
 
 class alldepartments(generic.ListView):
     model = Departments
@@ -50,7 +97,7 @@ class alldepartments(generic.ListView):
 
     # return HttpResponse("here are the departments")
 
-def department(request, dept):
+def department(request, email, dept):
     model = Course
     template_name = ('department.html')
 
@@ -81,7 +128,7 @@ def department(request, dept):
 
     # return HttpResponse("choose the class you want to find a study buddy in")
 
-def coursefeed (request, dept, course_number):
+def coursefeed (request, email, dept, course_number):
     template_name = 'course_feed.html'
 
     # print(Departments.objects.filter(dept))
