@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Buddy: {{ dept }}</title>
+</head>
+
+<style>
+ul#nav li {
+  display:inline;
+}
+
+li {
+  border: 1px solid black;
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  text-align : center;
+}
+</style>
+
+<nav class="nav justify-content-center">
+    <ul id="nav" class="list-unstyled">
+       <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
+    </ul>
+</nav>
+
+<body>
+<h3>Choose the class/section you would like to find a study buddy in</h3>
+
+{% if department_list %}
+    <ul class = "courses" style="list-style-type: none">
+    {% for course in department_list %}
+        <li><a href="{{ course.course_number }}">{{ course }}</a></li>
+        <br>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
+{% endif %}
+</body>
+</html>
