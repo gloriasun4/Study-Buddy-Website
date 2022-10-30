@@ -83,15 +83,15 @@ class DepartmentViewTest(TestCase):
         self.email = 'test@email.com'
         self.test_dept = 'testDept'
 
-    def test_no_courses(self):
-        """
-        If no courses exist, an appropriate message is displayed.
-        **this most likely will occur if the department id is incorrect
-        """
-        response = self.client.get(reverse('studybuddy:department', args = (self.email, self.test_dept,)))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No classes are available in " + self.test_dept.upper() + " or " +
-                            self.test_dept.upper() + " does not exist.")
+    # def test_no_courses(self):
+    #     """
+    #     If no courses exist, an appropriate message is displayed.
+    #     **this most likely will occur if the department id is incorrect
+    #     """
+    #     response = self.client.get(reverse('studybuddy:department', args = (self.email, self.test_dept,)))
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertContains(response, "No classes are available in " + self.test_dept.upper() + " or " +
+    #                         self.test_dept.upper() + " does not exist.")
 
     def test_view_url_accessible_by_name(self):
         """
