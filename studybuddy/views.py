@@ -14,9 +14,9 @@ class index(generic.TemplateView):
     template_name = 'homepage.html'
     # return HttpResponse("Welcome to the Study Buddy App!")
 
-def index(request, email):
-
-   return render(request, 'studybuddy/home.html')
+# def index(request, email):
+#
+#    return render(request, 'studybuddy/home.html')
 
 def addAccount(request, email):
     exist = User.objects.filter(email=email).exists()

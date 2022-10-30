@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -200,7 +201,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/studybuddy"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -211,7 +212,7 @@
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href=""> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href=""> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href=""> Sign In </a></li>
                     </ul>
                 </div>
@@ -219,11 +220,12 @@
         </nav>
         <div class="d-flex justify-content-center">
             <div class="sb-form">
+                <h3>Choose the department of the class you would like to find a study buddy in</h3>
                 <form>
                     {% if departments_list %}
                     <ul style="list-style-type: none">
                     {% for department in departments_list %}
-                        <li><a href="/studybuddy/{{ department.dept }}">{{ department.dept }}</a></li>
+                        <li><a href="/studybuddy/{{user.email}}/{{ department.dept }}">{{ department.dept }}</a></li>
                         <br>
                     {% endfor %}
                     </ul>
@@ -262,19 +264,4 @@ li {
   text-align: center;
 }
 </style>
-
-<body>
-<h3>Choose the department of the class you would like to find a study buddy in</h3>
-
-{% if departments_list %}
-    <ul style="list-style-type: none">
-    {% for department in departments_list %}
-        <li><a href="/studybuddy/{{ department.dept }}">{{ department.dept }}</a></li>
-        <br>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No departments are available.</p>
-{% endif %}
-</body>
 </html> {% endcomment %}

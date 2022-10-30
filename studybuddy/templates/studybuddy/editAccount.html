@@ -18,11 +18,6 @@
   <textarea type="text" id="blurb" name="blurb" >{{AboutMe}} </textarea><br><br>
   <input type="submit" value="Update">
 </form>
-
-  <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
-  <!--check if in model
-      if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
-
 </body>
 </html>
 
