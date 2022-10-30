@@ -11,4 +11,8 @@ urlpatterns = [
     path('<str:email>/account/add/', views.addAccount, name='addAccount'),
     path('<str:email>/account/edit/', views.EditAccount, name='editAccount'),
     path('<str:email>/account/update/', views.UpdateAccount, name='updateAccount'),
+    path('<str:email>/alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
+    path('<str:email>/<str:dept>/', views.department, name='department'),
+    path('<str:email>/<str:dept>/<int:course_number>/', views.coursefeed, name = 'coursefeed'),
+    path("<str:email>/<str:dept>/<int:course_number>/makepost", views.makepost, name = 'makepost'),
 ]
