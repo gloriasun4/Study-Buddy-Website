@@ -197,6 +197,8 @@
     </style>
 </head>
 
+{% if user.is_authenticated %}
+
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
@@ -241,6 +243,11 @@
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 </body>
+
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
 </html>
 
 {% comment %} Claire:

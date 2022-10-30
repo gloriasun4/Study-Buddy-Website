@@ -209,6 +209,8 @@
     </style>
 </head>
 
+{% if user.is_authenticated %}
+
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
@@ -224,8 +226,8 @@
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href=""> Sign In </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
             </div>
@@ -238,8 +240,7 @@
             <div class="sb-form">
                 <form method="get">
                   <ul id="nav" class="list-unstyled">
-                    <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
-                     &nbsp &nbsp &nbsp<li> <a href=/studybuddy/{{ dept }}>Choose another class in the same department</a></li>
+                     <li> <a href="{% url 'studybuddy:department' user.email dept%}">Choose another class in the same department</a></li>
                  </ul>
                     <div class="wrapper">
                         <h2 class="title">Find study buddy for: {{ course }}</h2>
@@ -265,6 +266,11 @@
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 </body>
+
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
 </html>
 
 

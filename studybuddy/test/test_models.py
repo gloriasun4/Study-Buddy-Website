@@ -2,12 +2,6 @@ from django.test import TestCase
 from studybuddy.models import User, Course
 from django.urls import reverse
 
-# Create your test here.
-class ModelTesting(TestCase):
-    def test_model(self):
-        self.user = User.objects.create(username='jacqueline-chao', password='123')
-        self.assertTrue(isinstance(self.user, User))
-
 class CourseTest(TestCase):
     def setUp(self):
         self.test_subject = 'testDept'
