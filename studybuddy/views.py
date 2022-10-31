@@ -1,3 +1,4 @@
+from types import NoneType
 from django.views import generic
 from .models import Departments, Course
 import requests
@@ -8,7 +9,9 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from .models import User
+from .models import UserProfile, Friend
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
@@ -18,10 +21,30 @@ class index(generic.TemplateView):
 #
 #    return render(request, 'studybuddy/home.html')
 
+@login_required
+def add_or_remove_friends(request, username, verb):
+    n_f = get_object_or_404(User, username=username)
+    owner = request.user.userprofile
+    new_friend = UserProfile.objects.get(user=n_f)
+
+    if verb == "add":
+        new_friend.followers.add(owner)
+        Friend.make_friend(owner, new_friend)
+    else:
+        new_friend.followers.remove(owner)
+        Friend.remove_friend(owner, new_friend)
+
+    return redirect(new_friend.get_absolute_url())
+
+def list_friends(request):
+    friend_object, created = Friend.objects.get_or_create(current_user=request.user.userprofile)
+    friends = [friend for friend in friend_object.users.all() if friend != request.user.userprofile]
+    return render(request, 'followers.html', {"friends":friends})
+
 def addAccount(request, email):
-    exist = User.objects.filter(email=email).exists()
+    exist = UserProfile.objects.filter(email=email).exists()
     if not exist:
-        newAcc = User(email=email)
+        newAcc = UserProfile(email=email)
         newAcc.save()
 
     return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
@@ -32,7 +55,7 @@ def makepost(request, email, dept, course_number):
 
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.user = request.user;
+            obj.UserProfile = request.UserProfile;
             obj.save()
             form = SnippetForm()
             messages.success(request, "Successfully created")
@@ -40,31 +63,40 @@ def makepost(request, email, dept, course_number):
     return render(request, 'form.html', {'form': form})
 
 def account(request, email):
-    user = User.objects.get(email=email)
+    # UserProfile = get_object_or_404(UserProfile, email=email)
+    # owner = request.user.userprofile
+    # new_friend = UserProfile.objects.get(user=n_f)
+    # UserProfile = UserProfile.objects.get(email=email)
+    # user = User.objects.get(email=email)
+    # currUser = User.objects.get(email=email)
+    print((UserProfile.objects.get(email = email) is NoneType))
+    userProfile = UserProfile.objects.get(email = email)
+
+    # userProfile = request.user.userprofile
     context = {
-        'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
-        'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'Email': userProfile.email,
+        'FirstName': userProfile.firstName,
+        'LastName': userProfile.lastName,
+        'ZoomLink': userProfile.zoomLink,
+        'AboutMe': userProfile.blurb
 
     }
     return render(request, 'studybuddy/account.html', context)
 
 def EditAccount(request, email):
-    user = User.objects.get(email=email)
+    UserProfile = UserProfile.objects.get(email=email)
     context = {
-        'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
-        'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'Email': UserProfile.email,
+        'FirstName': UserProfile.firstName,
+        'LastName': UserProfile.lastName,
+        'ZoomLink': UserProfile.zoomLink,
+        'AboutMe': UserProfile.blurb
 
     }
     return render(request, 'studybuddy/EditAccount.html', context)
 
 def UpdateAccount(request, email):
-    account = User.objects.get(email=email)
+    account = UserProfile.objects.get(email=email)
 
     account.firstName=request.POST['fname']
     account.lastName=request.POST['lname']

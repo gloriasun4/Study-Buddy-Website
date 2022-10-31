@@ -2,14 +2,37 @@ from django.db import models
 from django.conf import settings
 import requests
 import json
+from django.contrib.auth.models import User
 
 # Create your models here.
-class User(models.Model):
+class UserProfile(models.Model):
     email = models.CharField(primary_key=True, max_length=30, default="")
     firstName = models.CharField(max_length=30, default="")
     lastName = models.CharField(max_length=30, default="")
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
+    followers = models.ManyToManyField(User)
+
+class Friend(models.Model):
+    users = models.ManyToManyField(UserProfile)
+    current_user = models.ForeignKey(UserProfile, related_name="owner", null=True, on_delete=models.CASCADE)
+
+    @classmethod
+    def make_friend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user = current_user
+        )
+        friend.users.add(new_friend)
+
+    @classmethod
+    def remove_friend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user = current_user
+        )
+        friend.users.remove(new_friend)
+
+    def __str__(self):
+        return str(self.current_user)
 
 class Departments(models.Model):
     dept = models.CharField(max_length = 4)
@@ -36,11 +59,11 @@ class Course(models.Model):
 
 
 from django.db import models
-# User = settings.AUTH_USER_MODEL
+# UserProfile = settings.AUTH_UserProfile_MODEL
 
 # Create your models here.
 class Snippet(models.Model):
-    user = models.ForeignKey(User,
+    UserProfile = models.ForeignKey(UserProfile,
                              default=1,
                              null=True,
                              on_delete=models.SET_NULL
