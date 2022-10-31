@@ -40,7 +40,7 @@ def makepost(request, email, dept, course_number):
     return render(request, 'form.html', {'form': form})
 
 def account(request, email):
-    user = User.objects.get(email=email)
+    user = User.objects.get(email__exact=email)
     context = {
         'Email': user.email,
         'FirstName': user.firstName,
@@ -64,7 +64,7 @@ def EditAccount(request, email):
     return render(request, 'studybuddy/EditAccount.html', context)
 
 def UpdateAccount(request, email):
-    account = User.objects.get(email=email)
+    account = User.objects.get(email__exact=email)
 
     account.firstName=request.POST['fname']
     account.lastName=request.POST['lname']
