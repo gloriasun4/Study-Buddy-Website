@@ -1,4 +1,5 @@
 {% load socialaccount %}
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -8,7 +9,7 @@
     <meta name="description" content="Study Buddy">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Study Buddy</title>
+    <title>My Study Buddy Posts</title>
     <style>
         .navbar {
             padding-right: 1em;
@@ -107,9 +108,9 @@
             {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1611079829529-fe31a9531295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1629196206335-744346ba1331?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1289&q=80") no-repeat center; {% endcomment %}
             background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
             background-size: cover;
         }
 
@@ -125,7 +126,7 @@
             background: #aaa6e2;
             border-radius: 12px;
         }
-          
+
         .title {
             font-weight: bold;
             {% comment %} color: #fbfbfb; {% endcomment %}
@@ -135,7 +136,7 @@
             animation-timing-function: linear;
             animation-iteration-count: infinite;
         }
-          
+
         @keyframes rightToLeft {
             0% {
               transform: translateX(200px);
@@ -195,45 +196,34 @@
             color: #636363;
         }
 
-        #myInput {
-          background-image: url('/css/searchicon.png');
-          background-position: 10px 12px;
-          background-repeat: no-repeat;
-          width: 100%;
-          font-size: 16px;
-          padding: 12px 20px 12px 40px;
-          border: 1px solid #ddd;
-          margin-bottom: 12px;
+        .firstSpan .secondSpan {
+          visibility: hidden;
+          width: 120px;
+          background-color: gray;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
         }
 
-        #myUL {
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
+        .firstSpan:hover .secondSpan {
+          visibility: visible;
         }
 
-        #myUL li a {
-          border: 1px solid #ddd;
-          margin-top: -1px; /* Prevent double borders */
-          background: #a6e2c8;
-          padding: 12px;
-          text-decoration: none;
-          font-size: 16px;
-          font-weight: bold;
-          color: white;
-          display: block;
-          border-radius: 12px;
-          min-width: 140px;
-          outline: none !important;
+        {% comment %} ul#nav li {
+          display:inline;
         }
 
-        #myUL li a:hover:not(.header) {
-          background-color: #65c5c0;
-        }
+        li {
+          border: 1px solid black;
+          padding: 10px;
+          border-radius: 5px;
+          text-align : center;
+        } {% endcomment %}
     </style>
 </head>
-
-{% if user.is_authenticated %}
 
 <body>
     <div class="row">
@@ -247,61 +237,50 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
-                        {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
-                        <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
-                        <li class="nav-item"><a class="nav-link" href=""> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="d-flex justify-content-center">
+        <nav class="nav justify-content-center">
+      </nav>
 
+        <div class="d-flex justify-content-center">
             <div class="sb-form">
-                <h3>Choose the department of the class you would like to find a study buddy in</h3>
-                <form>
-                    {% if departments_list %}
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for departments.." title="Type in a department">
-                    <ul style="list-style-type: none" id="myUL">
-                    {% for department in departments_list %}
-                        <li><a href="/studybuddy/{{user.email}}/{{ department.dept }}">{{ department.dept }}</a></li>
-                    {% endfor %}
-                        <li hidden="true" id="noMatch">No department available</li>
+                <div class="wrapper">
+                    <h1>My Posts</h1>
+                </div>
+                <div class="wrapper">
+                    {% if user_posts %}
+                    <ul style="list-style-type: none">
+                        {% for post in user_posts %}
+                            <li>
+                                {{ post | linebreaksbr }}
+                                <form action="{% url 'studybuddy:deletepost' user.email%}" method = "post">
+                                {% csrf_token %}
+                                <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email post.course.subject post.course.course_number%}">Course Feed</button>
+                                <!-- link to maybe some pop up to show post + post.description -->
+                                <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
+                                <span class="firstSpan">
+                                    <button class="btn btn-lg">View Description</button>
+                                <span class="secondSpan">{{ post | linebreaksbr }} Description: {{ post.description }}</span></span>
+                                    <input type="hidden" name="delete_source" value="get_posts">
+                                    <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                    <input type="submit" value="Delete Post" class="btn btn-lg">
+                                </form>
+                            </li>
+                            <br>
+                        {% endfor %}
                     </ul>
-                {% else %}
-                    <p>No departments are available.</p>
-                {% endif %}
-                </form>
+                    {% else %}
+                        <p>You currently have not made any posts to look for a study buddy</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
-    <script>
-    function myFunction() {
-        var input, filter, ul, li, a, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        ul = document.getElementById("myUL");
-        li = ul.getElementsByTagName("li");
-        noMatch = document.getElementById("noMatch")
-        let match = false;
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            txtValue = a.textContent || a.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-                match = true;
-            } else {
-                li[i].style.display = "none";
-            }
-        }
-        if(match == false) {
-            noMatch.attr("hidden", false);
-        }
-    }
-    </script>
-
-    </div>
     <footer class="footer-container">
         <div class="container">
             <div class="row">
@@ -309,12 +288,6 @@
         </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
+    </div>
 </body>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
 </html>
-
-{% comment %}
-Source for filter search bar: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
-{% endcomment %}

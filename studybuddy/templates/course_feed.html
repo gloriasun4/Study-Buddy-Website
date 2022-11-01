@@ -9,7 +9,7 @@
     <meta name="description" content="Study Buddy">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Study Buddy</title>
+    <title>{{ course }}</title>
     <style>
         .navbar {
             padding-right: 1em;
@@ -196,6 +196,23 @@
             color: #636363;
         }
 
+        .firstSpan .secondSpan {
+          visibility: hidden;
+          width: 120px;
+          background-color: gray;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+        }
+
+        .firstSpan:hover .secondSpan {
+          visibility: visible;
+        }
+
+
         {% comment %} ul#nav li {
           display:inline;
         }
@@ -208,8 +225,6 @@
         } {% endcomment %}
     </style>
 </head>
-
-{% if user.is_authenticated %}
 
 <body>
     <div class="row">
@@ -225,6 +240,7 @@
                     <ul class="navbar-nav ms-auto">
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:getposts' user.email%}">My Posts</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
@@ -235,7 +251,6 @@
         <nav class="nav justify-content-center">
 
       </nav>
-      {% comment %} <h2>Find study buddy for: {{ course }}</h2> {% endcomment %}
         <div class="d-flex justify-content-center">
             <div class="sb-form">
                 <form method="get">
@@ -250,14 +265,56 @@
                         <button class="btn btn-lg" id="myBtn" name="myBtn" type="submit" formaction="makepost">
                         <a name="myBtn">Add a post!</a></button>
                         {% else %}
-    <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
-{% endif %}
+                            <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
+                            <p>
+                                If you tried to make a post, then post was not made, because course is not available.
+                                Please you can try again by clicking on "Departments" or "Choose another class in the same department"
+                                to find a course in {{ dept }}.
+                            </p>
+                        {% endif %}
                       </div>
                 </form>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <div class="sb-form">
+                <div class="wrapper">
+                    <h1>Studybuddy posts for this course</h1>
+                </div>
+                <div class="form-group">
+                    {% if has_posts and feed_posts%}
+                    <ul style="list-style-type: none">
+                        {% for post in feed_posts %}
+                            <li>
+                                <form action="{% url 'studybuddy:deletepost' user.email%}" method = "post">
+                                {% csrf_token %}
+                                {{ post | linebreaksbr }}
+                                <!-- this will link to chat room -->
+                                <button class="btn btn-lg" formaction=""><a name="message">Message Me!</a></button>
+                                <!-- link to maybe some pop up to show post + post.description -->
+                                <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
+                                <span class="firstSpan">
+                                 <button class="btn btn-lg" name="descripton" id="description" formaction="">View Description</button>
+                                <span class="secondSpan">{{ post | linebreaksbr }} Description: {{ post.description }}</span></span>
+
+                                {% if user.email == post.user.email %}
+                                    <input type="hidden" name="delete_source" value="course_feed">
+                                    <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                    <input type="submit" value="Delete Post" class="btn btn-lg">
+                                {% endif %}
+                            </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                        <p>There are currently no posts made for this class</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
     </div>
+
     <footer class="footer-container">
         <div class="container">
             <div class="row">
@@ -267,47 +324,4 @@
     </footer>
 </body>
 
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-
 </html>
-
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ course }}</title>
-</head>
-
-<style>
-
-
-li#post {
-  border: 1px solid black;
-  padding: 10px;
-  width: 100px;
-  border-radius: 5px;
-  text-align : center;
-}
-
-</style>
-
-<nav class="nav justify-content-center">
-    <ul id="nav" class="list-unstyled">
-       <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
-        &nbsp &nbsp &nbsp<li> <a href=/studybuddy/{{ dept }}>Choose another class in the same department</a></li>
-    </ul>
-</nav>
-
-<body>
-<h2>Find study buddy for: {{ course }}</h2>
-
-{% if valid %}
-    <li id="post" class="list-unstyled"> Make a post to find a study buddy </li>
-{% else %}
-    <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
-{% endif %}
-</body>
-</html> {% endcomment %}

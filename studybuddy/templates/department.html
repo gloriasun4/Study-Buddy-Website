@@ -20,7 +20,6 @@ li {
 }
 </style>
 
-{% if user.is_authenticated %}
 <nav class="nav justify-content-center">
     <ul id="nav" class="list-unstyled">
        <li><a href="{% url 'studybuddy:alldepartments' user.email%}"> Choose another department </a></li>
@@ -41,9 +40,5 @@ li {
     <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
 {% endif %}
 </body>
-
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
 
 </html>

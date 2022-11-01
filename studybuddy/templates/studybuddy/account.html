@@ -1,17 +1,20 @@
 {% load socialaccount %}
 <html>
 <body>
-<h1>My Study Buddy</h1>
-<p>View Account Details Below</p>
-<p>Email: {{Email}}</p>
-<p>First Name: {{FirstName}}</p>
-<p>Last Name: {{LastName}}</p>
-<p>Zoom Link:  <a href="{{ZoomLink}}">{{ZoomLink}}</a> </p>
-<p>About Me: {{AboutMe}}</p>
+{% if user.is_authenticated %}
+  <h1>My Study Buddy</h1>
+  <p>View Account Details Below</p>
+  <p>Email: {{Email}}</p>
+  <p>First Name: {{FirstName}}</p>
+  <p>Last Name: {{LastName}}</p>
+  <p>Zoom Link:  <a href="{{ZoomLink}}">{{ZoomLink}}</a> </p>
+  <p>About Me: {{AboutMe}}</p>
 
-  <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
-  <!--check if in model
-      if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
-
+    <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
+    <!--check if in model
+        if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
 </body>
 </html>

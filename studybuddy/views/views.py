@@ -1,24 +1,18 @@
 from django.views import generic
-from .models import Departments, Course
-import requests
-import json
-from .forms import SnippetForm
-from .models import Snippet
-from django.contrib import messages
+from studybuddy.models import User, Departments, Course, Post
+import requests, json
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render
 from django.urls import reverse
-from .models import User
+from django.utils import timezone
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
-    # return HttpResponse("Welcome to the Study Buddy App!")
-
-# def index(request, email):
-#
-#    return render(request, 'studybuddy/home.html')
 
 def addAccount(request, email):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     exist = User.objects.filter(email=email).exists()
     if not exist:
         newAcc = User(email=email)
@@ -26,32 +20,24 @@ def addAccount(request, email):
 
     return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
 
-def makepost(request, email, dept, course_number):
-    form = SnippetForm(request.POST or None, request.FILES or None)
-    if request.method == 'POST':
-
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user;
-            obj.save()
-            form = SnippetForm()
-            messages.success(request, "Successfully created")
-
-    return render(request, 'form.html', {'form': form})
-
 def account(request, email):
-    user = User.objects.get(email__exact=email)
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
+    user = User.objects.get(email=email)
     context = {
         'Email': user.email,
         'FirstName': user.firstName,
         'LastName': user.lastName,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb
-
     }
     return render(request, 'studybuddy/account.html', context)
 
 def EditAccount(request, email):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     user = User.objects.get(email=email)
     context = {
         'Email': user.email,
@@ -64,7 +50,10 @@ def EditAccount(request, email):
     return render(request, 'studybuddy/editAccount.html', context)
 
 def UpdateAccount(request, email):
-    account = User.objects.get(email__exact=email)
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
+    account = User.objects.get(email=email)
 
     account.firstName=request.POST['fname']
     account.lastName=request.POST['lname']
@@ -95,9 +84,10 @@ class alldepartments(generic.ListView):
     def get_queryset(self):
         return Departments.objects.all()
 
-    # return HttpResponse("here are the departments")
-
 def department(request, email, dept):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     model = Course
     template_name = ('department.html')
 
@@ -107,36 +97,43 @@ def department(request, email, dept):
     dept_classes = requests.get(dept_request)
     dept_classes_json = json.loads(dept_classes.text)
 
-    #
-    if (Course.objects.exists()):
-        Course.objects.all().delete()
-
     # Get all of the classes in the requested department
     for i in range(len(dept_classes_json)):
         current_class = dept_classes_json[i]
-        newClass = Course(subject = dept,
+
+        # if the course doesn't exists then we will add it
+        if not Course.objects.filter(subject = dept,
                           catalog_number = current_class.get('catalog_number'),
                           instructor = current_class.get('instructor').get('name'),
                           section = current_class.get('course_section'),
-                          course_number = current_class.get('course_number'))
+                          course_number = current_class.get('course_number')).exists():
 
-        # print(newClass)
-        newClass.save()
+            newClass = Course(subject=dept,
+                              catalog_number=current_class.get('catalog_number'),
+                              instructor=current_class.get('instructor').get('name'),
+                              section=current_class.get('course_section'),
+                              course_number=current_class.get('course_number'))
+            newClass.save()
 
-    return render(request, template_name, {'department_list' : Course.objects.all(), 'dept' : dept})
-    # return HttpResponse(dept_classes_json)
-
-    # return HttpResponse("choose the class you want to find a study buddy in")
+    return render(request, template_name, {'department_list' : Course.objects.filter(subject=dept), 'dept' : dept})
 
 def coursefeed (request, email, dept, course_number):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     template_name = 'course_feed.html'
 
-    # print(Departments.objects.filter(dept))
-    if(Course.objects.filter(course_number = course_number).exists()):
+    if Course.objects.filter(course_number = course_number).exists():
+        course = Course.objects.get(course_number=course_number)
+        Post.objects.filter(endDate__lt=timezone.now()).delete()
+        post_for_this_class = Post.objects.filter(course=course)
+
         context = {
             'dept' : dept.upper(),
-            'course' : Course.objects.get(course_number = course_number),
-            'valid' : 'true'
+            'course' : course,
+            'valid' : 'true',
+            'feed_posts' : post_for_this_class,
+            'has_posts' : post_for_this_class.exists()
         }
     else:
         context = {

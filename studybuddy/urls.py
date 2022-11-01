@@ -1,7 +1,8 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
-from . import views
+from studybuddy.views import views, post_views
+
 app_name = 'studybuddy'
 urlpatterns = [
     path('<str:email>/', views.index.as_view(), name='index'),
@@ -11,6 +12,9 @@ urlpatterns = [
     path('<str:email>/account/update/', views.UpdateAccount, name='updateAccount'),
     path('<str:email>/alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
     path('<str:email>/<str:dept>/', views.department, name='department'),
-    path('<str:email>/<str:dept>/<int:course_number>/', views.coursefeed, name = 'coursefeed'),
-    path("<str:email>/<str:dept>/<int:course_number>/makepost", views.makepost, name = 'makepost'),
+    path('<str:email>/<str:dept>/<int:course_number>/', views.coursefeed, name ='coursefeed'),
+    path('<str:email>/<str:dept>/<int:course_number>/makepost', post_views.makepost, name ='makepost'),
+    path('<str:email>/<str:dept>/<int:course_number>/submitpost', post_views.submitpost, name ='submitpost'),
+    path('<str:email>/deletepost', post_views.deletepost, name='deletepost'),
+    path('<str:email>/getpost', post_views.getposts, name='getposts'), #we can probably change this to be my courses?
 ]
