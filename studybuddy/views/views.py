@@ -5,10 +5,19 @@ from django.utils import timezone
 from django.shortcuts import render
 from . import post_views
 from django.http import HttpResponseRedirect, HttpResponse
-from studybuddy.models import User, Departments, Course, Post
+from studybuddy.models import User, Departments, Course, Post, EnrolledClass
 
-class index(generic.TemplateView):
-    template_name = 'homepage.html'
+# class index(generic.TemplateView):
+#     template_name = 'homepage.html'
+
+def index(request, email):
+    template_name = 'homepage2.html'
+
+    context = {
+            'student': User.objects.get(email=request.user.email),
+    }
+
+    return render(request, template_name, context)
 
 def addAccount(request, email):
     if request.user.is_anonymous:
@@ -16,7 +25,7 @@ def addAccount(request, email):
 
     exist = User.objects.filter(email=email).exists()
     if not exist:
-        newAcc = User(email=email)
+        newAcc = User(email=email, firstName=request.user.username)
         newAcc.save()
 
     return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
@@ -31,7 +40,8 @@ def account(request, email):
         'FirstName': user.firstName,
         'LastName': user.lastName,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'AboutMe': user.blurb,
+        'student': user
     }
     return render(request, 'studybuddy/account.html', context)
 
@@ -143,6 +153,61 @@ def coursefeed (request, email, dept, course_number):
         context = {
             'dept': dept.upper(),
             'course': course_number,
+
         }
 
     return render(request, template_name, context)
+
+def enrollcourse (request, email, dept, course_number):
+    template_name = 'enroll.html'
+
+    # print(Departments.objects.filter(dept))
+    if(Course.objects.filter(course_number = course_number).exists()):
+        context = {
+            'dept': dept.upper(),
+            'course': Course.objects.get(course_number = course_number),
+            'valid': 'true',
+            'enrolled': EnrolledClass.objects.filter(course=Course.objects.get(course_number=course_number),
+                                                     student=User.objects.get(email=request.user.email)).exists()
+        }
+    else:
+        context = {
+            'dept': dept.upper(),
+            'course': course_number,
+        }
+
+    return render(request, template_name, context)
+def updatecourseload(request, email, dept, course_number):
+    account = User.objects.get(email__exact=email)
+    course = Course.objects.get(course_number=course_number)
+
+    action = request.POST['choice']
+    if action=="YesD":
+        EnrolledClass.objects.filter(course=course, student=account).delete()
+    elif action == "YesE":
+        enrolled = EnrolledClass(course=course, student=account)
+        enrolled.save()
+
+
+
+    return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
+
+
+# def disenrollcourse(request, email, dept, course_number):
+#     template_name = 'disenroll.html'
+#
+#     # print(Departments.objects.filter(dept))
+#     if (Course.objects.filter(course_number=course_number).exists()):
+#         context = {
+#             'dept': dept.upper(),
+#             'course': Course.objects.get(course_number=course_number),
+#             'valid': 'true',
+#
+#         }
+#     else:
+#         context = {
+#             'dept': dept.upper(),
+#             'course': course_number,
+#         }
+#
+#     return render(request, template_name, context)
