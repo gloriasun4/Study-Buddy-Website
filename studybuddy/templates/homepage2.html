@@ -230,7 +230,7 @@
                       <div class="form-group">
                           {% if student.enrolledclass_set.all %}
                           {% for class in student.enrolledclass_set.all %}
-                            <li><a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">{{ class.course.subject }} {{ class.course.course_number }}</a></li>
+                            <li><a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">{{ class.course.subject }} {{ class.course.catalog_number }}</a></li>
 <!--                            <a href ="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number% }">-->
 <!--                                <a name="myBtn">{{ class}}</a></button>-->
 
