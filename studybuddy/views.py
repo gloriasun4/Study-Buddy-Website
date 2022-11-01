@@ -24,7 +24,7 @@ def addAccount(request, email):
         newAcc = User(email=email)
         newAcc.save()
 
-    return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
+    return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
 
 def makepost(request, email, dept, course_number):
     form = SnippetForm(request.POST or None, request.FILES or None)
