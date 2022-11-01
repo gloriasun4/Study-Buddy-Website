@@ -107,15 +107,14 @@
             {% comment %} background: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1629196206335-744346ba1331?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1289&q=80") no-repeat center; {% endcomment %}
-            background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+            background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            {% comment %} background: url("https://images.unsplash.com/photo-1611079829529-fe31a9531295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
             background-size: cover;
         }
 
         .wrapper {
-            width: 740px;
+            width: 640px;
             margin: auto;
             overflow-x: hidden;
             margin-bottom: 30px;
@@ -147,7 +146,7 @@
         }
 
         .sb-form {
-            width: 800px;
+            width: 700px;
             float: right;
             margin-top: 80px;
             padding: 30px 0;
@@ -195,17 +194,6 @@
         .text-center {
             color: #636363;
         }
-
-        {% comment %} ul#nav li {
-          display:inline;
-        }
-        
-        li {
-          border: 1px solid black;
-          padding: 10px;
-          border-radius: 5px;
-          text-align : center;
-        } {% endcomment %}
     </style>
 </head>
 
@@ -225,36 +213,37 @@
                     <ul class="navbar-nav ms-auto">
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="alldepartments"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <nav class="nav justify-content-center">
-
-      </nav>
-      {% comment %} <h2>Find study buddy for: {{ course }}</h2> {% endcomment %}
         <div class="d-flex justify-content-center">
             <div class="sb-form">
                 <form method="get">
-                  <ul id="nav" class="list-unstyled">
-<!--                     <li> <a href="{% url 'studybuddy:department' user.email dept%}">Choose another class in the same department</a></li>-->
-                     <li>  <a href="{% url 'studybuddy:enroll' user.email course.subject course.course_number%}">Remove course from schedule</a></li>
-                 </ul>
                     <div class="wrapper">
-                        <h2 class="title">Find study buddy for: {{ course }}</h2>
+                        <h1 class="title">Welcome to the Study Buddy App!</h1>
+                        <li><a href="{% url 'studybuddy:alldepartments' user.email%}"> Update Course Schedule</a></li>
                       </div>
                       <div class="form-group">
-                        {% if valid %}
-                        <button class="btn btn-lg" id="myBtn" name="myBtn" type="submit" formaction="makepost">
-                        <a name="myBtn">Add a post!</a></button>
-                        {% else %}
-    <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
-{% endif %}
+                          {% if student.enrolledclass_set.all %}
+                          {% for class in student.enrolledclass_set.all %}
+                            <li><a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">{{ class.course.subject }} {{ class.course.course_number }}</a></li>
+<!--                            <a href ="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number% }">-->
+<!--                                <a name="myBtn">{{ class}}</a></button>-->
+
+
+                          {% endfor %}
+                          {% else %}
+                          <p class="text-center">You are currently not enrolled in any classes </p>
+                          {% endif %}
+
+<!--                        <button class="btn btn-lg" type="submit" formaction="alldepartments">-->
+<!--                        <a name="myBtn">Find a study b buddyx</a></button>-->
                       </div>
-                </form>
+                </form> 
             </div>
         </div>
 
@@ -274,41 +263,25 @@
 
 </html>
 
+{% comment %} Claire:
+                - font change
+                - citation
+                - margin change
+                - spinner?? for choosing number of study Buddy
+                - etc.........decide main theme & color & app name
+{% endcomment %}
 
-{% comment %} <!DOCTYPE html>
+{% comment %} 
+</html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ course }}</title>
+    <title>Study Buddy</title>
 </head>
-
-<style>
-
-
-li#post {
-  border: 1px solid black;
-  padding: 10px;
-  width: 100px;
-  border-radius: 5px;
-  text-align : center;
-}
-
-</style>
-
-<nav class="nav justify-content-center">
-    <ul id="nav" class="list-unstyled">
-       <li><a href=/studybuddy/alldepartments> Choose another department </a></li>
-        &nbsp &nbsp &nbsp<li> <a href=/studybuddy/{{ dept }}>Choose another class in the same department</a></li>
-    </ul>
-</nav>
-
 <body>
-<h2>Find study buddy for: {{ course }}</h2>
+<h1>Welcome to the Study Buddy App!</h1>
 
-{% if valid %}
-    <li id="post" class="list-unstyled"> Make a post to find a study buddy </li>
-{% else %}
-    <p>The department {{ dept }} you are looking does not exist or course number {{ course }} in {{ dept }} is not valid.</p>
-{% endif %}
+<a href="alldepartments">Find a study buddy</a>
 </body>
 </html> {% endcomment %}

@@ -11,6 +11,7 @@ class User(models.Model):
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
 
+
 class Departments(models.Model):
     dept = models.CharField(max_length = 4)
 
@@ -36,7 +37,6 @@ class Course(models.Model):
 
 
 from django.db import models
-# User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Snippet(models.Model):
@@ -51,3 +51,10 @@ class Snippet(models.Model):
 
     def __str__(self):
         return self.blogname
+
+class EnrolledClass(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course.subject + " " + self.course.course_number

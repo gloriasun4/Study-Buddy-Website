@@ -1,5 +1,5 @@
 from django.views import generic
-from .models import Departments, Course
+from .models import Departments, Course, EnrolledClass
 import requests
 import json
 from .forms import SnippetForm
@@ -10,18 +10,21 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from .models import User
 
-class index(generic.TemplateView):
-    template_name = 'homepage.html'
-    # return HttpResponse("Welcome to the Study Buddy App!")
+def index(request, email):
+    template_name = 'homepage2.html'
 
-# def index(request, email):
-#
-#    return render(request, 'studybuddy/home.html')
+    context = {
+            'student': User.objects.get(email=request.user.email),
+
+    }
+
+    return render(request, template_name, context)
+
 
 def addAccount(request, email):
     exist = User.objects.filter(email=email).exists()
     if not exist:
-        newAcc = User(email=email)
+        newAcc = User(email=email, firstName=request.user.username)
         newAcc.save()
 
     return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
@@ -95,9 +98,10 @@ class alldepartments(generic.ListView):
     def get_queryset(self):
         return Departments.objects.all()
 
-    # return HttpResponse("here are the departments")
-
 def department(request, email, dept):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     model = Course
     template_name = ('department.html')
 
@@ -107,27 +111,25 @@ def department(request, email, dept):
     dept_classes = requests.get(dept_request)
     dept_classes_json = json.loads(dept_classes.text)
 
-    #
-    if (Course.objects.exists()):
-        Course.objects.all().delete()
-
     # Get all of the classes in the requested department
     for i in range(len(dept_classes_json)):
         current_class = dept_classes_json[i]
-        newClass = Course(subject = dept,
+
+        # if the course doesn't exists then we will add it
+        if not Course.objects.filter(subject = dept,
                           catalog_number = current_class.get('catalog_number'),
                           instructor = current_class.get('instructor').get('name'),
                           section = current_class.get('course_section'),
-                          course_number = current_class.get('course_number'))
+                          course_number = current_class.get('course_number')).exists():
 
-        # print(newClass)
-        newClass.save()
+            newClass = Course(subject=dept,
+                              catalog_number=current_class.get('catalog_number'),
+                              instructor=current_class.get('instructor').get('name'),
+                              section=current_class.get('course_section'),
+                              course_number=current_class.get('course_number'))
+            newClass.save()
 
-    return render(request, template_name, {'department_list' : Course.objects.all(), 'dept' : dept})
-    # return HttpResponse(dept_classes_json)
-
-    # return HttpResponse("choose the class you want to find a study buddy in")
-
+    return render(request, template_name, {'department_list' : Course.objects.filter(subject=dept), 'dept' : dept})
 def coursefeed (request, email, dept, course_number):
     template_name = 'course_feed.html'
 
@@ -136,7 +138,30 @@ def coursefeed (request, email, dept, course_number):
         context = {
             'dept' : dept.upper(),
             'course' : Course.objects.get(course_number = course_number),
-            'valid' : 'true'
+            'valid' : 'true',
+
+        }
+    else:
+        context = {
+            'dept': dept.upper(),
+            'course': course_number,
+
+        }
+
+    return render(request, template_name, context)
+
+def enrollcourse (request, email, dept, course_number):
+    template_name = 'enroll.html'
+
+    # print(Departments.objects.filter(dept))
+    if(Course.objects.filter(course_number = course_number).exists()):
+        context = {
+            'dept': dept.upper(),
+            'course': Course.objects.get(course_number = course_number),
+            'valid': 'true',
+            'enrolled': EnrolledClass.objects.filter(course=Course.objects.get(course_number=course_number),
+                                                     student=User.objects.get(email=request.user.email)).exists()
+
         }
     else:
         context = {
@@ -145,3 +170,37 @@ def coursefeed (request, email, dept, course_number):
         }
 
     return render(request, template_name, context)
+def updatecourseload(request, email, dept, course_number):
+    account = User.objects.get(email__exact=email)
+    course = Course.objects.get(course_number=course_number)
+
+    action = request.POST['choice']
+    if action=="YesD":
+        EnrolledClass.objects.filter(course=course, student=account).delete()
+    elif action == "YesE":
+        enrolled = EnrolledClass(course=course, student=account)
+        enrolled.save()
+
+
+
+    return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
+
+
+# def disenrollcourse(request, email, dept, course_number):
+#     template_name = 'disenroll.html'
+#
+#     # print(Departments.objects.filter(dept))
+#     if (Course.objects.filter(course_number=course_number).exists()):
+#         context = {
+#             'dept': dept.upper(),
+#             'course': Course.objects.get(course_number=course_number),
+#             'valid': 'true',
+#
+#         }
+#     else:
+#         context = {
+#             'dept': dept.upper(),
+#             'course': course_number,
+#         }
+#
+#     return render(request, template_name, context)

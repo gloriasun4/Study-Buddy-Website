@@ -1,0 +1,25 @@
+{% load socialaccount %}
+<html>
+<body>
+<h1>My Study Buddy</h1>
+
+  <p>click below to enroll</p>
+  <a href="{% url 'studybuddy:alldepartments' user.email%}">Back to Departments</a>
+
+    <form action="{% url 'studybuddy:index' user.email %}" method="post" >
+    {% csrf_token %}
+    <fieldset align="center">
+
+        <input type="radio" name="disenroll" id="disenroll" value="disenroll" >
+        <label for="disenroll">enroll</label><br>
+
+
+    </fieldset>
+
+    <div class= "row justify-content-center">
+
+       <input type="submit" value="Update">
+    </form>
+
+</body>
+</html>
