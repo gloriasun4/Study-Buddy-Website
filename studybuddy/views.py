@@ -61,7 +61,7 @@ def EditAccount(request, email):
         'AboutMe': user.blurb
 
     }
-    return render(request, 'studybuddy/EditAccount.html', context)
+    return render(request, 'studybuddy/editAccount.html', context)
 
 def UpdateAccount(request, email):
     account = User.objects.get(email__exact=email)
