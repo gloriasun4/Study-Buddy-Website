@@ -8,6 +8,19 @@
 <p>Last Name: {{LastName}}</p>
 <p>Zoom Link:  <a href="{{ZoomLink}}">{{ZoomLink}}</a> </p>
 <p>About Me: {{AboutMe}}</p>
+<!-- implementing friends -->
+<p>Friends: </p>
+{% for friend in Friends.all %}
+<li><a href="/studybuddy/{{friend.email}}/account/">{{ friend.email }}</a></li>
+{% endfor %}
+<p>Friend Requests:</p>
+{% for friend_request in all_friend_requests %}
+<h1>{{friend_request.from_user}}
+  <a href="/accept_friend_request/{{friend_request.id}}/">
+    accept friend request
+  </a>
+</h1>
+{% endfor %}
 
   <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
   <!--check if in model
