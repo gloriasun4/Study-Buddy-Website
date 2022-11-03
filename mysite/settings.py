@@ -159,14 +159,9 @@ LOGOUT_REDIRECT_URL = "/"
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
-    # '--exclude=(__init__.py)',
-    '--with-coverage',
-    # '--ignore-files=*/__init__.py/*',
-    # '--ignore-files=*/admin.py/*',
-    '--exclude=migrations$',
-    '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
-    '--cover-html',
-    '--cover-tests', # add test files
-    '--cover-min-percentage=75',
     '--cover-erase' #erase previously ran coverages
+    '--with-coverage', # show coverage report
+    '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
+    # '--cover-html', # maybe add this?
+    '--cover-min-percentage=40', # not sure what our values are yet, still trying to mock models
 ]
