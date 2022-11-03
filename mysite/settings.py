@@ -159,7 +159,7 @@ LOGOUT_REDIRECT_URL = "/"
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
-    '--cover-erase' #erase previously ran coverages
+    '--cover-erase', #erase previously ran coverages
     '--with-coverage', # show coverage report
     '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
     # '--cover-html', # maybe add this?
