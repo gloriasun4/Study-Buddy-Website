@@ -1,5 +1,14 @@
 {% load socialaccount %}
 <html>
+
+<head>
+    {% if enrolled%}
+        <title>Unenroll in {{ course }}</title>
+    {% else %}
+        <title>Enroll in {{ course }}</title>
+    {% endif %}
+</head>
+
 <body>
 <h1>My Study Buddy</h1>
 
