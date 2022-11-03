@@ -12,3 +12,4 @@ django-allauth
 
 # run coverage tests
 django_nose
+coverage
