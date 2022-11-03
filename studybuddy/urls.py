@@ -15,6 +15,5 @@ urlpatterns = [
     path('<str:email>/<str:dept>/<int:course_number>/', views.coursefeed, name ='coursefeed'),
     path('<str:email>/<str:dept>/<int:course_number>/makepost', post_views.makepost, name ='makepost'),
     path('<str:email>/<str:dept>/<int:course_number>/submitpost', post_views.submitpost, name ='submitpost'),
-    path('<str:email>/deletepost', post_views.deletepost, name='deletepost'),
-    path('<str:email>/getpost', post_views.getposts, name='getposts'), #we can probably change this to be my courses?
+    path('<str:email>/viewpost', post_views.viewposts, name='viewposts'), #we can probably change this to be my courses?
 ]

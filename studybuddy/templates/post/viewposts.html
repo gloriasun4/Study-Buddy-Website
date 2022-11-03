@@ -198,7 +198,7 @@
 
         .firstSpan .secondSpan {
           visibility: hidden;
-          width: 120px;
+          width: 200px;
           background-color: gray;
           color: #fff;
           text-align: center;
@@ -258,17 +258,17 @@
                         {% for post in user_posts %}
                             <li>
                                 {{ post | linebreaksbr }}
-                                <form action="{% url 'studybuddy:deletepost' user.email%}" method = "post">
+                                <form action="" method = "post">
                                 {% csrf_token %}
                                 <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email post.course.subject post.course.course_number%}">Course Feed</button>
                                 <!-- link to maybe some pop up to show post + post.description -->
                                 <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                 <span class="firstSpan">
                                     <button class="btn btn-lg">View Description</button>
-                                <span class="secondSpan">{{ post | linebreaksbr }} Description: {{ post.description }}</span></span>
+                                <span class="secondSpan">{{ post.description }}</span></span>
                                     <input type="hidden" name="delete_source" value="get_posts">
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input type="submit" value="Delete Post" class="btn btn-lg">
+                                    <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
                                 </form>
                             </li>
                             <br>

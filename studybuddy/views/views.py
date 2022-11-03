@@ -1,10 +1,11 @@
-from django.views import generic
-from studybuddy.models import User, Departments, Course, Post
 import requests, json
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
 from django.urls import reverse
+from django.views import generic
 from django.utils import timezone
+from django.shortcuts import render
+from . import post_views
+from django.http import HttpResponseRedirect, HttpResponse
+from studybuddy.models import User, Departments, Course, Post
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
@@ -118,10 +119,13 @@ def department(request, email, dept):
     return render(request, template_name, {'department_list' : Course.objects.filter(subject=dept), 'dept' : dept})
 
 def coursefeed (request, email, dept, course_number):
+    template_name = 'course_feed.html'
+
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    template_name = 'course_feed.html'
+    if request.POST.get('delete'):
+        post_views.deletepost(request, email)
 
     if Course.objects.filter(course_number = course_number).exists():
         course = Course.objects.get(course_number=course_number)

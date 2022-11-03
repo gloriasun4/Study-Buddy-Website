@@ -9,3 +9,6 @@ django-heroku
 
 #all-auth for google login
 django-allauth
+
+# run coverage tests
+django_nose

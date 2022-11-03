@@ -134,37 +134,37 @@ class DepartmentViewTest(TestCase):
         """
         pass
 
-    def test_passing_a_valid_department_courses_are_displayed(self):
-        """
-        Add test_dept to Departments Model
-        Add courses to Course model
-
-        Test url that test courses show up
-        """
-        # given
-        test_catalog_number = 1234
-        test_instructor = 'testInstructor'
-        test_section = 000
-        test_course_number = 12345
-        Departments.objects.create(dept=self.test_dept)
-
-        Course.objects.create(subject=self.test_dept,
-                              catalog_number=test_catalog_number,
-                              instructor=test_instructor,
-                              section=test_section,
-                              course_number=test_course_number)
-
-        print(Departments.objects.all())
-
-        # when
-        response = self.client.get(reverse('studybuddy:department', args=(self.test_email, self.test_dept,)))
-        print(response.content)
-
-        # then
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, Course.objects.get(subject=self.test_dept))
-
-        pass
+    # OH: mocking Department
+    # def test_passing_a_valid_department_courses_are_displayed(self):
+    #     """
+    #     Add test_dept to Departments Model
+    #     Add courses to Course model
+    #
+    #     Test url that test courses show up
+    #     """
+    #     # given
+    #     test_catalog_number = 1234
+    #     test_instructor = 'testInstructor'
+    #     test_section = 000
+    #     test_course_number = 12345
+    #     Departments.objects.create(dept=self.test_dept)
+    #
+    #     Course.objects.create(subject=self.test_dept,
+    #                           catalog_number=test_catalog_number,
+    #                           instructor=test_instructor,
+    #                           section=test_section,
+    #                           course_number=test_course_number)
+    #
+    #     print(Departments.objects.all())
+    #
+    #     # when
+    #     response = self.client.get(reverse('studybuddy:department', args=(self.test_email, self.test_dept,)))
+    #     print(response.content)
+    #
+    #     # then
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertContains(response, Course.objects.get(subject=self.test_dept))
+    #
 
 class CourseFeedViewTest(TestCase):
     def setUp(self):
@@ -225,42 +225,45 @@ class CourseFeedViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There are currently no posts made for this class")
 
-    @mock.patch('my_func.context')
-    def test_views_displays_feed(self, ):
-        """
-        when there are study buddy post for the course, the feed displays appropriate message
-        """
+    # Source: https://stackoverflow.com/questions/45512749/how-to-mock-a-django-model-object-along-with-its-methods
 
-        # given
-        mock_ = mock.patch.object(
-            alphabet, 'letters', return_value=['a', 'b', 'c']
-        )
-
-        test_topic = "test_topic"
-        test_description = "test_description"
-
-        Departments.objects.create(dept=self.test_subject.upper())
-
-        test_course = Course.objects.create(subject=self.test_subject.upper(),
-                              catalog_number=self.test_catalog_number,
-                              instructor=self.test_instructor,
-                              section=self.test_section,
-                              course_number=self.test_course_number)
-
-        test_user = User.objects.create(email=self.test_email)
-
-        Post.objects.create(course=test_course,
-                            user=test_user,
-                            author=self.test_username,
-                            topic=test_topic,
-                            startDate=timezone.now(),
-                            endDate=timezone.now() + datetime.timedelta(days=7),
-                            description=test_description)
-
-        # when
-        response = self.client.get(
-            reverse('studybuddy:coursefeed', args=(self.test_email, self.test_subject, self.test_course_number)))
-
-        # then
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, test_topic)
+    # OH: mocking course and feed
+    # @mock.patch('studybuddy.models.Course.objects', 'studybuddy.models.Post.objects')
+    # def test_views_displays_feed(self, mock_course, mock_post):
+    #     """
+    #     when there are study buddy post for the course, the feed displays
+    #     """
+    #
+    #     # given
+    #     test_topic = "test_topic"
+    #     test_description = "test_description"
+    #
+    #     Departments.objects.create(dept=self.test_subject.upper())
+    #
+    #     # test_course = Course.objects.create(subject=self.test_subject.upper(),
+    #     #                       catalog_number=self.test_catalog_number,
+    #     #                       instructor=self.test_instructor,
+    #     #                       section=self.test_section,
+    #     #                       course_number=self.test_course_number)
+    #
+    #     test_user = User.objects.create(email=self.test_email)
+    #
+    #     # test_post = Post.objects.create(course=test_course,
+    #     #                     user=test_user,
+    #     #                     author=self.test_username,
+    #     #                     topic=test_topic,
+    #     #                     startDate=timezone.now(),
+    #     #                     endDate=timezone.now() + datetime.timedelta(days=7),
+    #     #                     description=test_description)
+    #
+    #     mock_course.filter.exists.return_value = True
+    #     mock_course.filter.return_value = mock_course #test_course
+    #     mock_post.filter.return_value = mock_post #test_post
+    #
+    #     # when
+    #     response = self.client.get(
+    #         reverse('studybuddy:coursefeed', args=(self.test_email, self.test_subject, self.test_course_number)))
+    #
+    #     # then
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertContains(response, test_topic)

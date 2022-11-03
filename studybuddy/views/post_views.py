@@ -95,13 +95,16 @@ def deletepost(request, email):
         return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number,)))
     # default return to myposts
     else:
-        return HttpResponseRedirect(reverse('studybuddy:getposts', args=(email,)))
+        return HttpResponseRedirect(reverse('studybuddy:viewposts', args=(email,)))
 
-def getposts(request, email):
+def viewposts(request, email):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    template_name = ('post/getposts.html')
+    if request.POST.get('delete'):
+        deletepost(request, email)
+
+    template_name = ('post/viewposts.html')
     email = request.user.email
     user_posts = Post.objects.filter(user=User.objects.get(email=email)).distinct()
 

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google"
+    "allauth.socialaccount.providers.google",
+    "django_nose"
 ]
 
 MIDDLEWARE = [
@@ -75,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mysite.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -152,3 +152,21 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Django testing coverage
+# Source: https://nose.readthedocs.io/en/latest/usage.html#cmdoption-i
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    # '--exclude=(__init__.py)',
+    '--with-coverage',
+    # '--ignore-files=*/__init__.py/*',
+    # '--ignore-files=*/admin.py/*',
+    '--exclude=migrations$',
+    '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
+    '--cover-html',
+    '--cover-tests', # add test files
+    '--cover-min-percentage=75',
+    '--cover-erase' #erase previously ran coverages
+]

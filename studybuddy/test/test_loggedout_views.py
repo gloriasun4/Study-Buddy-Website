@@ -78,14 +78,8 @@ class LoginViewTest(TestCase):
         self.assertContains(response, "Login With Google")
         self.assertTemplateUsed(response, 'index.html')
 
-    def test_deletepost(self):
-        response = self.client.get(reverse('studybuddy:deletepost', args = (self.test_email,)))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Login With Google")
-        self.assertTemplateUsed(response, 'index.html')
-
-    def test_getposts(self):
-        response = self.client.get(reverse('studybuddy:getposts', args = (self.test_email,)))
+    def test_viewposts(self):
+        response = self.client.get(reverse('studybuddy:viewposts', args = (self.test_email,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Login With Google")
         self.assertTemplateUsed(response, 'index.html')
