@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from studybuddy.models import Post, Course, User
+from studybuddy.models import Post, Course, User, EnrolledClass
 
 def makepost(request, email, dept, course_number):
     if request.user.is_anonymous:
@@ -40,6 +40,7 @@ def submitpost(request, email, dept, course_number):
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     topic = request.POST['topic']
+    description = request.POST['description']
 
     # If user chooses to not provide values, then the default values will be used
     if(start_date == ""):
@@ -50,6 +51,9 @@ def submitpost(request, email, dept, course_number):
 
     if(topic == ""):
         topic = Post._meta.get_field('topic').get_default()
+
+    if description == "":
+        description = Post._meta.get_field('description').get_default()
 
     print(request.POST)
 
@@ -62,22 +66,25 @@ def submitpost(request, email, dept, course_number):
                        author= str(request.user),
                        topic=topic,
                        startDate=start_date,
-                       endDate=end_date)
+                       endDate=end_date,
+                       description=description,
+                       post_type='section')
         newPost.save()
     else:
-        for course in Course.objects.filter(subject=course.subject, catalog_number=course.catalog_number):
-            newPost = Post(course=course,
-                           user = User.objects.get(email=email),
+        newPost = Post(course=course,
+                       user = User.objects.get(email=email),
                            # right now if User.objects doesn't have a name it will be empty, so this will ensure we have name?
                            author=str(request.user),
                            topic=topic,
                            startDate=start_date,
-                           endDate=end_date)
-            newPost.save()
+                           endDate=end_date,
+                           description=description,
+                           post_type='course')
+        newPost.save()
 
     return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number)))
 
-def deletepost(request, email):
+def deletepost(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
@@ -95,19 +102,45 @@ def deletepost(request, email):
         return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number,)))
     # default return to myposts
     else:
-        return HttpResponseRedirect(reverse('studybuddy:viewposts', args=(email,)))
+        return HttpResponseRedirect(reverse('studybuddy:viewposts'))
 
-def viewposts(request, email):
+def viewposts(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
     if request.POST.get('delete'):
-        deletepost(request, email)
+        deletepost(request)
 
-    template_name = ('post/viewposts.html')
     email = request.user.email
+    template_name = 'post/viewposts.html'
     user_posts = Post.objects.filter(user=User.objects.get(email=email)).distinct()
+    enrolled_courses = EnrolledClass.objects.filter(student = User.objects.get(email=email))
+    unenrolled_posts_pk = []
 
-    # Make use of enrolled model to display posts
+    for post in user_posts:
+        print(enrolled_courses.filter(course=post.course).exists())
+        if not enrolled_courses.filter(course=post.course).exists():
+            # if the student is enrolled in the class remove it from unenrolled list
+            unenrolled_posts_pk.append(post.pk)
 
-    return render(request, template_name, {'user_posts' : user_posts})
+    unenrolled_posts=None
+    for pk in unenrolled_posts_pk:
+        if unenrolled_posts is None:
+            unenrolled_posts = Post.objects.filter(pk=pk)
+        else:
+            unenrolled_posts = unenrolled_posts | Post.objects.filter(pk=pk)
+
+    if unenrolled_posts is None:
+        context = {
+            'user_posts': user_posts,
+            'enrolled_courses' : enrolled_courses
+        }
+    else:
+        print(unenrolled_posts)
+        context = {
+            'user_posts': user_posts,
+            'enrolled_courses': enrolled_courses,
+            'unenrolled_posts': unenrolled_posts
+        }
+
+    return render(request, template_name, context)

@@ -252,7 +252,7 @@
         <div class="d-flex justify-content-center">
             <div class="sb-form">
                 {% if valid %}
-                <h1>Make a study buddy post for: </h1> <h1>{{ course }}</h1>
+                <h1>Make a study buddy post for: </h1> <h1>{{ course | linebreaksbr }}</h1>
                     <form action="{% url 'studybuddy:submitpost' email dept course.course_number%}" method="post">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
@@ -266,10 +266,11 @@
                       <label for="start_date">Start Date:</label>
                       <input type="date" id="start_date" name="start_date" value={{start_date}}> &nbsp &nbsp
                       <label for="end_date">End Date:</label>
-                      <input type="date" id="end_date" name="end_date" value={{end_date}}><br><br>
+                      <input type="date" id="end_date" name="end_date" value={{end_date}}>
+                      <span class="firstSpan"> (i) <span class="secondSpan">The default dates will keep the post open for a week from today</span></span><br><br>
 
-                      <label for="details">Details:</label>
-                      <textarea type="text" id="details" name="details" placeholder = "message me if you would like to study together"></textarea><br><br>
+                      <label for="description">Description:</label>
+                      <textarea type="text" id="description" name="description" placeholder = "message me if you would like to study together" value=description></textarea><br><br>
                       <input type="submit" value="Submit Post">
                     </form>
                 {% else %}

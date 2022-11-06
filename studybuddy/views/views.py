@@ -151,12 +151,22 @@ def coursefeed (request, email, dept, course_number):
         return render(request, template_name="index.html")
 
     if request.POST.get('delete'):
-        post_views.deletepost(request, email)
+        post_views.deletepost(request)
+
+    '''
+    filter through 2 things to find all posts:
+    1. course_number=course_number (this will fidn section specific posts)
+    2. sibject=subject, catalog_number=catalog_number, post_Type=course (this finds the course posts)
+    3. combine the above 2 posts to display
+    '''
 
     if Course.objects.filter(course_number = course_number).exists():
         course = Course.objects.get(course_number=course_number)
         Post.objects.filter(endDate__lt=timezone.now()).delete()
-        post_for_this_class = Post.objects.filter(course=course)
+        post_for_this_class = Post.objects.filter(course=course) #this will find posts that are related to this specific section only
+
+        for catalog_course in Course.objects.filter(subject=course.subject, catalog_number=course.catalog_number):
+            post_for_this_class = post_for_this_class | Post.objects.filter(course=catalog_course, post_type='course')
 
         context = {
             'dept' : dept.upper(),
@@ -169,7 +179,6 @@ def coursefeed (request, email, dept, course_number):
         context = {
             'dept': dept.upper(),
             'course': course_number,
-
         }
 
     return render(request, template_name, context)

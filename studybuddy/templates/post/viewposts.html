@@ -212,16 +212,32 @@
           visibility: visible;
         }
 
-        {% comment %} ul#nav li {
-          display:inline;
+        /* Style the button that is used to open and close the collapsible content */
+        .collapsible {
+          background-color: #aaa6e2;
+          color: #444;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
         }
 
-        li {
-          border: 1px solid black;
-          padding: 10px;
-          border-radius: 5px;
-          text-align : center;
-        } {% endcomment %}
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .collapsible:hover {
+          background-color: #aaa6e2;
+        }
+
+        /* Style the collapsible content. Note: hidden by default */
+        .content {
+          padding: 0 18px;
+          background-color: rgba(255, 255, 255, 0.5);
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+        }
     </style>
 </head>
 
@@ -252,34 +268,96 @@
                 <div class="wrapper">
                     <h1>My Posts</h1>
                 </div>
+                {% if enrolled_courses %}
+                {% for enrolled_course in enrolled_courses %}
                 <div class="wrapper">
-                    {% if user_posts %}
-                    <ul style="list-style-type: none">
-                        {% for post in user_posts %}
+                    <div class="dropdown">
+                        <button type="button" class="collapsible">{{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}</button>
+                        <div class="content">
+                          {% for post in user_posts %}
+                            {% if post.course.course_number == enrolled_course.course.course_number %}
+                                <li>
+                                    {{ post | linebreaksbr }}
+                                    <form action="" method = "post">
+                                    {% csrf_token %}
+                                    <!-- link to maybe some pop up to show post + post.description -->
+                                    <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
+                                    <span class="firstSpan">
+                                        <button class="btn btn-lg">View Description</button>
+                                    <span class="secondSpan">{{ post.description }}</span></span>
+                                        <input type="hidden" name="delete_source" value="get_posts">
+                                        <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                        <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
+                                    </form>
+                                </li>
+                              {% endif %}
+                            <br>
+                        {% endfor %}
+                            {% comment %}
+                                Showing them they don't have a course in specified class???
+                                {% if has_post == False %}
+                                    <p>You have not made any posts for this class</p>
+                                {% endif %}
+                            {% endcomment %}
+                          </div>
+                        </div>
+                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email enrolled_course.course.subject enrolled_course.course.course_number%}">
+                        <a href="{% url 'studybuddy:coursefeed' user.email enrolled_course.course.subject enrolled_course.course.course_number%}">
+                            View Course Feed
+                        </a>
+                    </button>
+                </div>
+                {% endfor %}
+                {% if unenrolled_posts %}
+                <div class="wrapper">
+                    <div class="dropdown">
+                        <button type="button" class="collapsible">
+                            Courses you aren't enrolled in, but made posts for
+                        </button>
+                        <div class="content">
+                        {% for post in unenrolled_posts %}
                             <li>
                                 {{ post | linebreaksbr }}
                                 <form action="" method = "post">
-                                {% csrf_token %}
-                                <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email post.course.subject post.course.course_number%}">Course Feed</button>
-                                <!-- link to maybe some pop up to show post + post.description -->
-                                <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
-                                <span class="firstSpan">
-                                    <button class="btn btn-lg">View Description</button>
-                                <span class="secondSpan">{{ post.description }}</span></span>
-                                    <input type="hidden" name="delete_source" value="get_posts">
-                                    <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
+                                    {% csrf_token %}
+                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email post.course.subject post.course.catalog_number%}">
+                                        View Course Feed
+                                    </button>
+                                    <span class="firstSpan">
+                                        <button class="btn btn-lg">View Description</button>
+                                    <span class="secondSpan">{{ post.description }}</span></span>
+                                        <input type="hidden" name="delete_source" value="get_posts">
+                                        <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                        <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
                                 </form>
                             </li>
-                            <br>
                         {% endfor %}
-                    </ul>
-                    {% else %}
-                        <p>You currently have not made any posts to look for a study buddy</p>
-                    {% endif %}
+                        </div>
+                    </div>
                 </div>
+                {% endif %}
+                {% else %}
+                    <p>You have not made any posts to find a study buddy and have not enrolled in any classes</p>
+                {% endif %}
             </div>
         </div>
+
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                }
+              });
+            }
+        </script>
 
     <footer class="footer-container">
         <div class="container">

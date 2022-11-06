@@ -24,7 +24,7 @@ urlpatterns = [
 
     path('<str:email>/<str:dept>/<int:course_number>/makepost', post_views.makepost, name ='makepost'),
     path('<str:email>/<str:dept>/<int:course_number>/submitpost', post_views.submitpost, name ='submitpost'),
-    path('<str:email>/viewpost', post_views.viewposts, name='viewposts'), #we can probably change this to be my courses?
+    path('viewpost/here', post_views.viewposts, name='viewposts'),  # we need to fix this after updating email
 
     path('<str:email>/<str:dept>/<int:course_number>/enroll', views.enrollcourse, name = 'enroll'),
     path('<str:email>/<str:dept>/<int:course_number>/updatecourseload', views.updatecourseload, name = 'ucl'),

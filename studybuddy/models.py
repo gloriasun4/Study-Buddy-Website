@@ -77,6 +77,7 @@ class Post(models.Model):
     startDate = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     endDate = models.DateField(default=(timezone.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d"))
     description = models.TextField(default="No description was provided by the author of this post")
+    post_type = models.TextField(default="section")
 
     def was_published_recently(self):
         now = timezone.now()
