@@ -46,9 +46,10 @@ class Course(models.Model):
     instructor = models.CharField(max_length = 30)
     section = models.CharField(max_length = 4)
     course_number = models.CharField(max_length = 10)
+    description = models.TextField(default="")
 
     class Meta:
-        unique_together = ["subject", "catalog_number", "instructor", "section", "course_number"]
+        unique_together = ["subject", "catalog_number", "instructor", "section", "course_number", "description"]
 
     def __str__(self):
         course_level = self.subject + self.catalog_number
@@ -58,7 +59,7 @@ class Course(models.Model):
             inst = self.instructor
         instructor = "Instructor: " + inst
         section = "(Section: " + self.section + ")"
-        return course_level + " \n " + instructor + " \n " + section
+        return  course_level + ": " + self.description + " \n " + instructor + " \n " + section
 
 class Post(models.Model):
     """

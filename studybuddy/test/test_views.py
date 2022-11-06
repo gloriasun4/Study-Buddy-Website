@@ -18,10 +18,13 @@ class HomepageViewTest(TestCase):
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
         self.client.login(username=self.test_username, password=self.test_password)
 
-    def test_after_login_redirect_to_homepage(self):
+    @mock.patch('studybuddy.models.User.objects')
+    def test_after_login_redirect_to_homepage(self, mock_user):
         """
         after user has successfully done google login, they will be redirected to the homepage
         """
+        mock_user.filter.exists.return_value = True
+
         response = self.client.get('/studybuddy/' + self.test_email,)
         self.assertEqual(response.status_code, 301)
 
@@ -48,7 +51,7 @@ class HomepageViewTest(TestCase):
         """
         response = self.client.get(reverse('studybuddy:index', args = (self.test_email, )))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'homepage.html')
+        self.assertTemplateUsed(response, 'homepage2.html')
 
 class AllDepartmentViewTest(TestCase):
     def setUp(self):
@@ -135,7 +138,8 @@ class DepartmentViewTest(TestCase):
         pass
 
     # OH: mocking Department
-    # def test_passing_a_valid_department_courses_are_displayed(self):
+    # @mock.patch('studybuddy.models.Departments.objects')
+    # def test_passing_a_valid_department_courses_are_displayed(self, mock_departments):
     #     """
     #     Add test_dept to Departments Model
     #     Add courses to Course model
@@ -147,6 +151,7 @@ class DepartmentViewTest(TestCase):
     #     test_instructor = 'testInstructor'
     #     test_section = 000
     #     test_course_number = 12345
+    #
     #     Departments.objects.create(dept=self.test_dept)
     #
     #     Course.objects.create(subject=self.test_dept,
@@ -164,7 +169,7 @@ class DepartmentViewTest(TestCase):
     #     # then
     #     self.assertEqual(response.status_code, 200)
     #     self.assertContains(response, Course.objects.get(subject=self.test_dept))
-    #
+
 
 class CourseFeedViewTest(TestCase):
     def setUp(self):

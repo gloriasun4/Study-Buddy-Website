@@ -13,13 +13,16 @@ from studybuddy.models import User, Departments, Course, Post, EnrolledClass, Ro
 #     template_name = 'homepage.html'
 
 def index(request, email):
-    template_name = 'homepage2.html'
+    if request.user.is_anonymous or not User.objects.filter(email=request.user.email).exists():
+        return render(request, template_name="index.html")
+    else:
+        template_name = 'homepage2.html'
 
-    context = {
-            'student': User.objects.get(email=request.user.email),
-    }
+        context = {
+                'student': User.objects.get(email=request.user.email),
+        }
 
-    return render(request, template_name, context)
+        return render(request, template_name, context)
 
 def chat(request, email):
     return render(request, 'studybuddy/chat.html')
@@ -133,13 +136,15 @@ def department(request, email, dept):
                           catalog_number = current_class.get('catalog_number'),
                           instructor = current_class.get('instructor').get('name'),
                           section = current_class.get('course_section'),
-                          course_number = current_class.get('course_number')).exists():
+                          course_number = current_class.get('course_number'),
+                          description = current_class.get('description')).exists():
 
             newClass = Course(subject=dept,
                               catalog_number=current_class.get('catalog_number'),
                               instructor=current_class.get('instructor').get('name'),
                               section=current_class.get('course_section'),
-                              course_number=current_class.get('course_number'))
+                              course_number=current_class.get('course_number'),
+                              description = current_class.get('description'))
             newClass.save()
 
     return render(request, template_name, {'department_list' : Course.objects.filter(subject=dept), 'dept' : dept})

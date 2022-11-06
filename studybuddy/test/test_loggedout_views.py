@@ -16,7 +16,7 @@ class LoginViewTest(TestCase):
         response = self.client.get(reverse('studybuddy:index', args = (self.test_email,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Login With Google")
-        self.assertTemplateUsed(response, 'homepage.html')
+        self.assertTemplateUsed(response, 'index.html')
 
     def test_account(self):
         response = self.client.get(reverse('studybuddy:account', args = (self.test_email,)))
@@ -79,7 +79,7 @@ class LoginViewTest(TestCase):
         self.assertTemplateUsed(response, 'index.html')
 
     def test_viewposts(self):
-        response = self.client.get(reverse('studybuddy:viewposts', args = (self.test_email,)))
+        response = self.client.get(reverse('studybuddy:viewposts'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Login With Google")
         self.assertTemplateUsed(response, 'index.html')
