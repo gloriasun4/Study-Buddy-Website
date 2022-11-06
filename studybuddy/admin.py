@@ -4,6 +4,7 @@ from django.contrib import admin
 #ev
 
 
-from .models import User
+from .models import User, Room
 
 admin.site.register(User)
+admin.site.register(Room)

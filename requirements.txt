@@ -9,3 +9,10 @@ django-heroku
 
 #all-auth for google login
 django-allauth
+
+# run coverage tests
+django_nose
+coverage
+
+# for chat rooms
+channels==4.0.0

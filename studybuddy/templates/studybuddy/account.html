@@ -17,87 +17,87 @@
                 background-color: rgba(255, 255, 255, 0.3);
                 color: #636363;
             }
-    
+
             .navbar-brand {
                 margin-left: 16px;
                 font-size: 28px;
                 color: #464646;
             }
-    
+
             .navbar-toggler {
                 color: #636363;
             }
-    
+
             .nav-link {
                 text-align: right;
                 color: #636363;
             }
-    
+
             footer {
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
                 color: #636363;
             }
-    
+
             @media only screen and (max-width: 768px) {
-    
+
                 /* For mobile phones and tablets: */
                 [class*="col-"] {
                     width: 100%;
                 }
             }
-    
+
             @media only screen and (min-width: 768px) {
                 .col-1 {
                     width: 8.33%;
                 }
-    
+
                 .col-2 {
                     width: 16.66%;
                 }
-    
+
                 .col-3 {
                     width: 25%;
                 }
-    
+
                 .col-4 {
                     width: 33.33%;
                 }
-    
+
                 .col-5 {
                     width: 41.66%;
                 }
-    
+
                 .col-6 {
                     width: 50%;
                 }
-    
+
                 .col-7 {
                     width: 58.33%;
                 }
-    
+
                 .col-8 {
                     width: 66.66%;
                 }
-    
+
                 .col-9 {
                     width: 75%;
                 }
-    
+
                 .col-10 {
                     width: 83.33%;
                 }
-    
+
                 .col-11 {
                     width: 91.66%;
                 }
-    
+
                 .col-12 {
                     width: 100%;
                 }
             }
-    
+
             body {
                 font-family: 'Orelega One';
                 font-size: 22px;
@@ -175,7 +175,7 @@
                 font-weight: 600;
                 margin-top: 10%;
             }
-            
+
             .profile-work a{
                 text-decoration: none;
                 color: #495057;
@@ -203,7 +203,7 @@
                   color: white;
                   border-radius: 12px;
               }
-          
+
               .myForm .btn:hover {
                 font-size: 22px;
                   margin-top: 10px;
@@ -272,18 +272,24 @@
                     <form method="get">
                       <button class="btn btn-lg" type="submit" formaction="{% url 'studybuddy:editAccount' user.email%}">
                         <a>Edit Profile</a></button>
-                    </form> 
+                    </form>
                 </div>
             </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
                     <p><h4>Courses looking for..</h4></p>
-                    <a href="">CS 3240</a><br/>
-                    <a href="">STS 2500</a><br/>
-                    <a href="">APMA 3100</a><br/>
-                    <a href="">ECON 3030</a><br/>
-                    <a href="">CHEM 2420</a><br/>
+                    {% if student.enrolledclass_set.all %}
+                        {% for class in student.enrolledclass_set.all %}
+                            <li>
+                                <a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">
+                                    {{ class.course.subject }} {{ class.course.catalog_number }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">You are currently not enrolled in any classes </p>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8">
@@ -337,9 +343,23 @@
                 </div>
             </div>
         </div>
-    </form>           
+    </form>
 </div>
 
+<p>Friends: </p>
+{% for friend in Friends.all %}
+<li><a href="/studybuddy/{{friend.email}}/account/">{{ friend.email }}</a></li>
+{% endfor %}
+<p>Friend Requests:</p>
+{% for friend_request in all_friend_requests %}
+<h1>{{friend_request.from_user}}
+  <a href="/accept_friend_request/{{friend_request.id}}/">
+    accept friend request
+  </a>
+</h1>
+{% endfor %}
+
+  <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
   <!--check if in model
       if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
       <footer class="footer-container">

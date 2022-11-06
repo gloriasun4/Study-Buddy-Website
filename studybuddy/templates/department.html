@@ -18,87 +18,87 @@
                 background-color: rgba(255, 255, 255, 0.3);
                 color: #636363;
             }
-    
+
             .navbar-brand {
                 margin-left: 16px;
                 font-size: 28px;
                 color: #464646;
             }
-    
+
             .navbar-toggler {
                 color: #636363;
             }
-    
+
             .nav-link {
                 text-align: right;
                 color: #636363;
             }
-    
+
             footer {
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
                 color: #636363;
             }
-    
+
             @media only screen and (max-width: 768px) {
-    
+
                 /* For mobile phones and tablets: */
                 [class*="col-"] {
                     width: 100%;
                 }
             }
-    
+
             @media only screen and (min-width: 768px) {
                 .col-1 {
                     width: 8.33%;
                 }
-    
+
                 .col-2 {
                     width: 16.66%;
                 }
-    
+
                 .col-3 {
                     width: 25%;
                 }
-    
+
                 .col-4 {
                     width: 33.33%;
                 }
-    
+
                 .col-5 {
                     width: 41.66%;
                 }
-    
+
                 .col-6 {
                     width: 50%;
                 }
-    
+
                 .col-7 {
                     width: 58.33%;
                 }
-    
+
                 .col-8 {
                     width: 66.66%;
                 }
-    
+
                 .col-9 {
                     width: 75%;
                 }
-    
+
                 .col-10 {
                     width: 83.33%;
                 }
-    
+
                 .col-11 {
                     width: 91.66%;
                 }
-    
+
                 .col-12 {
                     width: 100%;
                 }
             }
-    
+
             body {
                 font-family: 'Orelega One';
                 font-size: 22px;
@@ -120,7 +120,7 @@
                 position: relative;
                 text-align: center;
             }
-    
+
             .sb-form form {
                 border-radius: 3px;
                 background-color: rgba(255, 255, 255, 0.5);
@@ -130,19 +130,19 @@
                 padding-bottom: 12px;
                 border-radius: 25px;
             }
-    
+
             .sb-form .form-group {
                 margin-bottom: 20px;
             }
-    
+
             .sb-form .row div:first-child {
                 padding-right: 10px;
             }
-    
+
             .sb-form .row div:last-child {
                 padding-left: 10px;
             }
-    
+
             .text-center {
                 color: #636363;
             }
@@ -158,7 +158,7 @@
                   border-radius: 12px;
                   margin-bottom: 10px;
               }
-          
+
               .sb-form .btn:hover {
                 font-size: 22px;
                   {% comment %} margin-top: 10px; {% endcomment %}
@@ -180,7 +180,7 @@
                   color: white;
                   border-radius: 12px;
               }
-          
+
               .myForm .btn:hover {
                 font-size: 22px;
                   margin-top: 10px;
@@ -191,10 +191,45 @@
                   color: white;
                   border-radius: 12px;
               }
-        </style>
-    </head>
 
-    {% if user.is_authenticated %}
+               #myInput {
+                  background-image: url('/css/searchicon.png');
+                  background-position: 10px 12px;
+                  background-repeat: no-repeat;
+                  width: 100%;
+                  font-size: 16px;
+                  padding: 12px 20px 12px 40px;
+                  border: 1px solid #ddd;
+                  margin-bottom: 12px;
+                }
+
+                #myUL {
+                  list-style-type: none;
+                  padding: 0;
+                  margin: 0;
+                }
+
+                #myUL li a {
+                  border: 1px solid #ddd;
+                  margin-top: -1px; /* Prevent double borders */
+                  background: #a6e2c8;
+                  padding: 12px;
+                  text-decoration: none;
+                  font-size: 16px;
+                  font-weight: bold;
+                  color: white;
+                  display: block;
+                  border-radius: 12px;
+                  min-width: 140px;
+                  outline: none !important;
+                }
+
+                #myUL li a:hover:not(.header) {
+                  background-color: #65c5c0;
+                }
+            </style>
+        </head>
+
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
@@ -217,23 +252,20 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="sb-form">
-            <form method="get">
+            <form>
               <h3>Choose the class you would like to find a study buddy in</h3>
               <div class="myForm">
-                {% comment %} <form method="get"> {% endcomment %}
-                  <button class="btn btn-lg" type="submit" formaction="{% url 'studybuddy:alldepartments' user.email%}">
-                    <a>Choose another department</a></button>
-            </div>
-              {% if department_list %}
-              <ul class = "courses" style="list-style-type: none">
-              {% for course in department_list %}
-                  <li><a href="{{ course.course_number }}">{{ course }}</a></li>
-                  <br>
-              {% endfor %}
-              </ul>
-          {% else %}
-              <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
-          {% endif %}
+                  {% if department_list %}
+                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses in {{dept}}.." title="Type in a department">
+                    <ul class = "courses" style="list-style-type: none" id="myUL">
+                    {% for course in department_list %}
+                        <li><a href="{{ course.course_number }}/enroll">{{ course | linebreaksbr }}</a></li>
+                    {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
+                  {% endif %}
+              </div>
             </form>
         </div>
     </div>
@@ -245,60 +277,32 @@
         </div>
         <div class="text-center">&copy; Team B-15</div>
       </footer>
+
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        noMatch = document.getElementById("noMatch")
+        let match = false;
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+                match = true;
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+        if(match == false) {
+            noMatch.attr("hidden", false);
+        }
+    }
+    </script>
+
 </body>
 
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-
-</html> 
-{% comment %} </html>
-<!DOCTYPE html>
-{% load socialaccount %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Study Buddy: {{ dept }}</title>
-</head>
-
-<style>
-ul#nav li {
-  display:inline;
-}
-
-li {
-  border: 1px solid black;
-  padding: 10px;
-  width: 100px;
-  border-radius: 5px;
-  text-align : center;
-}
-</style>
-
-{% if user.is_authenticated %}
-<nav class="nav justify-content-center">
-    <ul id="nav" class="list-unstyled">
-       <li><a href="{% url 'studybuddy:alldepartments' user.email%}"> Choose another department </a></li>
-    </ul>
-</nav>
-
-<body>
-<h3>Choose the class/section you would like to find a study buddy in</h3>
-
-{% if department_list %}
-    <ul class = "courses" style="list-style-type: none">
-    {% for course in department_list %}
-        <li><a href="{{ course.course_number }}">{{ course }}</a></li>
-        <br>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
-{% endif %}
-</body>
-
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-
-</html> {% endcomment %}
+</html>

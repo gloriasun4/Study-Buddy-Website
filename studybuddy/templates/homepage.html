@@ -207,8 +207,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' user.email%}">My Posts</a></li>
                         <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="chat"> Chat Room </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -250,18 +252,3 @@
                 - spinner?? for choosing number of study Buddy
                 - etc.........decide main theme & color & app name
 {% endcomment %}
-
-{% comment %} 
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Study Buddy</title>
-</head>
-<body>
-<h1>Welcome to the Study Buddy App!</h1>
-
-<a href="alldepartments">Find a study buddy</a>
-</body>
-</html> {% endcomment %}
