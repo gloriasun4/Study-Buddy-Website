@@ -4,16 +4,25 @@ import requests
 import json
 
 # Create your models here.
-class Room(models.Model):
-    name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
-    
 class User(models.Model):
     email = models.CharField(primary_key=True, max_length=30, default="")
     firstName = models.CharField(max_length=30, default="")
     lastName = models.CharField(max_length=30, default="")
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
+
+class Room(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
+class Message(models.Model):
+    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('date_added',)
 
 class Departments(models.Model):
     dept = models.CharField(max_length = 4)

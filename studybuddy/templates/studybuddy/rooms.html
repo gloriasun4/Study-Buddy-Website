@@ -257,6 +257,9 @@
     </footer>
 </body>
 
+{% block scripts %}
+{% endblock %}
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
