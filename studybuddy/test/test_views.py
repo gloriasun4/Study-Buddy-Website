@@ -45,10 +45,14 @@ class HomepageViewTest(TestCase):
         response = self.client.get(reverse('studybuddy:index', args = (self.test_email,)))
         self.assertEqual(response.status_code, 200)
 
-    def test_view_uses_correct_template(self):
+    @mock.patch('studybuddy.models.User.objects')
+    def test_view_uses_correct_template(self, mock_user):
         """
         homepage view uses the correct template
         """
+        # given
+        mock_user.filter.return_value = mock_user
+
         response = self.client.get(reverse('studybuddy:index', args = (self.test_email, )))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'homepage2.html')
