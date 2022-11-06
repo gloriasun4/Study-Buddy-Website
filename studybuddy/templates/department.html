@@ -11,16 +11,43 @@ ul#nav li {
   display:inline;
 }
 
-li {
-  border: 1px solid black;
-  padding: 10px;
-  width: 100px;
-  border-radius: 5px;
-  text-align : center;
-}
+#myInput {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 12px;
+          background-repeat: no-repeat;
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
+        #myUL {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        #myUL li a {
+          border: 1px solid #ddd;
+          margin-top: -1px; /* Prevent double borders */
+          background: #a6e2c8;
+          padding: 12px;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: bold;
+          color: white;
+          display: block;
+          border-radius: 12px;
+          min-width: 140px;
+          outline: none !important;
+        }
+
+        #myUL li a:hover:not(.header) {
+          background-color: #65c5c0;
+        }
 </style>
 
-{% if user.is_authenticated %}
 <nav class="nav justify-content-center">
     <ul id="nav" class="list-unstyled">
        <li><a href="{% url 'studybuddy:alldepartments' user.email%}"> Choose another department </a></li>
@@ -31,19 +58,41 @@ li {
 <h3>Choose the class/section you would like to find a study buddy in</h3>
 
 {% if department_list %}
-    <ul class = "courses" style="list-style-type: none">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses in {{dept}}.." title="Type in a department">
+    <ul class = "courses" style="list-style-type: none" id="myUL">
     {% for course in department_list %}
-        <li><a href="{{ course.course_number }}/enroll">{{ course }}</a></li>
-        <br>
+        <li><a href="{{ course.course_number }}/enroll">{{ course | linebreaksbr }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No classes are available in {{ dept }} or {{ dept }} does not exist.</p>
 {% endif %}
-</body>
 
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
+    <script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        noMatch = document.getElementById("noMatch")
+        let match = false;
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+                match = true;
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+        if(match == false) {
+            noMatch.attr("hidden", false);
+        }
+    }
+    </script>
+
+</body>
 
 </html>

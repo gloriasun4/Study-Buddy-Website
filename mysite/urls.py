@@ -19,6 +19,9 @@ from . import views
 # implement Google login
 from django.contrib.auth.views import LogoutView
 
+# handler404 = views.handler404
+# handler500 = 'my_app.views.handler500'
+
 urlpatterns = [
     path('studybuddy/', include('studybuddy.urls')),
     path('admin/', admin.site.urls),

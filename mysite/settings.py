@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google"
+    "allauth.socialaccount.providers.google",
+    "django_nose",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -75,7 +77,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mysite.wsgi.application"
+ASGI_APPLICATION = "djangochat.asgi.application"
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        # 'CONFIG': {
+        #     "hosts": [('127.0.0.1', 6379)],
+        # },
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -152,3 +163,16 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Django testing coverage
+# Source: https://nose.readthedocs.io/en/latest/usage.html#cmdoption-i
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-erase', #erase previously ran coverages
+    '--with-coverage', # show coverage report
+    '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
+    # '--cover-html', # maybe add this?
+    '--cover-min-percentage=30', # not sure what our values are yet, still trying to mock models
+]
