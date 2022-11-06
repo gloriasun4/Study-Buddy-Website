@@ -223,22 +223,34 @@ def send_friend_request(request, email, requestee_email):
     from_user = User.objects.get(email__exact=email)
     #print(requestee_email)
     #print(User.objects.all())
-    to_user = User.objects.get(email__exact=requestee_email)
-    if (from_user.email == str(request.user.email)):
-        friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
-        if created:
-            return HttpResponse("friend request sent")
+
+    if (User.objects.filter(email__exact=requestee_email).exists()):
+        to_user = User.objects.filter(email__exact=requestee_email).exists()
+        if (from_user.email == str(request.user.email)):
+            friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
+            if created:
+                return HttpResponse("friend request sent")
+            else:
+                return HttpResponse("friend request was already sent")
         else:
-            return HttpResponse("friend request was already sent")
+            return HttpResponse('Invalid')
     else:
-        return HttpResponse('Invalid')
+        return HttpResponse("This user, " +  requestee_email + " does not exist")
+
+    
+    
 
 @login_required
 def accept_friend_request(request, email, requester_email):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     from_user = User.objects.get(email=requester_email)
     to_user = User.objects.get(email=email)
     #print("to_user.username: " + to_user.username)
     #print("request.user: " + str(request.user))
+    if (Friend_Request.objects.filter(from_user = from_user).count() == 0):
+        return HttpResponse("You have no pending requests from " + requester_email)
     if (to_user.email == str(request.user.email)):
         friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
         friend_request = friend_request_query_set.first()
