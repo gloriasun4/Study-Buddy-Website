@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from .models import Room, Message
 from .models import User, Friend_Request
 from django.contrib.auth.decorators import login_required
 
@@ -18,6 +19,20 @@ class index(generic.TemplateView):
 # def index(request, email):
 #
 #    return render(request, 'studybuddy/home.html')
+
+def chat(request, email):
+    return render(request, 'studybuddy/chat.html')
+
+def rooms(request, email):
+    rooms = Room.objects.all()
+
+    return render(request, 'studybuddy/rooms.html', {'rooms': rooms})
+
+def room(request, email, slug):
+    room = Room.objects.get(slug=slug)
+    messages = Message.objects.filter(room=room)[0:25]
+
+    return render(request, 'studybuddy/room.html', {'room': room, 'messages': messages})
 
 def addAccount(request, email):
     exist = User.objects.filter(email=email).exists()
