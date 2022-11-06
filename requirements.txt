@@ -13,3 +13,6 @@ django-allauth
 # run coverage tests
 django_nose
 coverage
+
+# for chat rooms
+channels
