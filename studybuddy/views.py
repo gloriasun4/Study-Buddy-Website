@@ -8,7 +8,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from .models import User
+from .models import User, Friend_Request
+from django.contrib.auth.decorators import login_required
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
@@ -21,7 +22,7 @@ class index(generic.TemplateView):
 def addAccount(request, email):
     exist = User.objects.filter(email=email).exists()
     if not exist:
-        newAcc = User(email=email)
+        newAcc = User(email=email, username=request.user)
         newAcc.save()
 
     return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
@@ -46,8 +47,9 @@ def account(request, email):
         'FirstName': user.firstName,
         'LastName': user.lastName,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
-
+        'AboutMe': user.blurb,
+        # implementing friends
+        'Friends': user.friends
     }
     return render(request, 'studybuddy/account.html', context)
 
@@ -58,8 +60,10 @@ def EditAccount(request, email):
         'FirstName': user.firstName,
         'LastName': user.lastName,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
-
+        'AboutMe': user.blurb,
+        # implementing friends
+        'Friends': user.friends,
+        'Username': user.username
     }
     return render(request, 'studybuddy/editAccount.html', context)
 
@@ -70,6 +74,7 @@ def UpdateAccount(request, email):
     account.lastName=request.POST['lname']
     account.zoomLink = request.POST['zlink']
     account.blurb = request.POST['blurb']
+    account.username = request.POST['uname']
 
     account.save()
 
@@ -145,3 +150,37 @@ def coursefeed (request, email, dept, course_number):
         }
 
     return render(request, template_name, context)
+
+# implementing friends
+@login_required
+def send_friend_request(request, email, requestee_email):
+    from_user = User.objects.get(email__exact=email)
+    #print(requestee_email)
+    #print(User.objects.all())
+    to_user = User.objects.get(email__exact=requestee_email)
+    if (from_user.username == str(request.user)):
+        friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
+        if created:
+            return HttpResponse("friend request sent")
+        else:
+            return HttpResponse("friend request was already sent")
+    else:
+        return HttpResponse('Invalid')
+
+@login_required
+def accept_friend_request(request, email, requester_email):
+    from_user = User.objects.get(email=requester_email)
+    to_user = User.objects.get(email=email)
+    #print("to_user.username: " + to_user.username)
+    #print("request.user: " + str(request.user))
+    if (to_user.username == str(request.user)):
+        friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
+        friend_request = friend_request_query_set.first()
+        friend_request.to_user.friends.add(friend_request.from_user)
+        print(friend_request.to_user.friends.all())
+        friend_request.from_user.friends.add(friend_request.to_user)
+        print(friend_request.from_user.friends.all())
+        friend_request.delete()
+        return HttpResponse("friend request accepted")
+    else:
+        return HttpResponse('Invalid')
