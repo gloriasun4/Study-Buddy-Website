@@ -101,14 +101,14 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            {% comment %} background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            /* {% comment %} background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1495465798138-718f86d1a4bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1611079829529-fe31a9531295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %} */
             background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
             background-size: cover;
         }
@@ -120,15 +120,15 @@
             margin-bottom: 30px;
             position: relative;
             text-align: center;
-            {% comment %} background: #65c5c0; {% endcomment %}
-            {% comment %} background: #e2a6c0; {% endcomment %}
+            /* {% comment %} background: #65c5c0; {% endcomment %}
+            {% comment %} background: #e2a6c0; {% endcomment %} */
             background: #aaa6e2;
             border-radius: 12px;
         }
           
         .title {
             font-weight: bold;
-            {% comment %} color: #fbfbfb; {% endcomment %}
+            /* {% comment %} color: #fbfbfb; {% endcomment %} */
             color: white;
             animation-name: rightToLeft;
             animation-duration: 6s;
@@ -174,11 +174,11 @@
             font-weight: bold;
             min-width: 140px;
             outline: none !important;
-            {% comment %} background: #65c5c0; {% endcomment %}
+            /* {% comment %} background: #65c5c0; {% endcomment %}
             {% comment %} background: #e2a6c0; {% endcomment %}
-            {% comment %} background: #aaa6e2; {% endcomment %}
+            {% comment %} background: #aaa6e2; {% endcomment %} */
             background: #a6e2c8;
-            {% comment %} background: #c0e2a6; {% endcomment %}
+            /* {% comment %} background: #c0e2a6; {% endcomment %} */
             color: white;
             border-radius: 12px;
         }
@@ -251,6 +251,7 @@
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href=""> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="% url 'studybuddy:chat' user.email%"> Chat Room </a></li> -->
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
