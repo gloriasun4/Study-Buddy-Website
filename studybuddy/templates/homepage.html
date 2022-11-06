@@ -213,6 +213,7 @@
                     <ul class="navbar-nav ms-auto">
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' user.email%}">My Posts</a></li>
                         <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="chat"> Chat Room </a></li>
@@ -259,7 +260,7 @@
                 - etc.........decide main theme & color & app name
 {% endcomment %}
 
-{% comment %} 
+{% comment %}
 </html>
 <!DOCTYPE html>
 <html lang="en">

@@ -9,9 +9,9 @@
 <form action="{% url 'studybuddy:updateAccount' user.email%}" method="post">
   {% csrf_token %}
   <label for="fname">First name:</label>
-  <input type="text" id="fname" name="fname" value={{FirstName}}><br><br>
+  <input type="text" id="fname" name="fname" value="{{FirstName}}"><br><br>
   <label for="lname">Last name:</label>
-  <input type="text" id="lname" name="lname" value={{LastName}}><br><br>
+  <input type="text" id="lname" name="lname" value="{{LastName}}"><br><br>
   <label for="zlink">Zoom Link:</label>
   <input type="url" id="zlink" name="zlink" value={{ZoomLink}}><br><br>
   <label for="blurb">About Me:</label>

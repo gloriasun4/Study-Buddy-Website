@@ -1,0 +1,59 @@
+{% load socialaccount %}
+<html>
+
+<head>
+    {% if enrolled%}
+        <title>Unenroll in {{ course }}</title>
+    {% else %}
+        <title>Enroll in {{ course }}</title>
+    {% endif %}
+</head>
+
+<body>
+<h1>My Study Buddy</h1>
+
+  <a href="{% url 'studybuddy:alldepartments' user.email%}">Back to Departments</a>
+    {% if enrolled%}
+        <p>You are already enrolled in this course. Would you like to remove this course from your schedule?</p>
+        <form action="{% url 'studybuddy:ucl' user.email course.subject course.course_number%}" method="post" >
+        {% csrf_token %}
+        <fieldset align="center">
+
+            <input type="radio" name="choice" id="YesD" value="YesD" >
+            <label for="YesD">Yes, remove this course from my schedule.</label><br>
+
+            <input type="radio" name="choice" id="NoD" value="NoD" >
+            <label for="NoD">No, go back to home page.</label><br>
+
+        </fieldset>
+
+        <div class= "row justify-content-center">
+
+           <input type="submit" value="Continue">
+        </div>
+        </form>
+
+    {% else %}
+        <p>Would you like to enroll in this course?</p>
+        <form action="{% url 'studybuddy:ucl' user.email course.subject course.course_number%}" method="post" >
+        {% csrf_token %}
+        <fieldset align="center">
+
+            <input type="radio" name="choice" id="YesE" value="YesE" >
+            <label for="YesE">Yes, enroll in this course.</label><br>
+
+            <input type="radio" name="choice" id="NoE" value="NoE" >
+            <label for="NoE">No, go back to home page.</label><br>
+
+        </fieldset>
+
+        <div class= "row justify-content-center">
+
+           <input type="submit" value="Continue">
+        </div>
+        </form>
+    {% endif %}
+
+
+</body>
+</html>

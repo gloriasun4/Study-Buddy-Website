@@ -25,6 +25,21 @@
   <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
   <!--check if in model
       if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
+<p></p>
+<h3>My Schedule </h3>
 
+  {% if student.enrolledclass_set.all %}
+                          {% for class in student.enrolledclass_set.all %}
+                            <li><a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">{{ class.course.subject }} {{ class.course.catalog_number }}</a></li>
+<!--                            <a href ="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number% }">-->
+<!--                                <a name="myBtn">{{ class}}</a></button>-->
+
+
+                          {% endfor %}
+                          {% else %}
+                          <p class="text-center">You are currently not enrolled in any classes </p>
+                          {% endif %}
+<p></p>
+<a href="{% url 'studybuddy:alldepartments' user.email%}"> Update Course Schedule</a>
 </body>
 </html>

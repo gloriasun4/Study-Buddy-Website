@@ -1,0 +1,292 @@
+{% load socialaccount %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Team B-15">
+    <meta name="description" content="Study Buddy">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <title>Make Post</title>
+    <style>
+        .navbar {
+            padding-right: 1em;
+            text-align: right;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #636363;
+        }
+
+        .navbar-brand {
+            color: #464646;
+        }
+
+        .navbar-toggler {
+            color: #636363;
+        }
+
+        .nav-link {
+            text-align: right;
+            color: #636363;
+        }
+
+        footer {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-top: auto;
+            color: #636363;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+            /* For mobile phones and tablets: */
+            [class*="col-"] {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            .col-1 {
+                width: 8.33%;
+            }
+
+            .col-2 {
+                width: 16.66%;
+            }
+
+            .col-3 {
+                width: 25%;
+            }
+
+            .col-4 {
+                width: 33.33%;
+            }
+
+            .col-5 {
+                width: 41.66%;
+            }
+
+            .col-6 {
+                width: 50%;
+            }
+
+            .col-7 {
+                width: 58.33%;
+            }
+
+            .col-8 {
+                width: 66.66%;
+            }
+
+            .col-9 {
+                width: 75%;
+            }
+
+            .col-10 {
+                width: 83.33%;
+            }
+
+            .col-11 {
+                width: 91.66%;
+            }
+
+            .col-12 {
+                width: 100%;
+            }
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            max-height: 100%;
+            {% comment %} background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1495465798138-718f86d1a4bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1629196206335-744346ba1331?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1289&q=80") no-repeat center; {% endcomment %}
+            background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
+            background-size: cover;
+        }
+
+        .wrapper {
+            width: 740px;
+            margin: auto;
+            overflow-x: hidden;
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
+            {% comment %} background: #65c5c0; {% endcomment %}
+            {% comment %} background: #e2a6c0; {% endcomment %}
+            background: #aaa6e2;
+            border-radius: 12px;
+        }
+
+        .title {
+            font-weight: bold;
+            {% comment %} color: #fbfbfb; {% endcomment %}
+            color: white;
+            animation-name: rightToLeft;
+            animation-duration: 6s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes rightToLeft {
+            0% {
+              transform: translateX(200px);
+            }
+            100% {
+              transform: translateX(-160px);
+            }
+        }
+
+        .sb-form {
+            width: 800px;
+            float: right;
+            margin-top: 80px;
+            padding: 30px 0;
+            font-size: 15px;
+            position: relative;
+            text-align: center;
+        }
+
+        .sb-form form {
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding-top: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 12px;
+            border-radius: 25px;
+        }
+
+        .sb-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .sb-form .btn {
+            font-size: 16px;
+            font-weight: bold;
+            min-width: 140px;
+            outline: none !important;
+            {% comment %} background: #65c5c0; {% endcomment %}
+            {% comment %} background: #e2a6c0; {% endcomment %}
+            {% comment %} background: #aaa6e2; {% endcomment %}
+            background: #a6e2c8;
+            {% comment %} background: #c0e2a6; {% endcomment %}
+            color: white;
+            border-radius: 12px;
+        }
+
+        .sb-form .row div:first-child {
+            padding-right: 10px;
+        }
+
+        .sb-form .row div:last-child {
+            padding-left: 10px;
+        }
+
+        .text-center {
+            color: #636363;
+        }
+
+        .firstSpan .secondSpan {
+          visibility: hidden;
+          width: 120px;
+          background-color: gray;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+        }
+
+        .firstSpan:hover .secondSpan {
+          visibility: visible;
+        }
+
+        {% comment %} ul#nav li {
+          display:inline;
+        }
+
+        li {
+          border: 1px solid black;
+          padding: 10px;
+          border-radius: 5px;
+          text-align : center;
+        } {% endcomment %}
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ms-auto">
+                        {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
+                        <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="nav justify-content-center">
+
+      </nav>
+        <div class="d-flex justify-content-center">
+            <div class="sb-form">
+                {% if valid %}
+                <h1>Make a study buddy post for: </h1> <h1>{{ course | linebreaksbr }}</h1>
+                    <form action="{% url 'studybuddy:submitpost' email dept course.course_number%}" method="post">
+                      {% csrf_token %}
+                      <label for="topic">Topic:</label>
+                      <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>
+
+                      <label>Post To: </label> &nbsp &nbsp
+                      <input type="radio" id="section" name="post_type" value="section" checked>Only this section
+                      <span class="firstSpan">(?)<span class="secondSpan">This study buddy post will only be displayed for this section</span></span>&nbsp &nbsp
+                      <input type="radio" id="course" name="post_type" value="course">All sections of {{course.subject}}{{course.catalog_number}}
+                      <span class="firstSpan">(?)<span class="secondSpan">This study buddy post will be displayed for all sections of {{course.subject}}{{course.catalog_number}}</span></span><br><br>
+                      <label for="start_date">Start Date:</label>
+                      <input type="date" id="start_date" name="start_date" value={{start_date}}> &nbsp &nbsp
+                      <label for="end_date">End Date:</label>
+                      <input type="date" id="end_date" name="end_date" value={{end_date}}>
+                      <span class="firstSpan"> (i) <span class="secondSpan">The default dates will keep the post open for a week from today</span></span><br><br>
+
+                      <label for="description">Description:</label>
+                      <textarea type="text" id="description" name="description" placeholder = "message me if you would like to study together" value=description></textarea><br><br>
+                      <input type="submit" value="Submit Post">
+                    </form>
+                {% else %}
+                    <h1>This course number {{ course }} in {{ dept }} is not available to make a post</h1>
+                    <p>Note: The department {{ dept }} you are looking for does not exist or course number {{ course }} in {{ dept }} is not a available course.</p>
+                {% endif %}
+        </div>
+    </div>
+    <footer class="footer-container">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+        <div class="text-center">&copy; Team B-15</div>
+    </footer>
+    </div>
+</body>
+
+</html>

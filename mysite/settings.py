@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "django_nose",
     "channels",
 ]
 
@@ -94,9 +95,6 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-        "TEST": {
-            'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
-        }
     }
 }
 
@@ -165,3 +163,16 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Django testing coverage
+# Source: https://nose.readthedocs.io/en/latest/usage.html#cmdoption-i
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-erase', #erase previously ran coverages
+    '--with-coverage', # show coverage report
+    '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
+    # '--cover-html', # maybe add this?
+    '--cover-min-percentage=30', # not sure what our values are yet, still trying to mock models
+]
