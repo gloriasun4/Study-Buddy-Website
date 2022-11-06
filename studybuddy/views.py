@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from .models import User
+from .models import User, Room
 
 class index(generic.TemplateView):
     template_name = 'homepage.html'
@@ -17,6 +17,18 @@ class index(generic.TemplateView):
 # def index(request, email):
 #
 #    return render(request, 'studybuddy/home.html')
+
+def chat(request, email):
+    return render(request, 'studybuddy/chat.html')
+
+def rooms(request, email):
+    rooms = Room.objects.all()
+
+    return render(request, 'studybuddy/rooms.html', {'rooms': rooms})
+
+def room(request, email, slug):
+    room = Room.objects.get(slug=slug)
+    return render(request, 'studybuddy/room.html', {'room': room})
 
 def addAccount(request, email):
     exist = User.objects.filter(email=email).exists()

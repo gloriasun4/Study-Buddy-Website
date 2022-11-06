@@ -1,5 +1,6 @@
 {% load socialaccount %}
-<html>
+
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -101,20 +102,20 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            /* {% comment %} background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            /*
             {% comment %} background: url("https://images.unsplash.com/photo-1495465798138-718f86d1a4bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
+            background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
             {% comment %} background: url("https://images.unsplash.com/photo-1611079829529-fe31a9531295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
             {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %} */
-            background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
             background-size: cover;
         }
 
         .wrapper {
-            width: 740px;
+            width: 640px;
             margin: auto;
             overflow-x: hidden;
             margin-bottom: 30px;
@@ -136,17 +137,17 @@
             animation-iteration-count: infinite;
         }
           
-        @keyframes rightToLeft {
+        /* @keyframes rightToLeft {
             0% {
               transform: translateX(200px);
             }
             100% {
               transform: translateX(-160px);
             }
-        }
+        } */
 
         .sb-form {
-            width: 800px;
+            width: 700px;
             float: right;
             margin-top: 80px;
             padding: 30px 0;
@@ -174,11 +175,11 @@
             font-weight: bold;
             min-width: 140px;
             outline: none !important;
-            /* {% comment %} background: #65c5c0; {% endcomment %}
+            /* {% comment %} background: #65c5c0; {% endcomment %} 
             {% comment %} background: #e2a6c0; {% endcomment %}
             {% comment %} background: #aaa6e2; {% endcomment %} */
-            background: #a6e2c8;
-            /* {% comment %} background: #c0e2a6; {% endcomment %} */
+            background: #a6e2c8; 
+            /* {% comment %} background: #c0e2a6; {% endcomment %}  */
             color: white;
             border-radius: 12px;
         }
@@ -213,37 +214,38 @@
                     <ul class="navbar-nav ms-auto">
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
-                        <li class="nav-item"><a class="nav-link" href=""> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
-                        <!-- <li class="nav-item"><a class="nav-link" href="% url 'studybuddy:chat' user.email%"> Chat Room </a></li> -->
+                        <!-- <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li> -->
+                        <!-- <li class="nav-item"><a class="nav-link" href="chat"> Back to Chat </a></li> -->
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="d-flex justify-content-center">
-
             <div class="sb-form">
-                <h3>Choose the department of the class you would like to find a study buddy in</h3>
-                <form>
-                    {% if departments_list %}
-                    <ul style="list-style-type: none">
-                    {% for department in departments_list %}
-                        {% if user.is_authenticated %}
-                            <li><a href="/studybuddy/{{user.email}}/{{ department.dept }}">{{ department.dept }}</a></li>
-                        {% else %}
-                            <a href="{% provider_login_url 'google' %}">Login With Google</a>
-                        {% endif %}
-                        <br>
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No departments are available.</p>
-                {% endif %}
-                </form>
+                <form method="get">
+                    <div class="wrapper">
+                        <h1 class="title">Rooms</h1>
+                        
+                      </div>
+                      <!-- <div class="form-group">
+                        <button class="btn btn-lg" type="submit" formaction="alldepartments">
+                        <a name="myBtn">Find a study buddy</a></button>
+                      </div> -->
+                </form> 
+                {% for room in rooms %}
+                <div class="w-full lg:w-1/4 px-3 py-3">
+                    <div class="p-4 bg-white shadow rounded-xl text-center">
+                        <h2 class="mb-5 text-2xl font-semibold">{{ room.name }}</h2>
+                        <button class="btn btn-lg">
+                            <a href="{% url 'studybuddy:room' user.email room.slug %}" name="myBtn">Join</a>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
-
 
     </div>
     <footer class="footer-container">
@@ -254,25 +256,9 @@
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 </body>
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
+
 </html>
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Find Study Buddy</title>
-</head>
-
-<style>
-li {
-  border: 1px solid black;
-  padding: 10px;
-  width: 50px;
-  border-radius: 5px;
-  text-align: center;
-}
-</style>
-</html> {% endcomment %}

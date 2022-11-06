@@ -4,6 +4,10 @@ import requests
 import json
 
 # Create your models here.
+class Room(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    
 class User(models.Model):
     email = models.CharField(primary_key=True, max_length=30, default="")
     firstName = models.CharField(max_length=30, default="")
