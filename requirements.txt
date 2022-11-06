@@ -1,4 +1,4 @@
-# Django is needed to run Django
+ngo is needed to run Django
 Django
 
 # gunicorn is needed by Heroku to launch the web application
@@ -15,4 +15,4 @@ django_nose
 coverage
 
 # for chat rooms
-channels
+channels==4.0.0
