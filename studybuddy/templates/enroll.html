@@ -12,7 +12,6 @@
 <body>
 <h1>My Study Buddy</h1>
 
-<p>{{enrolled}}</p>
   <a href="{% url 'studybuddy:alldepartments' user.email%}">Back to Departments</a>
     {% if enrolled%}
         <p>You are already enrolled in this course. Would you like to remove this course from your schedule?</p>
