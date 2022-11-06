@@ -43,8 +43,11 @@ def account(request, email):
     user = User.objects.get(email__exact=email)
     context = {
         'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
+        # 'FirstName': user.firstName,
+        # 'LastName': user.lastName,
+        'UserName': user.username,
+        'Name': user.name,
+        'Major': user.major,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb
 
@@ -55,8 +58,11 @@ def EditAccount(request, email):
     user = User.objects.get(email=email)
     context = {
         'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
+        # 'FirstName': user.firstName,
+        # 'LastName': user.lastName,
+        'UserName': user.username,
+        'Name': user.name,
+        'Major': user.major,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb
 
@@ -65,9 +71,11 @@ def EditAccount(request, email):
 
 def UpdateAccount(request, email):
     account = User.objects.get(email__exact=email)
-
-    account.firstName=request.POST['fname']
-    account.lastName=request.POST['lname']
+    # account.firstName=request.POST['fname']
+    # account.lastName=request.POST['lname']
+    account.username=request.POST['username']
+    account.name=request.POST['name']
+    account.major=request.POST['major']
     account.zoomLink = request.POST['zlink']
     account.blurb = request.POST['blurb']
 
