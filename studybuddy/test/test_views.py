@@ -128,3 +128,26 @@ class DepartmentViewTest(TestCase):
         response = self.client.get(reverse('studybuddy:department', args = (self.test_email, self.test_dept,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'department.html')
+
+
+class EnrollViewTest(TestCase):
+    def setUp(self):
+        self.test_dept = 'testDept'
+        self.test_username = 'testName'
+        self.test_password = 'testPassword'
+        self.test_email = 'test2@email.com'
+        self.test_subject = 'testDept'
+        self.test_catalog_number = 1234
+        self.test_instructor = 'testInstructor'
+        self.test_section = 000
+        self.test_course_number = 12345
+        # mock user login
+        self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
+        self.client.login(username=self.test_username, password=self.test_password)
+    def test_view_uses_correct_template(self):
+        """
+        department view uses the correct template
+        """
+        response = self.client.get(reverse('studybuddy:enroll', args = (self.test_email, self.test_dept, self.test_course_number)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'enroll.html')
