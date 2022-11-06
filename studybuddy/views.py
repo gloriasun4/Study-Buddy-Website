@@ -158,7 +158,7 @@ def send_friend_request(request, email, requestee_email):
     #print(requestee_email)
     #print(User.objects.all())
     to_user = User.objects.get(email__exact=requestee_email)
-    if (from_user.username == str(request.user)):
+    if (from_user.email == str(request.user.email)):
         friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
         if created:
             return HttpResponse("friend request sent")
@@ -173,7 +173,7 @@ def accept_friend_request(request, email, requester_email):
     to_user = User.objects.get(email=email)
     #print("to_user.username: " + to_user.username)
     #print("request.user: " + str(request.user))
-    if (to_user.username == str(request.user)):
+    if (to_user.email == str(request.user.email)):
         friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
         friend_request = friend_request_query_set.first()
         friend_request.to_user.friends.add(friend_request.from_user)
