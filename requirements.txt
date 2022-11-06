@@ -1,4 +1,4 @@
-ngo is needed to run Django
+# Django is needed to run Django
 Django
 
 # gunicorn is needed by Heroku to launch the web application
