@@ -189,6 +189,9 @@ def coursefeed (request, email, dept, course_number):
     return render(request, template_name, context)
 
 def enrollcourse (request, email, dept, course_number):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     template_name = 'enroll.html'
 
     # print(Departments.objects.filter(dept))
@@ -207,7 +210,11 @@ def enrollcourse (request, email, dept, course_number):
         }
 
     return render(request, template_name, context)
+
 def updatecourseload(request, email, dept, course_number):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     account = User.objects.get(email__exact=email)
     course = Course.objects.get(course_number=course_number)
 

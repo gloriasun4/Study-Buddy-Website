@@ -276,3 +276,41 @@ class CourseFeedViewTest(TestCase):
     #     # then
     #     self.assertEqual(response.status_code, 200)
     #     self.assertContains(response, test_topic)
+
+
+class EnrollViewTest(TestCase):
+    def setUp(self):
+        self.test_dept = 'testDept'
+        self.test_username = 'testName'
+        self.test_password = 'testPassword'
+        self.test_email = 'test2@email.com'
+        self.test_subject = 'testDept'
+        self.test_catalog_number = 1234
+        self.test_instructor = 'testInstructor'
+        self.test_section = 000
+        self.test_course_number = 12345
+
+        Course.objects.create(subject=self.test_dept,
+                              catalog_number=self.test_catalog_number,
+                              instructor=self.test_instructor,
+                              section=self.test_section,
+                              course_number=self.test_course_number)
+
+        # mock user login
+        self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
+        self.client.login(username=self.test_username, password=self.test_password)
+
+    @mock.patch('studybuddy.models.User.objects')
+    def test_view_uses_correct_template(self, mock_user):
+        """
+        enroll view uses the correct template
+        """
+        # given
+        mock_user.get.return_value = mock_user
+
+        # when
+        response = self.client.get(reverse('studybuddy:enroll', args = (self.test_email, self.test_dept, self.test_course_number)))
+
+        # then
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'enroll.html')
