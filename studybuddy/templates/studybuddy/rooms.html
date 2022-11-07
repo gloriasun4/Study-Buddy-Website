@@ -198,13 +198,11 @@
     </style>
 </head>
 
-{% if user.is_authenticated %}
-
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' %}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -259,9 +257,5 @@
 
 {% block scripts %}
 {% endblock %}
-
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
 
 </html>
