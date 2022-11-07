@@ -25,8 +25,8 @@ class HomepageViewTest(TestCase):
         """
         mock_user.filter.exists.return_value = True
 
-        response = self.client.get('/studybuddy/' + self.test_email,)
-        self.assertEqual(response.status_code, 301)
+        response = self.client.get('/studybuddy/')
+        self.assertEqual(response.status_code, 200)
 
     def test_view_url_exists_at_desired_location(self):
         """
@@ -34,15 +34,14 @@ class HomepageViewTest(TestCase):
 
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
-        response = self.client.get('/studybuddy/' + self.test_email, follow=True)
+        response = self.client.get('/studybuddy/', follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
         """
         homepage view is accessible through its name
-        301 because after login homepage is redirected
         """
-        response = self.client.get(reverse('studybuddy:index', args = (self.test_email,)))
+        response = self.client.get(reverse('studybuddy:index'))
         self.assertEqual(response.status_code, 200)
 
     @mock.patch('studybuddy.models.User.objects')
@@ -53,7 +52,7 @@ class HomepageViewTest(TestCase):
         # given
         mock_user.filter.return_value = mock_user
 
-        response = self.client.get(reverse('studybuddy:index', args = (self.test_email, )))
+        response = self.client.get(reverse('studybuddy:index'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'homepage.html')
 
@@ -78,7 +77,7 @@ class AllDepartmentViewTest(TestCase):
         """
         alldepartments view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:alldepartments', args = (self.test_email, )))
+        response = self.client.get(reverse('studybuddy:alldepartments'))
 
         self.assertEqual(response.status_code, 200)
 
@@ -86,7 +85,7 @@ class AllDepartmentViewTest(TestCase):
         """
         alldepartments view uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:alldepartments', args = (self.test_email, )))
+        response = self.client.get(reverse('studybuddy:alldepartments'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'alldepartments.html')
 
@@ -112,14 +111,14 @@ class DepartmentViewTest(TestCase):
         """
         department view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:department', args = (self.test_email, self.test_dept,)))
+        response = self.client.get(reverse('studybuddy:department', args = (self.test_dept,)))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
         """
         department view uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:department', args = (self.test_email, self.test_dept,)))
+        response = self.client.get(reverse('studybuddy:department', args = (self.test_dept,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'department.html')
 
@@ -128,7 +127,7 @@ class DepartmentViewTest(TestCase):
         If no courses exist, an appropriate message is displayed.
         **this most likely will occur if the department id is incorrect
         """
-        response = self.client.get(reverse('studybuddy:department', args = (self.test_email, self.test_dept,)))
+        response = self.client.get(reverse('studybuddy:department', args = (self.test_dept,)))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No classes are available in " + self.test_dept.upper() + " or " +
@@ -167,7 +166,7 @@ class DepartmentViewTest(TestCase):
     #     print(Departments.objects.all())
     #
     #     # when
-    #     response = self.client.get(reverse('studybuddy:department', args=(self.test_email, self.test_dept,)))
+    #     response = self.client.get(reverse('studybuddy:department', args=(self.test_dept,)))
     #     print(response.content)
     #
     #     # then
@@ -201,7 +200,7 @@ class CourseFeedViewTest(TestCase):
         """
         coursefeed view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:department', args = (self.test_email, self.test_subject,)))
+        response = self.client.get(reverse('studybuddy:department', args = (self.test_subject,)))
         self.assertEqual(response.status_code, 200)
 
     def test_invalid_course_id(self):
@@ -209,7 +208,7 @@ class CourseFeedViewTest(TestCase):
         If a course_number is not in the api, an appropiate message is displayed
         """
         response = self.client.get(
-            reverse('studybuddy:coursefeed', args = (self.test_email, self.test_subject, self.test_course_number)))
+            reverse('studybuddy:coursefeed', args = (self.test_subject, self.test_course_number)))
         self.assertEqual(response.status_code, 200)
 
         self.assertContains(response, "The department " + self.test_subject.upper() + " you are looking does not exist "
@@ -221,7 +220,7 @@ class CourseFeedViewTest(TestCase):
         coursefeed view uses the correct template
         """
         response = self.client.get(
-            reverse('studybuddy:coursefeed', args = (self.test_email, self.test_subject, self.test_course_number)))
+            reverse('studybuddy:coursefeed', args = (self.test_subject, self.test_course_number)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'course_feed.html')
 
@@ -230,7 +229,7 @@ class CourseFeedViewTest(TestCase):
         when there are no study buddy posts for the course, the feed displays appropriate message
         """
         response = self.client.get(
-            reverse('studybuddy:coursefeed', args=(self.test_email, self.test_subject, self.test_course_number)))
+            reverse('studybuddy:coursefeed', args=(self.test_subject, self.test_course_number)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There are currently no posts made for this class")
 
@@ -271,7 +270,7 @@ class CourseFeedViewTest(TestCase):
     #
     #     # when
     #     response = self.client.get(
-    #         reverse('studybuddy:coursefeed', args=(self.test_email, self.test_subject, self.test_course_number)))
+    #         reverse('studybuddy:coursefeed', args=(self.test_subject, self.test_course_number)))
     #
     #     # then
     #     self.assertEqual(response.status_code, 200)
@@ -309,7 +308,7 @@ class EnrollViewTest(TestCase):
         mock_user.get.return_value = mock_user
 
         # when
-        response = self.client.get(reverse('studybuddy:enroll', args = (self.test_email, self.test_dept, self.test_course_number)))
+        response = self.client.get(reverse('studybuddy:enroll', args = (self.test_dept, self.test_course_number)))
 
         # then
         self.assertEqual(response.status_code, 200)

@@ -229,7 +229,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' %}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -239,8 +239,8 @@
                     <ul class="navbar-nav ms-auto">
                         {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
                         <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -253,7 +253,7 @@
             <div class="sb-form">
                 {% if valid %}
                 <h1>Make a study buddy post for: </h1> <h1>{{ course | linebreaksbr }}</h1>
-                    <form action="{% url 'studybuddy:submitpost' email dept course.course_number%}" method="post">
+                    <form action="{% url 'studybuddy:submitpost' dept course.course_number%}" method="post">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
                       <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>

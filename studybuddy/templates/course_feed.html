@@ -206,7 +206,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}">Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' %}">Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -215,8 +215,8 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -229,9 +229,9 @@
             <div class="sb-form">
                 <form method="get">
                   <ul id="nav" class="list-unstyled">
-                     <li> <a href="{% url 'studybuddy:department' user.email dept%}">Choose another class in the same department</a></li>
+                     <li> <a href="{% url 'studybuddy:department' dept%}">Choose another class in the same department</a></li>
                      {% if valid %}
-                        <li>  <a href="{% url 'studybuddy:enroll' user.email course.subject course.course_number%}">Remove course from schedule</a></li>
+                        <li>  <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}">Remove course from schedule</a></li>
                      {% endif %}
                  </ul>
                     <div class="wrapper">

@@ -30,8 +30,7 @@ class MakePostViewTest(TestCase):
         """
         makepost view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_email,
-                                                                        self.test_dept,
+        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_dept,
                                                                         self.test_course_number)))
         self.assertEqual(response.status_code, 200)
 
@@ -39,8 +38,7 @@ class MakePostViewTest(TestCase):
         """
         makepost view uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_email,
-                                                                        self.test_dept,
+        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_dept,
                                                                         self.test_course_number)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post/makepost.html')
@@ -71,9 +69,8 @@ class SubmitPostViewTest(TestCase):
         """
         submit post is accessible through its name and will be redirected to coursefeed
         """
-        response = self.client.get(reverse('studybuddy:submitpost', args=(self.test_email,
-                                                                        self.test_dept,
-                                                                        self.test_course_number)))
+        response = self.client.get(reverse('studybuddy:submitpost', args = (self.test_dept,
+                                                                            self.test_course_number)))
         # OH: why is this a 302 instead of a 301?
         self.assertEqual(response.status_code, 302)
 
@@ -81,9 +78,8 @@ class SubmitPostViewTest(TestCase):
         """
         submitpost uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_email,
-                                                                        self.test_dept,
-                                                                        self.test_course_number)))
+        response = self.client.get(reverse('studybuddy:makepost', args = (self.test_dept,
+                                                                          self.test_course_number)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post/makepost.html')
 

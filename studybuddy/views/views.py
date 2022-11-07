@@ -12,7 +12,7 @@ from studybuddy.models import User, Departments, Course, Post, EnrolledClass, Ro
 # class index(generic.TemplateView):
 #     template_name = 'homepage.html'
 
-def index(request, email):
+def index(request):
     if request.user.is_anonymous or not User.objects.filter(email=request.user.email).exists():
         return render(request, template_name="index.html")
     else:
@@ -24,40 +24,49 @@ def index(request, email):
 
         return render(request, template_name, context)
 
-def chat(request, email):
+def chat(request):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     return render(request, 'studybuddy/chat.html')
 
-def rooms(request, email):
+def rooms(request):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     rooms = Room.objects.all()
 
     return render(request, 'studybuddy/rooms.html', {'rooms': rooms})
 
-def room(request, email, slug):
+def room(request, slug):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     room = Room.objects.get(slug=slug)
     messages = Message.objects.filter(room=room)[0:25]
 
     return render(request, 'studybuddy/room.html', {'room': room, 'messages': messages})
 
-def addAccount(request, email):
+def addAccount(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email= request.user.email
     exist = User.objects.filter(email=email).exists()
     if not exist:
         newAcc = User(email=email, firstName=request.user.username)
         newAcc.save()
 
-    return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
+    return HttpResponseRedirect(reverse('studybuddy:index'))
 
-def account(request, email):
+def account(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     user = User.objects.get(email__exact=email)
     context = {
         'Email': user.email,
-        # 'FirstName': user.firstName,
-        # 'LastName': user.lastName,
         'UserName': user.username,
         'Name': user.name,
         'Major': user.major,
@@ -67,15 +76,14 @@ def account(request, email):
     }
     return render(request, 'studybuddy/account.html', context)
 
-def EditAccount(request, email):
+def EditAccount(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     user = User.objects.get(email=email)
     context = {
         'Email': user.email,
-        # 'FirstName': user.firstName,
-        # 'LastName': user.lastName,
         'UserName': user.username,
         'Name': user.name,
         'Major': user.major,
@@ -85,13 +93,12 @@ def EditAccount(request, email):
     }
     return render(request, 'studybuddy/editAccount.html', context)
 
-def UpdateAccount(request, email):
+def UpdateAccount(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     account = User.objects.get(email__exact=email)
-    # account.firstName=request.POST['fname']
-    # account.lastName=request.POST['lname']
     account.username=request.POST['username']
     account.name=request.POST['name']
     account.major=request.POST['major']
@@ -100,7 +107,7 @@ def UpdateAccount(request, email):
 
     account.save()
 
-    return HttpResponseRedirect(reverse('studybuddy:account', args=(email,)))
+    return HttpResponseRedirect(reverse('studybuddy:account'))
 
 class alldepartments(generic.ListView):
     model = Departments
@@ -122,11 +129,13 @@ class alldepartments(generic.ListView):
     def get_queryset(self):
         return Departments.objects.all()
 
-def department(request, email, dept):
+def department(request, dept):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    model = Course
+    if dept == "viewpost":
+        return post_views.viewposts(request)
+
     template_name = ('department.html')
 
     # Get the json file for the request department
@@ -157,7 +166,7 @@ def department(request, email, dept):
 
     return render(request, template_name, {'department_list' : Course.objects.filter(subject=dept), 'dept' : dept})
 
-def coursefeed (request, email, dept, course_number):
+def coursefeed (request, dept, course_number):
     template_name = 'course_feed.html'
 
     if request.user.is_anonymous:
@@ -166,14 +175,7 @@ def coursefeed (request, email, dept, course_number):
     if request.POST.get('delete'):
         post_views.deletepost(request)
 
-    '''
-    filter through 2 things to find all posts:
-    1. course_number=course_number (this will fidn section specific posts)
-    2. sibject=subject, catalog_number=catalog_number, post_Type=course (this finds the course posts)
-    3. combine the above 2 posts to display
-    '''
-
-    if Course.objects.filter(course_number = course_number).exists():
+    if Course.objects.filter(course_number = course_number).exists() and Course.objects.filter(subject = dept):
         course = Course.objects.get(course_number=course_number)
         Post.objects.filter(endDate__lt=timezone.now()).delete()
         post_for_this_class = Post.objects.filter(course=course) #this will find posts that are related to this specific section only
@@ -196,13 +198,12 @@ def coursefeed (request, email, dept, course_number):
 
     return render(request, template_name, context)
 
-def enrollcourse (request, email, dept, course_number):
+def enrollcourse (request, dept, course_number):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
     template_name = 'enroll.html'
 
-    # print(Departments.objects.filter(dept))
     if(Course.objects.filter(course_number = course_number).exists()):
         context = {
             'dept': dept.upper(),
@@ -219,10 +220,11 @@ def enrollcourse (request, email, dept, course_number):
 
     return render(request, template_name, context)
 
-def updatecourseload(request, email, dept, course_number):
+def updatecourseload(request, dept, course_number):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     account = User.objects.get(email__exact=email)
     course = Course.objects.get(course_number=course_number)
 
@@ -233,20 +235,20 @@ def updatecourseload(request, email, dept, course_number):
         enrolled = EnrolledClass(course=course, student=account)
         enrolled.save()
 
-
-
-    return HttpResponseRedirect(reverse('studybuddy:index', args=(email,)))
+    return HttpResponseRedirect(reverse('studybuddy:index'))
 
 # implementing friends
 @login_required
-def send_friend_request(request, email, requestee_email):
-    from_user = User.objects.get(email__exact=email)
-    #print(requestee_email)
-    #print(User.objects.all())
+def send_friend_request(request, requestee_email):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
 
-    if (User.objects.filter(email__exact=requestee_email).exists()):
+    email = request.user.email
+    from_user = User.objects.get(email__exact=email)
+
+    if User.objects.filter(email__exact=requestee_email).exists():
         to_user = User.objects.filter(email__exact=requestee_email).exists()
-        if (from_user.email == str(request.user.email)):
+        if from_user.email == str(request.user.email):
             friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
             if created:
                 return HttpResponse("friend request sent")
@@ -257,21 +259,18 @@ def send_friend_request(request, email, requestee_email):
     else:
         return HttpResponse("This user, " +  requestee_email + " does not exist")
 
-    
-    
-
 @login_required
-def accept_friend_request(request, email, requester_email):
+def accept_friend_request(request, requester_email):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     from_user = User.objects.get(email=requester_email)
     to_user = User.objects.get(email=email)
-    #print("to_user.username: " + to_user.username)
-    #print("request.user: " + str(request.user))
-    if (Friend_Request.objects.filter(from_user = from_user).count() == 0):
+
+    if Friend_Request.objects.filter(from_user = from_user).count() == 0:
         return HttpResponse("You have no pending requests from " + requester_email)
-    if (to_user.email == str(request.user.email)):
+    if to_user.email == str(request.user.email):
         friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
         friend_request = friend_request_query_set.first()
         friend_request.to_user.friends.add(friend_request.from_user)
@@ -283,7 +282,7 @@ def accept_friend_request(request, email, requester_email):
     else:
         return HttpResponse('Invalid')
 
-# def disenrollcourse(request, email, dept, course_number):
+# def disenrollcourse(reques, dept, course_number):
 #     template_name = 'disenroll.html'
 #
 #     # print(Departments.objects.filter(dept))

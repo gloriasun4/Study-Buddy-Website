@@ -220,7 +220,7 @@
   <div class="row">
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+            <a class="navbar-brand" href="{% url 'studybuddy:index' %}"> Study Buddy</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -228,8 +228,8 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Departments </a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                 </ul>
             </div>
@@ -241,7 +241,7 @@
 <p>Last Name: {{LastName}}</p>
 <p>Zoom Link:  <a href="{{ZoomLink}}">{{ZoomLink}}</a> </p>
 <p>About Me: {{AboutMe}}</p> {% endcomment %}
-{% comment %} <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a> {% endcomment %}
+{% comment %} <a href="{% url 'studybuddy:editAccount' %}">Edit Account Details</a> {% endcomment %}
 <div class="container emp-profile">
     <form>
         <div class="row">
@@ -270,7 +270,7 @@
             <div class="col-md-2">
                 <div class="myForm">
                     <form method="get">
-                      <button class="btn btn-lg" type="submit" formaction="{% url 'studybuddy:editAccount' user.email%}">
+                      <button class="btn btn-lg" type="submit" formaction="{% url 'studybuddy:editAccount' %}">
                         <a>Edit Profile</a></button>
                     </form>
                 </div>
@@ -282,7 +282,7 @@
                     {% if student.enrolledclass_set.all %}
                         {% for class in student.enrolledclass_set.all %}
                             <li>
-                                <a href="{% url 'studybuddy:coursefeed' user.email class.course.subject class.course.course_number%}">
+                                <a href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
                                     {{ class.course.subject }} {{ class.course.catalog_number }}
                                 </a>
                             </li>

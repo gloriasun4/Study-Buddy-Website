@@ -5,12 +5,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from studybuddy.models import Post, Course, User, EnrolledClass
 
-def makepost(request, email, dept, course_number):
+def makepost(request, dept, course_number):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
     template_name = ('post/makepost.html')
 
+    email = request.user.email
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         context = {
             'email' : email,
@@ -27,16 +28,18 @@ def makepost(request, email, dept, course_number):
 
     return render(request, template_name, context)
 
-def submitpost(request, email, dept, course_number):
+def submitpost(request, dept, course_number):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
+
+    email = request.user.email
 
     # if the course exists
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         course = Course.objects.get(course_number=course_number)
     # else go back into course feed and let user know the course is not valid
     else:
-        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number)))
+        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number)))
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     topic = request.POST['topic']
@@ -54,8 +57,6 @@ def submitpost(request, email, dept, course_number):
 
     if description == "":
         description = Post._meta.get_field('description').get_default()
-
-    print(request.POST)
 
     # Get if user wants post to be in specific section or all sections of catalog_number
     # Default: post to only this specific section
@@ -82,7 +83,7 @@ def submitpost(request, email, dept, course_number):
                            post_type='course')
         newPost.save()
 
-    return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number)))
+    return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number)))
 
 def deletepost(request):
     if request.user.is_anonymous:
@@ -99,7 +100,7 @@ def deletepost(request):
     request_source = request.POST['delete_source']
 
     if(request_source == 'course_feed'):
-        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(email, dept, course_number,)))
+        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number,)))
     # default return to myposts
     else:
         return HttpResponseRedirect(reverse('studybuddy:viewposts'))

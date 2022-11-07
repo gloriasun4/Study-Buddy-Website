@@ -245,7 +245,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' %}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -253,8 +253,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' user.email%}"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -276,7 +276,7 @@
                         <div class="content">
                           {% for post in user_posts %}
                             {% if post.course.course_number == enrolled_course.course.course_number %}
-                                <li>
+                                <li style="list-style-type: none">
                                     {{ post | linebreaksbr }}
                                     <form action="" method = "post">
                                     {% csrf_token %}
@@ -301,8 +301,8 @@
                             {% endcomment %}
                           </div>
                         </div>
-                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email enrolled_course.course.subject enrolled_course.course.course_number%}">
-                        <a href="{% url 'studybuddy:coursefeed' user.email enrolled_course.course.subject enrolled_course.course.course_number%}">
+                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
+                        <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
                             View Course Feed
                         </a>
                     </button>
@@ -316,11 +316,11 @@
                         </button>
                         <div class="content">
                         {% for post in unenrolled_posts %}
-                            <li>
+                            <li style="list-style-type: none">
                                 {{ post | linebreaksbr }}
                                 <form action="" method = "post">
                                     {% csrf_token %}
-                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' user.email post.course.subject post.course.catalog_number%}">
+                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.catalog_number%}">
                                         View Course Feed
                                     </button>
                                     <span class="firstSpan">

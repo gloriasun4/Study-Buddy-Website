@@ -163,7 +163,7 @@
 <h1>Do you want to study with me?</h1>
 {% if user.is_authenticated %}
   <p>Welcome, You are logged in as {{ user.username }}</p>
-  <a href="{% url 'studybuddy:addAccount' user.email%}">Go to Home Page</a>
+  <a href="{% url 'studybuddy:addAccount' %}">Go to Home Page</a>
 {% else %}
 <div class="myForm">
 <form method="get">
