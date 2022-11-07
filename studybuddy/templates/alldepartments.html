@@ -200,7 +200,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'studybuddy:index' user.email%}"> Study Buddy</a>
+                <a class="navbar-brand" href="{% url 'studybuddy:index' %}"> Study Buddy</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -209,8 +209,8 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href=""> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' user.email%}"> My Account </a></li>
-                        <!-- <li class="nav-item"><a class="nav-link" href="% url 'studybuddy:chat' user.email%"> Chat Room </a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="% url 'studybuddy:chat' %"> Chat Room </a></li> -->
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -225,7 +225,7 @@
                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for departments.." title="Type in a department">
                     <ul style="list-style-type: none" id="myUL">
                     {% for department in departments_list %}
-                        <li><a href="/studybuddy/{{user.email}}/{{ department.dept }}">{{ department.dept }}</a></li>
+                        <li><a href="{% url 'studybuddy:department' department.dept %}">{{ department.dept }}</a></li>
                     {% endfor %}
                         <li hidden="true" id="noMatch">No department available</li>
                     </ul>

@@ -4,9 +4,9 @@
 <h1>My Study Buddy</h1>
 
   <p>click below to enroll</p>
-  <a href="{% url 'studybuddy:alldepartments' user.email%}">Back to Departments</a>
+  <a href="{% url 'studybuddy:alldepartments' %}">Back to Departments</a>
 
-    <form action="{% url 'studybuddy:index' user.email %}" method="post" >
+    <form action="{% url 'studybuddy:index' %}" method="post" >
     {% csrf_token %}
     <fieldset align="center">
 
