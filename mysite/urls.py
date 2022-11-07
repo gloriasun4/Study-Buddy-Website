@@ -28,5 +28,5 @@ urlpatterns = [
     # implement Google login
     path('', views.index, name = "index"),
     path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view(), name='logout')
+    path('logout', LogoutView.as_view(), name='logout'),
 ]

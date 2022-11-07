@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -77,13 +78,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mysite.wsgi.application"
-ASGI_APPLICATION = "djangochat.asgi.application"
+# ASGI_APPLICATION = "djangochat.asgi.application"
+ASGI_APPLICATION = "mysite.asgi.application"
+
+# Source: https://github.com/redis/redis-py/issues/417
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        # "BACKEND": "channels_redis.core.RedisChannelLayer",
         # 'CONFIG': {
-        #     "hosts": [('127.0.0.1', 6379)],
+        #     "host": [('127.0.0.1', 6379)],
         # },
     }
 }

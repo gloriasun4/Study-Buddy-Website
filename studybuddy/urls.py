@@ -18,7 +18,7 @@ urlpatterns = [
     path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
     path('chat/', views.chat, name='chat'),
     path('chat/rooms/', views.rooms, name='rooms'),
-    path('chat/rooms/<slug:slug>/', views.room, name='room'),
+    path('chat/rooms/<str:slug>/', views.room, name='room'),
     path('<str:dept>/', views.department, name='department'),
     path('<str:dept>/<int:course_number>/', views.coursefeed, name ='coursefeed'),
 

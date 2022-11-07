@@ -1,7 +1,7 @@
 import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async, async_to_sync
 
 from .models import Message, Room, User
 
@@ -18,7 +18,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
     
-    async def disconnect(self):
+    async def disconnect(self, close_code):
+        # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
@@ -27,35 +28,38 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         data = json.loads(text_data)
         message = data['message']
-        username = data['username']
+        email = data['email']
         room = data['room']
 
-        await self.save_message(username, room, message)
+        await self.save_message(email, room, message)
 
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
                 'message': message,
-                'username': username,
+                'email': email,
                 'room': room,
             }
         )
 
     async def chat_message(self, event):
         message = event['message']
-        username = event['username']
+        email = event['email']
         room = event['room']
 
         await self.send(text_data=json.dumps({
             'message': message,
-            'username': username,
+            'email': email,
             'room': room,
         }))
     
     @sync_to_async
-    def save_message(self, username, room, message):
-        user = User.objects.get(username = username)
-        room = Room.objects.get(slug = room)
+    def save_message(self, email, room, message):
+        if User.objects.filter(email = email):
+            user = User.objects.get(email = email)
+            room = Room.objects.get(slug = room)
 
-        Message.objects.create(user=user, room=room, content=message)
+            Message.objects.create(user=user, room=room, content=message)
+        else:
+            print(email, " is not logged into our system. Please sign in to proceed.")
