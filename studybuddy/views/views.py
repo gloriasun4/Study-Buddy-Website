@@ -16,7 +16,7 @@ def index(request, email):
     if request.user.is_anonymous or not User.objects.filter(email=request.user.email).exists():
         return render(request, template_name="index.html")
     else:
-        template_name = 'homepage2.html'
+        template_name = 'homepage.html'
 
         context = {
                 'student': User.objects.get(email=request.user.email),
@@ -53,14 +53,17 @@ def account(request, email):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    user = User.objects.get(email=email)
+    user = User.objects.get(email__exact=email)
     context = {
         'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
+        # 'FirstName': user.firstName,
+        # 'LastName': user.lastName,
+        'UserName': user.username,
+        'Name': user.name,
+        'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb,
-        'student': user
+        'AboutMe': user.blurb
+
     }
     return render(request, 'studybuddy/account.html', context)
 
@@ -71,8 +74,11 @@ def EditAccount(request, email):
     user = User.objects.get(email=email)
     context = {
         'Email': user.email,
-        'FirstName': user.firstName,
-        'LastName': user.lastName,
+        # 'FirstName': user.firstName,
+        # 'LastName': user.lastName,
+        'UserName': user.username,
+        'Name': user.name,
+        'Major': user.major,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb
 
@@ -83,10 +89,12 @@ def UpdateAccount(request, email):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    account = User.objects.get(email=email)
-
-    account.firstName=request.POST['fname']
-    account.lastName=request.POST['lname']
+    account = User.objects.get(email__exact=email)
+    # account.firstName=request.POST['fname']
+    # account.lastName=request.POST['lname']
+    account.username=request.POST['username']
+    account.name=request.POST['name']
+    account.major=request.POST['major']
     account.zoomLink = request.POST['zlink']
     account.blurb = request.POST['blurb']
 

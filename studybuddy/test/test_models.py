@@ -58,18 +58,16 @@ class UserTest(TestCase):
     def test_default(self):
         account = User(email="abc@gmail.com")
         self.assertEqual(account.email, "abc@gmail.com")
-        self.assertEqual(account.firstName, "")
-        self.assertEqual(account.lastName, "")
+        self.assertEqual(account.name, "")
         self.assertEqual(account.zoomLink, "")
         self.assertEqual(account.blurb, "")
 
     def test_update(self):
         account = User(email="abc2@gmail.com")
-        account.firstName="abc"
+        account.name="abc"
         account.blurb="hi my name is abc"
         self.assertEqual(account.email, "abc2@gmail.com")
-        self.assertEqual(account.firstName, "abc")
-        self.assertEqual(account.lastName, "")
+        self.assertEqual(account.name, "abc")
         self.assertEqual(account.zoomLink, "")
         self.assertEqual(account.blurb, "hi my name is abc")
 

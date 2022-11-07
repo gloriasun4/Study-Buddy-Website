@@ -55,7 +55,7 @@ class HomepageViewTest(TestCase):
 
         response = self.client.get(reverse('studybuddy:index', args = (self.test_email, )))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'homepage2.html')
+        self.assertTemplateUsed(response, 'homepage.html')
 
 class AllDepartmentViewTest(TestCase):
     def setUp(self):

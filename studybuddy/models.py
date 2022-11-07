@@ -1,17 +1,19 @@
+import datetime
 from django.db import models
 from django.conf import settings
-import requests
-import json
-import datetime
 from django.utils import timezone
 
 # Create your models here.
 class User(models.Model):
     email = models.CharField(primary_key=True, max_length=30, default="")
-    firstName = models.CharField(max_length=30, default="")
-    lastName = models.CharField(max_length=30, default="")
+    # firstName = models.CharField(max_length=30, default="")
+    # lastName = models.CharField(max_length=30, default="")
+    username = models.CharField(max_length=20, default="")
+    name = models.CharField(max_length=50, default="")
+    major = models.CharField(max_length=30, default="")
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
+    
     # implementing friends
     friends = models.ManyToManyField("self")
     username = models.CharField(max_length=30, default="")
@@ -42,7 +44,7 @@ class Departments(models.Model):
 
 class Course(models.Model):
     subject = models.CharField(max_length = 4)
-    catalog_number = models.CharField(max_length = 4) #catalog_number = models.CharField(max_length = 4, unique=True)
+    catalog_number = models.CharField(max_length = 4)
     instructor = models.CharField(max_length = 30)
     section = models.CharField(max_length = 4)
     course_number = models.CharField(max_length = 10)
