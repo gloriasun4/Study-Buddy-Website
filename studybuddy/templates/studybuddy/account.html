@@ -291,6 +291,28 @@
                         <p class="text-center">You are currently not enrolled in any classes </p>
                     {% endif %}
                 </div>
+                <div class="profile-work">
+                    <p><h4> Friends: </h4></p>
+                    {% if Friends.all %}
+                        {% for friend in Friends.all %}
+                        <li><a href="/studybuddy/{{friend.email}}/account/">{{ friend.email }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">You are currently not friends with other users </p>
+                    {% endif %}
+                    <p><h4> Friend Requests: </h4></p>
+                    {% if all_friend_requests %}
+                        {% for friend_request in all_friend_requests %}
+                            <h1>{{friend_request.from_user}}
+                              <a href="/accept_friend_request/{{friend_request.id}}/">
+                                accept friend request
+                              </a>
+                            </h1>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">You are currently do not have any pending friend requests </p>
+                    {% endif %}
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
@@ -346,22 +368,6 @@
     </form>
 </div>
 
-<p>Friends: </p>
-{% for friend in Friends.all %}
-<li><a href="/studybuddy/{{friend.email}}/account/">{{ friend.email }}</a></li>
-{% endfor %}
-<p>Friend Requests:</p>
-{% for friend_request in all_friend_requests %}
-<h1>{{friend_request.from_user}}
-  <a href="/accept_friend_request/{{friend_request.id}}/">
-    accept friend request
-  </a>
-</h1>
-{% endfor %}
-
-  <a href="{% url 'studybuddy:editAccount' user.email%}">Edit Account Details</a>
-  <!--check if in model
-      if not add {{ user.username }}, {{ user.email }} as model instance and rest as blank-->
       <footer class="footer-container">
         <div class="container">
             <div class="row">

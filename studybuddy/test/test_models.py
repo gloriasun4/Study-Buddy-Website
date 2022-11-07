@@ -53,6 +53,37 @@ class CourseTest(TestCase):
     # test for a class being added successfully to the model
     # create a mock department and assert true/false
 
+
+class UserTest(TestCase):
+    def test_default(self):
+        account = User(email="abc@gmail.com")
+        self.assertEqual(account.email, "abc@gmail.com")
+        self.assertEqual(account.name, "")
+        self.assertEqual(account.zoomLink, "")
+        self.assertEqual(account.blurb, "")
+
+    def test_update(self):
+        account = User(email="abc2@gmail.com")
+        account.name="abc"
+        account.blurb="hi my name is abc"
+        self.assertEqual(account.email, "abc2@gmail.com")
+        self.assertEqual(account.name, "abc")
+        self.assertEqual(account.zoomLink, "")
+        self.assertEqual(account.blurb, "hi my name is abc")
+
+class EnrollTest(TestCase):
+    def add_class(self):
+        account = User(email="abc3@gmail.com", firstName="abc", lastName="def")
+        test_course = Course.objects.get(id=1)
+        enroll= EnrolledClass(course=test_course, student=account)
+        enrolled_course = account.enrolledclass_set.all()
+        num_enrolled_course = account.enrolledclass_set.count()
+        self.assertTrue(EnrolledClass.objects.filter(course=test_course, student=account).exists())
+        self.assertEqual(num_enrolled_course, 1)
+
+
+
+
 class PostTest(TestCase):
     def setUp(self):
         self.test_subject = 'testDept'
