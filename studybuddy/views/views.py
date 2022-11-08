@@ -45,7 +45,13 @@ def room(request, slug):
     room = Room.objects.get(slug=slug)
     messages = Message.objects.filter(room=room)[0:25]
 
-    return render(request, 'studybuddy/room.html', {'room': room, 'messages': messages})
+    context = {
+        'room' : room,
+        'messages' : messages,
+        'username' : User.objects.get(email=request.user.email).username
+    }
+
+    return render(request, 'studybuddy/room.html', context)
 
 def addAccount(request):
     if request.user.is_anonymous:
