@@ -16,4 +16,4 @@ coverage
 
 # for chat rooms
 channels==4.0.0
-daphne==3.0.2
+daphne==4.0.0
