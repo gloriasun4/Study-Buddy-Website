@@ -208,11 +208,11 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="alldepartments"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Upcoming Study Sessions</a></li>
-                        <li class="nav-item"><a class="nav-link" href="chat"> Chat Room </a></li>
-                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:chat' %}"> Chat Room </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
