@@ -278,7 +278,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
-                    <p><h4>Courses looking for..</h4></p>
+                    <p><h4>My Schedule</h4></p>
                     {% if student.enrolledclass_set.all %}
                         {% for class in student.enrolledclass_set.all %}
                             <li>
@@ -290,6 +290,8 @@
                     {% else %}
                         <p class="text-center">You are currently not enrolled in any classes </p>
                     {% endif %}
+                    <a href="{% url 'studybuddy:alldepartments'%}"> Edit Schedule</a>
+
                 </div>
                 <div class="profile-work">
                     <p><h4> Friends: </h4></p>

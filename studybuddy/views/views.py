@@ -82,7 +82,8 @@ def account(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'AboutMe': user.blurb,
+        'student': user
 
     }
     return render(request, 'studybuddy/account.html', context)
