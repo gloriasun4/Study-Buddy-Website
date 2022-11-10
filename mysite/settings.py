@@ -164,6 +164,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# Source: https://stackoverflow.com/questions/70873098/login-with-google-redairecting-on-conformation-page-to-continue-django
+SOCIALACCOUNT_LOGIN_ON_GET=True
+
 SITE_ID = 2
 
 LOGIN_REDIRECT_URL = "/"
