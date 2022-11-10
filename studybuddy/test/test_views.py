@@ -173,6 +173,18 @@ class DepartmentViewTest(TestCase):
     #     self.assertEqual(response.status_code, 200)
     #     self.assertContains(response, Course.objects.get(subject=self.test_dept))
 
+    # def test_two_courses(self):
+    #     '''
+    #     There can be multiple courses to be displayed for a given dept
+    #     one of the courses is already added at setup
+    #     '''
+    #     test_course2 = Course.objects.create(subject=self.test_subject,
+    #                                          catalog_number=self.test_catalog_number,
+    #                                          instructor=self.test_instructor,
+    #                                          section=self.test_section,
+    #                                          course_number=23456,
+    #                                          description=self.test_description)
+    #
 
 class CourseFeedViewTest(TestCase):
     def setUp(self):
@@ -189,12 +201,13 @@ class CourseFeedViewTest(TestCase):
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
         self.client.login(username=self.test_username, password=self.test_password)
 
-    # def test_view_url_exists_at_desired_location(self):
-    #     """
-    #     url is valid to view all the departments
-    #     """
-    #     response = self.client.get(('/studybuddy/', self.test_subject, '/', self.test_course_number), follow=True)
-    #     self.assertEqual(response.status_code, 200)
+    def test_view_url_exists_at_desired_location(self):
+        """
+        url is valid to view the course feed
+        """
+        # response = self.client.get(('/studybuddy/'+ self.test_subject + '/' + self.test_course_number), follow=True)
+        # self.assertEqual(response.status_code, 200)
+        pass
 
     def test_view_url_accessible_by_name(self):
         """

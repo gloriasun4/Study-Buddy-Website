@@ -254,6 +254,10 @@
                         <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message" id="chat-message-input">
                         <button class="btn btn-lg" id="chat-message-submit">Submit</button>
                     </form>
+                    <form method="post" action="{% url 'studybuddy:schedule' room.slug %}">
+                        {% csrf_token %}
+                        <button class="btn btn-lg" id="schedule">Schedule Study Session</button>
+                    </form>
                 </div>
             </div>
         </div>

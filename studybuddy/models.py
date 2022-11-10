@@ -1,7 +1,7 @@
 import datetime
 from django.db import models
-from django.conf import settings
 from django.utils import timezone
+
 
 # Create your models here.
 class User(models.Model):
@@ -13,19 +13,22 @@ class User(models.Model):
     major = models.CharField(max_length=30, default="")
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
-    
+
     # implementing friends
     friends = models.ManyToManyField("self")
     username = models.CharField(max_length=30, default="")
+
 
 # implementing friends
 class Friend_Request(models.Model):
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
 
+
 class Room(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
+
 
 class Message(models.Model):
     room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
@@ -36,18 +39,20 @@ class Message(models.Model):
     class Meta:
         ordering = ('date_added',)
 
+
 class Departments(models.Model):
-    dept = models.CharField(max_length = 4)
+    dept = models.CharField(max_length=4)
 
     def __str__(self):
         return self.dept
 
+
 class Course(models.Model):
-    subject = models.CharField(max_length = 4)
-    catalog_number = models.CharField(max_length = 4)
-    instructor = models.CharField(max_length = 30)
-    section = models.CharField(max_length = 4)
-    course_number = models.CharField(max_length = 10)
+    subject = models.CharField(max_length=4)
+    catalog_number = models.CharField(max_length=4)
+    instructor = models.CharField(max_length=30)
+    section = models.CharField(max_length=4)
+    course_number = models.CharField(max_length=10)
     description = models.TextField(default="")
 
     class Meta:
@@ -55,13 +60,14 @@ class Course(models.Model):
 
     def __str__(self):
         course_level = self.subject + self.catalog_number
-        if(self.instructor == '-'):
+        if (self.instructor == '-'):
             inst = "Not available"
         else:
             inst = self.instructor
         instructor = "Instructor: " + inst
         section = "(Section: " + self.section + ")"
-        return  course_level + ": " + self.description + " \n " + instructor + " \n " + section
+        return course_level + ": " + self.description + " \n " + instructor + " \n " + section
+
 
 class Post(models.Model):
     """
@@ -73,10 +79,10 @@ class Post(models.Model):
     Source for on_delete: https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models
         we want to remove posts related to the course and/or user when a post is delete, so we are using using CASCADE
     """
-    course = models.ForeignKey(Course, on_delete=models.CASCADE,)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,)
-    author = models.CharField(max_length = 30, default="Author of this post chose to be anonymous")
-    topic = models.CharField(max_length = 30, default="No topic was provided by the author of this post")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, )
+    author = models.CharField(max_length=30, default="Author of this post chose to be anonymous")
+    topic = models.CharField(max_length=30, default="No topic was provided by the author of this post")
     startDate = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     endDate = models.DateField(default=(timezone.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d"))
     description = models.TextField(default="No description was provided by the author of this post")
@@ -89,11 +95,13 @@ class Post(models.Model):
     def __str__(self):
         author = "Author: " + self.author
         if type(self.startDate) != str:
-            time_frame = "Time Frame: " + self.startDate.strftime("%Y-%m-%d") + " to " + self.endDate.strftime("%Y-%m-%d")
+            time_frame = "Time Frame: " + self.startDate.strftime("%Y-%m-%d") + " to " + self.endDate.strftime(
+                "%Y-%m-%d")
         else:
             time_frame = "Time Frame: " + self.startDate + " to " + self.endDate
 
         return self.topic + '\n' + author + '\n' + time_frame + '\n'
+
 
 class EnrolledClass(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -101,3 +109,42 @@ class EnrolledClass(models.Model):
 
     def __str__(self):
         return self.course.subject + " " + self.course.course_number
+
+
+class StudySession(models.Model):
+    '''
+    a study session is associated with a user
+    ask gloria about how the chat room will be associated
+
+    have students accept/decline study session???
+
+    if chat room is associated with a user:
+    '''
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, )
+
+    # if post is deleted, the study session should still remain, because deletion of a post means
+    # the user no longer wants the post/they have found a study buddy, but study sessions schedule should remain
+    # post = models.OneToOneField(Post, on_delete=models.PROTECT, )
+
+    # currently just setting it the room name
+    name = models.CharField(max_length=50, default="Study Session") #update after figuring out room/post/user relation
+    date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    start = models.TimeField(default=timezone.now().strftime("%H-%M"))
+    end = models.TimeField(default=(timezone.now() + datetime.timedelta(hours=1)).strftime("%H-%M"))
+    accepted = models.CharField(max_length=4, default="?")
+
+
+    def __str__(self):
+        if type(self.start) != str:
+            time_frame = "Time Frame: " + self.start.strftime("%H:%M") + " to " + self.end.strftime("%H:%M")
+        else:
+            time_frame = "Time Frame: " + self.start + " to " + self.start
+
+        if type(self.date) != str:
+            date = "Scheduled on: " + self.date.strftime("%Y-%m-%d")
+        else:
+            date = "Scheduled on: " + self.date
+
+        name = "Study session for: " + self.name
+
+        return name + '\n' + date + '\n' + time_frame
