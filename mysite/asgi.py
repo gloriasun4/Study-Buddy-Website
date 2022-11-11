@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
 
 import os, django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup() #maybe delete
 
 from django.core.asgi import get_asgi_application

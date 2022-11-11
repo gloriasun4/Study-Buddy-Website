@@ -28,8 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Source: https://stackoverflow.com/questions/10664244/django-how-to-manage-development-and-production-settings
+MODE = os.environ.get('DJANGO_DEVELOPMENT', 'true')
+
+if not MODE:
+    # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
