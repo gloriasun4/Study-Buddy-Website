@@ -5,8 +5,7 @@ app_name = 'studybuddy'
 urlpatterns = [
     path('', views.index, name='index'),
     # implementing friends
-    path('send_friend_request/<str:requestee_email>/', views.send_friend_request, name='send friend request'),
-    path('accept_friend_request/<str:requester_email>/', views.accept_friend_request, name='accept friend request'),
+    path('friends', views.view_friends, name='viewFriends'),
 
     path('account/', views.account, name='account'),
     path('account/add/', views.addAccount, name='addAccount'),

@@ -18,12 +18,17 @@ class User(models.Model):
     friends = models.ManyToManyField("self")
     username = models.CharField(max_length=30, default="")
 
+    def __str__(self):
+        return self.email
 
 # implementing friends
 class Friend_Request(models.Model):
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
     to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+    declined = models.TextField('no')
 
+    def __str__(self):
+        return self.from_user.email
 
 class Room(models.Model):
     name = models.CharField(max_length=255)
