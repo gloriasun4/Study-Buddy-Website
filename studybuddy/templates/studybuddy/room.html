@@ -283,11 +283,13 @@
     const userEmail = JSON.parse(document.getElementById('json-email').textContent)
     const userName = JSON.parse(document.getElementById('json-username').textContent)
 
-    const chatSocket = new WebSocket(
-            ((window.location.protocol === "https:") ? "wss://" : "ws://")
-            + window.location.host
-            + window.location.pathname
-        );
+    const endpoint = ((window.location.protocol === "https:") ? "wss://" : "ws://")
+                    + window.location.host
+                    + window.location.pathname
+
+    console.log(endpoint);
+
+    const chatSocket = new WebSocket(endpoint);
 
     chatSocket.onopen = () => {
         console.log("Successfully Connected");
