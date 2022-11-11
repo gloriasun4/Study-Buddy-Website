@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+from socket import gethostname, gethostbyname
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,10 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-# Source: https://stackoverflow.com/questions/10664244/django-how-to-manage-development-and-production-settings
-MODE = os.environ.get('DJANGO_DEVELOPMENT', 'true')
+PRODUCTION_SERVER = 'cs-3240-my-study-buddy.herokuapp.com'
 
-if not MODE:
+if gethostname() == PRODUCTION_SERVER:
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
