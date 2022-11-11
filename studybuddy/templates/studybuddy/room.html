@@ -286,9 +286,7 @@
     const chatSocket = new WebSocket(
             ((window.location.protocol === "https:") ? "wss://" : "ws://")
             + window.location.host
-            + '/ws/studybuddy/chat/rooms/'
-            + roomName
-            + '/'
+            + window.location.pathname
         );
 
     chatSocket.onopen = () => {
