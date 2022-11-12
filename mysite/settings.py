@@ -31,11 +31,8 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com
 
 DEV_HOSTS = ['Sofias-MacBook-Pro.local']
 
-print(gethostname() not in DEV_HOSTS)
-
 if gethostname() not in DEV_HOSTS:
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
-    print("here")
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
