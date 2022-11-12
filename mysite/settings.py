@@ -18,7 +18,7 @@ from socket import gethostname
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # for profile pic - grab images
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/studybuddy/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'studybuddy/static/images')
 MEDIA_URL = '/images/'
 
 # Quick-start development settings - unsuitable for production
