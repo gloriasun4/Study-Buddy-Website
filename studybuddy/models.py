@@ -18,6 +18,8 @@ class User(models.Model):
     friends = models.ManyToManyField("self")
     username = models.CharField(max_length=30, default="")
 
+    # profile picture
+    profile_pic = models.ImageField(null=True, blank=True) # note: need to install the pillow lib for the image field
 
 # implementing friends
 class Friend_Request(models.Model):
