@@ -200,7 +200,7 @@
     <div class="d-flex justify-content-center">
 
         <div class="sb-form">
-            <form action="{% url 'studybuddy:updateAccount' %}" method="post">
+            <form action="{% url 'studybuddy:updateAccount' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <p>Email: {{Email}}</p>
               <label for="name">Username:</label>
@@ -214,6 +214,8 @@
               <input type="url" id="zlink" name="zlink" value={{ZoomLink}}><br><br>
               <label for="blurb">About Me:</label>
               <textarea type="text" id="blurb" name="blurb" >{{AboutMe}} </textarea><br><br>
+              <label for="profilepic">Profile Picture:</label>
+              <input type="file" id="profilepic" name="profilepic" value="{{ProfilePic}}"><br><br>
               <input class="btn" type="submit" value="Save Profile">
             </form>
         </div>

@@ -100,8 +100,8 @@ def EditAccount(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
-
+        'AboutMe': user.blurb,
+        'ProfilePic': user.profile_pic
     }
     return render(request, 'studybuddy/editAccount.html', context)
 
@@ -117,6 +117,7 @@ def UpdateAccount(request):
     account.major = request.POST['major']
     account.zoomLink = request.POST['zlink']
     account.blurb = request.POST['blurb']
+    account.profile_pic = request.FILES['profilepic']
 
     account.save()
 
