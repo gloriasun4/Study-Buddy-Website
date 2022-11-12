@@ -298,9 +298,7 @@ def decline_request(request, email):
     from_user = User.objects.get(email=email)
     to_user = User.objects.get(email=request.user.email)
 
-    friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
-    friend_request = friend_request_query_set.first()
-    pass
+    Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user).delete()
 
 
 def view_friends(request):
@@ -324,8 +322,11 @@ def view_friends(request):
     if request.POST.get('request'):
         requestee_email = request.POST.get('email')
         context['toEmail'] = requestee_email
+        # make sure the user isn't trying to add themselves
+        if requestee_email == request.user.email:
+            context['self'] = True
         # check that the requested friend is in our system
-        if User.objects.filter(email__exact=requestee_email).exists():
+        elif User.objects.filter(email__exact=requestee_email).exists():
             # send the request (adds to friend_request model)
             send = send_friend_request(request, requestee_email)
 
@@ -343,16 +344,21 @@ def view_friends(request):
     # user accepted a friend request
     if request.POST.get('accept'):
         ad_email = request.POST.get('ad_email')
-        print(ad_email)
-        decline_request(request, ad_email)
+        accept_friend_request(request, ad_email)
+        context['accepted'] = True
+        context['accepted_email'] = ad_email
 
     if request.POST.get('decline'):
         ad_email = request.POST.get('ad_email')
-        remove_friend(request, ad_email)
+        decline_request(request, ad_email)
+        context['declined'] = True
+        context['declined_email'] = ad_email
 
     if request.POST.get('unfriend'):
-        ad_email = request.POST.get('remove_email')
-        remove_friend(request, ad_email)
+        remove_email = request.POST.get('remove_email')
+        remove_friend(request, remove_email)
+        context['remove_friend'] = True
+        context['removed_email'] = remove_email
 
     return render(request, "friends/view_friends.html", context)
 

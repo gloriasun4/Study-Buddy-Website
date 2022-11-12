@@ -300,6 +300,11 @@
         <div class="sb-form">
             <h1>Friends</h1>
             <div>
+                {% if self %}
+                    <p>
+                        The email {{ toEmail }} you entered belongs to you
+                    </p>
+                {% endif %}
                 {% if notValid %}
                     <p>
                         User with email: {{ toEmail }} is not a user of our system. Please try another email or ask them
@@ -315,6 +320,23 @@
                 {% if alreadySent %}
                     <p>
                         You have already sent a friend request to {{ toEmail }}, its pending acceptance from the user
+                    </p>
+                {% endif %}
+                {% if accepted %}
+                    <p>
+                        You have successfully accepted the friend request from {{ accepted_email }}. You can now view your
+                        new friend in the "My Friends" tab.
+                    </p>
+                {% endif %}
+                {% if declined %}
+                    <p>
+                        You have declined the friend request from {{ declined_email }}.
+                    </p>
+                {% endif %}
+                {% if remove_friend %}
+                    <p>
+                        You have removed {{ removed_email }} from your list of friends. To add the user again you need
+                        to send a request and ask the user to accept it.
                     </p>
                 {% endif %}
                 <form action="" method="post">
@@ -386,7 +408,7 @@
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
-                                Friends request from other users (open dropdown to accept or deline)
+                                Pending requests that you sent to other users
                             </span>
                         </span>
                     </button>
@@ -394,7 +416,7 @@
                         {% if sent_requests %}
                             {% for sent_request in sent_requests %}
                                 <li style="list-style-type: none">
-                                    {{ sent_requests | linebreaksbr }}
+                                    {{ sent_request.to_user | linebreaksbr }}
                                 </li> <br>
                             {% endfor %}
                         {% else %}
