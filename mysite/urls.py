@@ -22,6 +22,10 @@ from django.contrib.auth.views import LogoutView
 # handler404 = views.handler404
 # handler500 = 'my_app.views.handler500'
 
+# for profile pic - configure MEDIA_URL
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('studybuddy/', include('studybuddy.urls')),
     path('admin/', admin.site.urls),
@@ -30,3 +34,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view(), name='logout'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
