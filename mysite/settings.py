@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os, re
 from pathlib import Path
-from telnetlib import AUTHENTICATION
-import os
+from socket import gethostname
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +29,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
+DEV_HOSTS = ['Sofias-MacBook-Pro.local']
+
+if gethostname() not in DEV_HOSTS and not re.match('^fv-az..', gethostname()):
+    # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -182,5 +188,5 @@ NOSE_ARGS = [
     '--with-coverage', # show coverage report
     '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
     # '--cover-html', # maybe add this?
-    '--cover-min-percentage=35', # not sure what our values are yet, still trying to mock models
+    '--cover-min-percentage=15', # not sure what our values are yet, still trying to mock models
 ]
