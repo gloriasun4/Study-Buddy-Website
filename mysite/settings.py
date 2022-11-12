@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os, re
 from pathlib import Path
-from socket import gethostname, gethostbyname
+from socket import gethostname
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,9 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-DEV_HOSTS = ['Sofias-MacBook-Pro.local', 'fv-az*']
-
-print("hostname: ", gethostname())
+DEV_HOSTS = ['Sofias-MacBook-Pro.local']
 
 if gethostname() not in DEV_HOSTS and not re.match('^fv-az..', gethostname()):
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
