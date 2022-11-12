@@ -29,7 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-DEV_HOSTS = ['Sofias-MacBook-Pro.local']
+DEV_HOSTS = ['Sofias-MacBook-Pro.local', 'fv-az71-297']
+
+print("hostname: ", gethostname())
 
 print("hostname: ", gethostname())
 
