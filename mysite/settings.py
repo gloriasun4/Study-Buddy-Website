@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-import os
+import os, re
 from pathlib import Path
 from socket import gethostname, gethostbyname
 
@@ -29,13 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-DEV_HOSTS = ['Sofias-MacBook-Pro.local', 'fv-az71-297']
+DEV_HOSTS = ['Sofias-MacBook-Pro.local', 'fv-az*']
 
 print("hostname: ", gethostname())
 
-print("hostname: ", gethostname())
-
-if gethostname() not in DEV_HOSTS:
+if gethostname() not in DEV_HOSTS and not re.match('^fv-az..', gethostname()):
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
