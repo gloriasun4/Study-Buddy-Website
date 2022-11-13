@@ -1,11 +1,11 @@
 from django.urls import path
-from studybuddy.views import views, post_views, study_session_views
+from studybuddy.views import views, post_views, study_session_views, friend_views
 
 app_name = 'studybuddy'
 urlpatterns = [
     path('', views.index, name='index'),
     # implementing friends
-    path('friends', views.view_friends, name='viewFriends'),
+    path('friends', friend_views.view_friends, name='viewFriends'),
 
     path('account/', views.account, name='account'),
     path('account/add/', views.addAccount, name='addAccount'),

@@ -301,6 +301,7 @@
                     <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}" name="myBtn" class="btn btn-sm">View Course Feed</a>
                 </div>
                 {% endfor %}
+
                 {% if unenrolled_posts %}
                 <div class="wrapper">
                     <div class="dropdown">
@@ -313,7 +314,7 @@
                                 {{ post | linebreaksbr }}
                                 <form action="" method = "post">
                                     {% csrf_token %}
-                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.catalog_number%}">
+                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.course_number%}">
                                         View Course Feed
                                     </button>
                                     <span class="firstSpan">
@@ -328,7 +329,6 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
                 {% else %}
                     <p>You have not made any posts to find a study buddy and have not enrolled in any classes</p>
                 {% endif %}

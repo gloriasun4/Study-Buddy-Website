@@ -222,9 +222,11 @@
       </nav>
         <div class="d-flex justify-content-center">
             <div class="sb-form">
+
                 {% if valid %}
                 <h2>Make a study buddy post for: </h2> <h2>{{ course | linebreaksbr }}</h2>
                     <form action="{% url 'studybuddy:coursefeed' dept course.course_number%}" method="post">
+
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
                       <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>
@@ -241,11 +243,11 @@
 
                       <label for="description">Description:</label>
                       <textarea type="text" id="description" name="description" placeholder = "message me if you would like to study together" value=description></textarea><br><br>
-                      <input name='submit' type="submit" value="Submit Post">
+                      <input onClick='alertWhenFormNotFilled()' id='make' name='submit' type="button" value="Submit Post">
                     </form>
                 {% else %}
-                    <h1>This course number {{ course }} in {{ dept }} is not available to make a post</h1>
-                    <p>Note: The department {{ dept }} you are looking for does not exist or course number {{ course }} in {{ dept }} is not a available course.</p>
+                    <h1>The course number {{ course_number }} in {{ dept }} is not available to make a post</h1>
+                    <p>Note: The department {{ dept }} you are looking for does not exist or course number {{ course_number }} in {{ dept }} is not valid course.</p>
                 {% endif %}
         </div>
     </div>
@@ -257,6 +259,68 @@
         <div class="text-center">&copy; Team B-15</div>
     </footer>
     </div>
+
+<!-- Source: https://stackoverflow.com/questions/563406/how-to-add-days-to-date -->
+<script>
+    function alertWhenFormNotFilled() {
+        const start = new Date(document.getElementById('start_date').value);
+        const end = document.getElementById('end_date');
+        const form = document.getElementById('make_post');
+        const make = document.getElementById('make');
+
+        console.log(start)
+        console.log(end.value)
+
+        if(end.value == "" && start != "") {
+            let year = start.getYear() + 1900;
+            let month = start.getMonth() + 1;
+            let day = start.getDate() + 8;
+
+            if(day >= 28 && month == 2) {
+                month = month + 1;
+                day = day - 28;
+            }
+            else if(day > 31) {
+                if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                    month = month + 1;
+                    day = day - 31;
+                }
+            }
+            else if(day > 30) {
+                if(month == 4 || month == 6 || month == 9 || month == 11) {
+                    month = month + 1;
+                    day = day - 30;
+                }
+            }
+
+            if(month > 12) {
+                month = 1
+                year = year + 1
+            }
+
+            day = ('0' + day).slice(-2)
+            month = ('0' + month).slice(-2)
+
+            end.setAttribute('value', year + "-" + month + "-" + day)
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
+            make.setAttribute('type', 'submit');
+        }
+        else if(new Date(start).getTime() > new Date(end).getTime()) {
+            form.setAttribute('action', "")
+            alert('end date must be later than start date');
+        }
+        else {
+            console.log("here")
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
+            make.setAttribute('type', 'submit');
+        }
+    }
+
+</script>
+
+
 </body>
 
 </html>
