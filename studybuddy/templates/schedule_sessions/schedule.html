@@ -262,15 +262,13 @@
             </div>
         {% else %}
             <div class="sb-form">
-                <h1>Schedule a study session for: {{ room.name }}</h1>
+                <h1>Schedule a study session for: <br> {{ room.post.course.class_str }} <br> {{ room.name }}</h1>
 
                 <form id="schedule-form" action="{% url 'studybuddy:upcomingSessions' %}">
                     {% csrf_token %}
-                        <p>
-                            This study session is schedule with: **we will use this if chat room is related to a post**
-                            Else we will have the student enter the email address of target student? Or idk depends on how
-                            chat room is going to get associated**
-                        </p>
+<!--                        <p>-->
+<!--                            This study session is schedule with: {{ room.users }}-->
+<!--                        </p>-->
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" value={{date}}><br><br>
 
