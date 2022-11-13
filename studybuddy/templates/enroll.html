@@ -220,39 +220,53 @@
                         <h2>You are already enrolled in this course. Would you like to remove this course from your schedule?</h2>
                         <fieldset align="center">
 
-            <input type="radio" name="choice" id="YesD" value="YesD" >
-            <label for="YesD">Yes, remove this course from my schedule.</label><br>
-
-            <input type="radio" name="choice" id="NoD" value="NoD" >
-            <label for="NoD">No, go back to home page.</label><br>
-
-        </fieldset>
-
-        <div class= "row justify-content-center">
-
-           <input type="submit" value="Continue">
+                            <input type="radio" name="choice" id="YesD" value="YesD" checked>
+                            <label for="YesD">Yes, remove this course from my schedule.</label><br>
+                
+                            <input type="radio" name="choice" id="NoD" value="NoD" >
+                            <label for="NoD">No, go back to home page.</label><br>
+                
+                        </fieldset>
+                        <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn">Back to Departments</a>
+                        <input class="btn" type="submit" value="Continue">
+                    </form>
+                    </div>
+            </div>
         </div>
-        </form>
-
+        <footer class="footer-container">
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
+            <div class="text-center">&copy; Team B-15</div>
+        </footer>
     {% else %}
-        <p>Would you like to enroll in this course?</p>
-        <form action="{% url 'studybuddy:ucl' course.subject course.course_number%}" method="post" >
-        {% csrf_token %}
-        <fieldset align="center">
-
-            <input type="radio" name="choice" id="YesE" value="YesE" >
-            <label for="YesE">Yes, enroll in this course.</label><br>
-
-            <input type="radio" name="choice" id="NoE" value="NoE" >
-            <label for="NoE">No, go back to home page.</label><br>
-
-        </fieldset>
-
-        <div class= "row justify-content-center">
-
-           <input type="submit" value="Continue">
+    
+    <div class="d-flex justify-content-center">
+        <div class="sb-form">
+            <form action="{% url 'studybuddy:ucl' course.subject course.course_number%}" method="post" >
+                {% csrf_token %}
+                <div class="wrapper">
+                    <h2>Would you like to enroll in this course?</h2>
+                    <fieldset align="center">
+                        <input type="radio" name="choice" id="YesE" value="YesE" checked>
+                        <label for="YesE">Yes, enroll in this course.</label><br>
+                        <input type="radio" name="choice" id="NoE" value="NoE" >
+                        <label for="NoE">No, go back to home page.</label><br>
+                    </fieldset>
+                        <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn">Back to Departments</a>
+                        <input class="btn" type="submit" value="Continue">
+                </form>
+                </div>
         </div>
-        </form>
+    </div>
+        <footer class="footer-container">
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
+            <div class="text-center">&copy; Team B-15</div>
+        </footer>
     {% endif %}
 </body>
 </html>
