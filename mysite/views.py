@@ -9,9 +9,10 @@ def index(request):
     if request.user.is_anonymous:
         return render(request, template_name)
     else:
-        views.addAccount(request)
+        #views.addAccount(request)
+        return HttpResponseRedirect(reverse('studybuddy:addAccount'))
 
-        return HttpResponseRedirect(reverse('studybuddy:index'))
+        #return HttpResponseRedirect(reverse('studybuddy:index'))
 
 def handler404(request, *args, **argv):
     response = render_to_response('index.html', {},

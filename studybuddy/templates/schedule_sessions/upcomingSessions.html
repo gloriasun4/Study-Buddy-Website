@@ -22,7 +22,7 @@
 
             .navbar-brand {
                 margin-left: 16px;
-                font-size: 28px;
+                font-size: 26px;
                 color: #464646;
             }
 
@@ -36,6 +36,7 @@
             }
 
             footer {
+                bottom: 0px;
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
@@ -102,7 +103,7 @@
 
             body {
                 font-family: 'Orelega One';
-                font-size: 22px;
+                font-size: 18px;
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
@@ -115,7 +116,7 @@
             .sb-form {
                 width: 700px;
                 float: right;
-                margin-top: 80px;
+                margin-top: 50px;
                 padding: 30px 0;
                 font-size: 15px;
                 position: relative;
@@ -150,11 +151,9 @@
 
             .sb-form .btn{
                 font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
                   min-width: 140px;
                   outline: none !important;
                   background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.5); {% endcomment %}
                   color: white;
                   border-radius: 12px;
                   margin-bottom: 10px;
@@ -162,35 +161,12 @@
 
               .sb-form .btn:hover {
                 font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
                   min-width: 140px;
                   outline: none !important;
                   background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.5); {% endcomment %}
                   color: white;
                   border-radius: 12px;
                   margin-bottom: 10px;
-              }
-              .myForm .btn{
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
-              .myForm .btn:hover {
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
               }
 
                #myInput {
@@ -271,10 +247,16 @@
                 .firstSpan:hover .secondSpan {
                   visibility: visible;
                 }
+
+                .content .msg {
+                    margin-top: 15px;
+                    font-size: 18px;
+                }
             </style>
         </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
@@ -285,11 +267,14 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="alldepartments"> Update Course Load </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:chat' %}"> Chat Room </a></li>
-                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
                     </ul>
                 </div>
@@ -313,7 +298,7 @@
                     <div class="content">
                         {% if study_sessions %}
                             {% for session in study_sessions %}
-                                <li style="list-style-type: none">
+                                <li style="list-style-type: none" class="msg">
                                     {{ session | linebreaksbr }}
                                 </li><br>
                                 <form action="" method = "post">
@@ -323,13 +308,11 @@
                                 </form>
                             {% endfor %}
                         {% else %}
-                            <p>You currently do have any scheduled study sessions</p>
+                            <p class="msg">You currently do have any scheduled study sessions</p>
                         {% endif %}
                     </div>
                 </div>
-
                 <br>
-
                 <div class="dropdown">
                     <button type="button" class="collapsible">
                         Study Session Requests
@@ -349,12 +332,12 @@
                                 <form action="" method = "post">
                                     {% csrf_token %}
                                     <input type="hidden" name="session_pk" value="{{session.pk}}">
-                                    <input name='accept' type="submit" value="Accept" class="btn"> &nbsp &nbsp
-                                    <input name='decline' type="submit" value="Decline" class="btn">
+                                    <input name='accept' type="submit" value="Accept" class="btn btn-sm"> &nbsp &nbsp
+                                    <input name='decline' type="submit" value="Decline" class="btn btn-sm">
                                 </form>
                             {% endfor %}
                         {% else %}
-                            <p>You currently do have any study sessions requests from other users</p>
+                            <p class="msg">You currently do have any study sessions requests from other users</p>
                         {% endif %}
                     </div>
                 </div>
@@ -381,7 +364,7 @@
                                 </li><br>
                             {% endfor %}
                         {% else %}
-                            <p>You currently do have any declined study sessions requests</p>
+                            <p class="msg">You currently do have any declined study sessions requests</p>
                         {% endif %}
                     </div>
                 </div>

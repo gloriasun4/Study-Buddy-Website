@@ -21,7 +21,7 @@
 
             .navbar-brand {
                 margin-left: 16px;
-                font-size: 28px;
+                font-size: 26px;
                 color: #464646;
             }
 
@@ -101,7 +101,7 @@
 
             body {
                 font-family: 'Orelega One';
-                font-size: 22px;
+                font-size: 18px;
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
@@ -112,9 +112,9 @@
             }
 
             .sb-form {
-                width: 700px;
+                width: 900px;
                 float: right;
-                margin-top: 80px;
+                margin-top: 30px;
                 padding: 30px 0;
                 font-size: 15px;
                 position: relative;
@@ -147,51 +147,6 @@
                 color: #636363;
             }
 
-            .sb-form .btn{
-                font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.5); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-                  margin-bottom: 10px;
-              }
-
-              .sb-form .btn:hover {
-                font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.5); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-                  margin-bottom: 10px;
-              }
-              .myForm .btn{
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
-              .myForm .btn:hover {
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
                #myInput {
                   background-image: url('/css/searchicon.png');
                   background-position: 10px 12px;
@@ -201,6 +156,7 @@
                   padding: 12px 20px 12px 40px;
                   border: 1px solid #ddd;
                   margin-bottom: 12px;
+                  border-radius: 12px;
                 }
 
                 #myUL {
@@ -217,7 +173,7 @@
                   text-decoration: none;
                   font-size: 16px;
                   font-weight: bold;
-                  color: white;
+                  color: #464646;
                   display: block;
                   border-radius: 12px;
                   min-width: 140px;
@@ -231,6 +187,7 @@
         </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
@@ -242,9 +199,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Departments </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -253,7 +214,7 @@
     <div class="d-flex justify-content-center">
         <div class="sb-form">
             <form>
-              <h3>Choose the class you would like to find a study buddy in</h3>
+              <h2>Choose the class you would like to find a study buddy in</h2>
               <div class="myForm">
                   {% if department_list %}
                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses in {{dept}}.." title="Type in a department">

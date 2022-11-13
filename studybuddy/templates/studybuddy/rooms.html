@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <title>Study Buddy</title>
+    <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
     <style>
         .navbar {
             padding-right: 1em;
@@ -20,6 +21,8 @@
 
         .navbar-brand {
             color: #464646;
+            margin-left: 16px;
+            font-size: 26px;
         }
 
         .navbar-toggler {
@@ -97,20 +100,14 @@
         }
 
         body {
+            font-family: 'Orelega One';
+            font-size: 18px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            background: url("https://images.unsplash.com/photo-1508873699372-7aeab60b44ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
-            /*
-            {% comment %} background: url("https://images.unsplash.com/photo-1495465798138-718f86d1a4bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1598620617137-2ab990aadd37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
-            {% comment %} background: url("https://images.unsplash.com/photo-1611079829529-fe31a9531295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center; {% endcomment %}
-            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %} */
+            background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
             background-size: cover;
         }
 
@@ -128,28 +125,14 @@
         }
           
         .title {
-            font-weight: bold;
             /* {% comment %} color: #fbfbfb; {% endcomment %} */
             color: white;
-            animation-name: rightToLeft;
-            animation-duration: 6s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
         }
-          
-        /* @keyframes rightToLeft {
-            0% {
-              transform: translateX(200px);
-            }
-            100% {
-              transform: translateX(-160px);
-            }
-        } */
 
         .sb-form {
             width: 700px;
             float: right;
-            margin-top: 80px;
+            margin-top: 50px;
             padding: 30px 0;
             font-size: 15px;
             position: relative;
@@ -170,20 +153,32 @@
             margin-bottom: 20px;
         }
 
-        .sb-form .btn {
-            font-size: 16px;
-            font-weight: bold;
-            min-width: 140px;
-            outline: none !important;
-            /* {% comment %} background: #65c5c0; {% endcomment %} 
-            {% comment %} background: #e2a6c0; {% endcomment %}
-            {% comment %} background: #aaa6e2; {% endcomment %} */
-            background: #a6e2c8; 
-            /* {% comment %} background: #c0e2a6; {% endcomment %}  */
-            color: white;
-            border-radius: 12px;
-        }
-
+        .sb-form .btn{
+            font-size: 18px;
+              min-width: 140px;
+              outline: none !important;
+              background-color: #65c5c0;
+              color: white;
+              border-radius: 12px;
+              margin-top: 10px;
+              margin-bottom: 10px;
+              margin-left: 10px;
+              margin-right: 10px;
+          }
+    
+          .sb-form .btn:hover {
+            font-size: 18px;
+              min-width: 140px;
+              outline: none !important;
+              background: #a6e2c8;
+              color: white;
+              border-radius: 12px;
+              margin-top: 10px;
+              margin-bottom: 10px;
+              margin-left: 10px;
+              margin-right: 10px;
+          }
+          
         .sb-form .row div:first-child {
             padding-right: 10px;
         }
@@ -199,6 +194,7 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div class="row">
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
@@ -210,28 +206,36 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
-                        {% comment %} <li class="nav-item"><a class="nav-link" href="coursefeed"> Course Feed </a></li>
-                        <li class="nav-item"><a class="nav-link" href="department%"> Department </a></li> {% endcomment %}
-                        <!-- <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
-                        <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li> -->
-                        <!-- <li class="nav-item"><a class="nav-link" href="chat"> Back to Chat </a></li> -->
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="d-flex justify-content-center">
             <div class="sb-form">
-                <form method="get">
+                <form>
                     <div class="wrapper">
-                        <h1 class="title">Rooms</h1>
-                        
+                        <h1 class="title">Chat Rooms</h1>
                       </div>
                       <!-- <div class="form-group">
                         <button class="btn btn-lg" type="submit" formaction="alldepartments">
                         <a name="myBtn">Find a study buddy</a></button>
                       </div> -->
-                </form> 
+                      {% for room in rooms %}
+                      <div class="w-full lg:w-1/4 px-3 py-3">
+                          <div class="p-4 bg-white shadow rounded-xl text-center">
+                              <h2 class="mb-5 text-2xl font-semibold">{{ room.name }}</h2>
+                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Join</a>
+                          </div>
+                      </div>
+                      {% endfor %}
+                </form>
                 {% for room in rooms %}
                 <div class="w-full lg:w-1/4 px-3 py-3">
                     <div class="p-4 bg-white shadow rounded-xl text-center">

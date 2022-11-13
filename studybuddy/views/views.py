@@ -39,8 +39,9 @@ def addAccount(request):
     if not exist:
         newAcc = User(email=email, name=request.user.username)
         newAcc.save()
-
-    return HttpResponseRedirect(reverse('studybuddy:index'))
+        return HttpResponseRedirect(reverse('studybuddy:editAccount'))
+    else:
+        return HttpResponseRedirect(reverse('studybuddy:index'))
 
 
 def account(request):
@@ -55,7 +56,8 @@ def account(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'AboutMe': user.blurb,
+        'student': user
 
     }
     return render(request, 'studybuddy/account.html', context)
