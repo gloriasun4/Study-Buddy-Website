@@ -192,7 +192,7 @@ def coursefeed(request, dept, course_number):
     else:
         context = {
             'dept': dept.upper(),
-            'course': course_number,
+            'course_number': course_number,
             'student': User.objects.get(email=request.user.email),
         }
 
