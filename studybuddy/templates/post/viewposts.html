@@ -301,7 +301,7 @@
                     <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}" name="myBtn" class="btn btn-sm">View Course Feed</a>
                 </div>
                 {% endfor %}
-
+                {% endif %}
                 {% if unenrolled_posts %}
                 <div class="wrapper">
                     <div class="dropdown">
