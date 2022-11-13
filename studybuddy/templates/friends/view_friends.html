@@ -302,6 +302,10 @@
                     margin-top: 15px;
                     font-size: 18px;
                 }
+
+                  .dropdown .arrowdown {
+                  font-size: 15px;
+                  }
             </style>
         </head>
 
@@ -324,7 +328,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -384,7 +388,7 @@
 
             <div class="wrapper">
                 <div class="dropdown">
-                    <button type="button" class="collapsible">My Friends</button>
+                    <button type="button" class="collapsible"> <span class="arrowdown">&#8964</span> My Friends</button>
                     <div class="content">
                         {% if friends %}
                             {% for friend in friends %}
@@ -407,7 +411,7 @@
 
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        Pending Friend Requests
+                        <span class="arrowdown">&#8964</span> Pending Friend Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -438,7 +442,7 @@
 
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        Sent Friend Requests
+                        <span class="arrowdown">&#8964</span> Sent Friend Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -459,32 +463,32 @@
                     </div>
                 </div>
 
-                <br>
+<!--                <br>-->
 
-                <div class="dropdown">
-                    <button type="button" class="collapsible">
-                        Declined Friend Requests
-                        <span class="firstSpan">
-                            (?)
-                            <span class="secondSpan">
-                                friends request that you sent and have been declined
-                                (they will disappear 24 hours after declining)
-                            </span>
-                        </span>
-                    </button>
-                    <div class="content">
-                        <p class="msg">Should we keep this??</p>
-                        {% if declined_sessions %}
-                            {% for session in declined_sessions %}
-                                <li style="list-style-type: none">
-                                    {{ session | linebreaksbr }} <br>
-                                    will be removed on: {{ session.date }} {{ session.end }}
-                                </li><br>
-                            {% endfor %}
-                        {% else %}
-                            <p class="msg">You currently do have any declined friend requests</p>
-                        {% endif %}
-                    </div>
+<!--                <div class="dropdown">-->
+<!--                    <button type="button" class="collapsible">-->
+<!--                        Declined Friend Requests-->
+<!--                        <span class="firstSpan">-->
+<!--                            (?)-->
+<!--                            <span class="secondSpan">-->
+<!--                                friends request that you sent and have been declined-->
+<!--                                (they will disappear 24 hours after declining)-->
+<!--                            </span>-->
+<!--                        </span>-->
+<!--                    </button>-->
+<!--                    <div class="content">-->
+<!--                        <p class="msg">Should we keep this??</p>-->
+<!--                        {% if declined_sessions %}-->
+<!--                            {% for session in declined_sessions %}-->
+<!--                                <li style="list-style-type: none">-->
+<!--                                    {{ session | linebreaksbr }} <br>-->
+<!--                                    will be removed on: {{ session.date }} {{ session.end }}-->
+<!--                                </li><br>-->
+<!--                            {% endfor %}-->
+<!--                        {% else %}-->
+<!--                            <p class="msg">You currently do have any declined friend requests</p>-->
+<!--                        {% endif %}-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>

@@ -75,7 +75,8 @@ def EditAccount(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb
+        'AboutMe': user.blurb,
+        'student': User.objects.get(email=request.user.email),
 
     }
     return render(request, 'studybuddy/editAccount.html', context)
@@ -185,12 +186,14 @@ def coursefeed(request, dept, course_number):
             'course': course,
             'valid': 'true',
             'feed_posts': post_for_this_class,
-            'has_posts': post_for_this_class.exists()
+            'has_posts': post_for_this_class.exists(),
+            'student': User.objects.get(email=request.user.email),
         }
     else:
         context = {
             'dept': dept.upper(),
             'course': course_number,
+            'student': User.objects.get(email=request.user.email),
         }
 
     return render(request, template_name, context)
@@ -204,6 +207,7 @@ def enrollcourse(request, dept, course_number):
 
     if Course.objects.filter(course_number=course_number).exists():
         context = {
+            'student': User.objects.get(email=request.user.email),
             'dept': dept.upper(),
             'course': Course.objects.get(course_number=course_number),
             'valid': 'true',
@@ -214,6 +218,7 @@ def enrollcourse(request, dept, course_number):
         context = {
             'dept': dept.upper(),
             'course': course_number,
+            'student': User.objects.get(email=request.user.email),
         }
 
     return render(request, template_name, context)
@@ -236,22 +241,3 @@ def updatecourseload(request, dept, course_number):
 
     return HttpResponseRedirect(reverse('studybuddy:index'))
 
-
-# def disenrollcourse(reques, dept, course_number):
-#     template_name = 'disenroll.html'
-#
-#     # print(Departments.objects.filter(dept))
-#     if (Course.objects.filter(course_number=course_number).exists()):
-#         context = {
-#             'dept': dept.upper(),
-#             'course': Course.objects.get(course_number=course_number),
-#             'valid': 'true',
-#
-#         }
-#     else:
-#         context = {
-#             'dept': dept.upper(),
-#             'course': course_number,
-#         }
-#
-#     return render(request, template_name, context)

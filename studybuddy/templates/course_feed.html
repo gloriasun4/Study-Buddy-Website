@@ -216,7 +216,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -292,7 +292,7 @@
                                 {% else %}
                                     <!-- this will link to chat room -->
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input type="submit" name="message" value="Message Me!" class="btn btn-lg">
+                                    <input type="submit" name="message" value="Message Me!" class="btn btn-sm">
                                 {% endif %}
                             </form>
                             </li>

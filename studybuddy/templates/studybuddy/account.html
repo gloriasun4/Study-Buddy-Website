@@ -235,7 +235,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Room </a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                 </ul>
             </div>
         </div>
@@ -244,16 +244,16 @@
 <div class="container emp-profile">
     <form>
         <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1743&q=80" alt=""/>
-                    <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" name="file"/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
+<!--            <div class="col-md-4">-->
+<!--                <div class="profile-img">-->
+<!--                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1743&q=80" alt=""/>-->
+<!--                    <div class="file btn btn-lg btn-primary">-->
+<!--                        Change Photo-->
+<!--                        <input type="file" name="file"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="col-md-10">
                 <div class="profile-head">
                             <h2>
                                 {{Name}}
@@ -292,28 +292,6 @@
                     {% endif %}
                     <a href="{% url 'studybuddy:alldepartments'%}"> Edit Schedule</a>
 
-                </div>
-                <div class="profile-work">
-                    <p><h4> Friends: </h4></p>
-                    {% if Friends.all %}
-                        {% for friend in Friends.all %}
-                        <li><a href="/studybuddy/{{friend.email}}/account/">{{ friend.email }}</a></li>
-                        {% endfor %}
-                    {% else %}
-                        <p class="text-center">You are currently not friends with other users </p>
-                    {% endif %}
-                    <p><h4> Friend Requests: </h4></p>
-                    {% if all_friend_requests %}
-                        {% for friend_request in all_friend_requests %}
-                            <h1>{{friend_request.from_user}}
-                              <a href="/accept_friend_request/{{friend_request.id}}/">
-                                accept friend request
-                              </a>
-                            </h1>
-                        {% endfor %}
-                    {% else %}
-                        <p class="text-center">You are currently do not have any pending friend requests </p>
-                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8">

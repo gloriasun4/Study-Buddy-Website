@@ -229,6 +229,10 @@
           overflow: hidden;
           transition: max-height 0.2s ease-out;
         }
+
+        .dropdown .arrowdown {
+            font-size: 15px;
+        }
     </style>
 </head>
 
@@ -251,7 +255,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -267,7 +271,9 @@
                 <div class="wrapper">
                     <div class="dropdown">
                         
-                        <button type="button" class="collapsible">{{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}</button>
+                        <button type="button" class="collapsible"> <span class="arrowdown">&#8964</span>
+                            {{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}
+                        </button>
                         
                         <div class="content">
                             <form action="" method = "post">
@@ -306,7 +312,7 @@
                 <div class="wrapper">
                     <div class="dropdown">
                         <button type="button" class="collapsible">
-                            Courses you aren't enrolled in, but made posts for
+                            <span class="arrowdown">&#8964</span> Courses you aren't enrolled in, but made posts for
                         </button>
                         <div class="content">
                         {% for post in unenrolled_posts %}
@@ -329,7 +335,8 @@
                         </div>
                     </div>
                 </div>
-                {% else %}
+                {% endif %}
+                {% if no_courses_and_post %}
                     <p>You have not made any posts to find a study buddy and have not enrolled in any classes</p>
                 {% endif %}
             </div>

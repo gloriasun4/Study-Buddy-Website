@@ -7,7 +7,8 @@ def rooms(request):
         return render(request, template_name="index.html")
 
     context = {
-        'rooms': Room.objects.filter(users=User.objects.get(email=request.user.email))
+        'rooms': Room.objects.filter(users=User.objects.get(email=request.user.email)),
+        'student': User.objects.get(email=request.user.email),
     }
 
     return render(request, 'studybuddy/rooms.html', context)
@@ -23,7 +24,8 @@ def room(request, roomNumber):
     context = {
         'room': room,
         'messages': messages,
-        'username': User.objects.get(email=request.user.email).username
+        'username': User.objects.get(email=request.user.email).username,
+        'student': User.objects.get(email=request.user.email),
     }
 
     return render(request, 'studybuddy/room.html', context)

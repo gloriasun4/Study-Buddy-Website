@@ -252,6 +252,10 @@
                     margin-top: 15px;
                     font-size: 18px;
                 }
+
+                .dropdown .arrowdown {
+                  font-size: 15px;
+                }
             </style>
         </head>
 
@@ -275,7 +279,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -287,7 +291,7 @@
             <div class="wrapper">
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        Scheduled Study Sessions
+                        <span class="arrowdown">&#8964</span> Scheduled Study Sessions
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -315,7 +319,7 @@
                 <br>
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        Study Session Requests
+                        <span class="arrowdown">&#8964</span> Study Session Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -346,7 +350,7 @@
 
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        Declined Study Sessions
+                        <span class="arrowdown">&#8964</span> Declined Study Sessions
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">

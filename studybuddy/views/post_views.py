@@ -13,6 +13,7 @@ def makepost(request, dept, course_number):
     context = {
         'dept': dept.upper(),
         'course_number': course_number,
+        'student': User.objects.get(email=request.user.email),
     }
 
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
@@ -113,8 +114,15 @@ def viewposts(request):
 
     context = {
         'user_posts': user_posts,
-        'enrolled_courses': enrolled_courses
+        'enrolled_courses': enrolled_courses,
+        'student': User.objects.get(email=request.user.email),
     }
+
+    print(unenrolled_posts is None)
+    print(enrolled_courses.count()== 0)
+
+    if enrolled_courses.count()== 0 and unenrolled_posts is None:
+        context['no_courses_and_post'] = True
 
     if unenrolled_posts is not None:
         context ['unenrolled_posts'] = unenrolled_posts
