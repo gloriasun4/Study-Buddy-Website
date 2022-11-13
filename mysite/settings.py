@@ -29,7 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
-DEV_HOSTS = ['Sofias-MacBook-Pro.local']
+DEV_HOSTS = ['Sofias-MacBook-Pro.local', 'Claires-MBP.hsd1.va.comcast.net']
+
 
 if gethostname() not in DEV_HOSTS and not re.match('^fv-az..', gethostname()):
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
