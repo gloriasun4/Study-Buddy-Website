@@ -197,6 +197,8 @@ class CourseFeedViewTest(TestCase):
         self.test_section = 000
         self.test_course_number = 12345
 
+        User.objects.create(email=self.test_email)
+
         # mock user login
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
         self.client.login(username=self.test_username, password=self.test_password)

@@ -58,6 +58,7 @@ def view_friends(request):
         'friends': friends,
         'friend_requests': friend_request,
         'sent_requests': sent_requests,
+        'student': User.objects.get(email=request.user.email),
         # add declined?
     }
 

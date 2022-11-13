@@ -212,7 +212,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.firstName}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -224,12 +224,12 @@
             <div class="sb-form">
 
                 {% if course %}
-                <h2>Make a study buddy post for: </h2> <h2>{{ course | linebreaksbr }}</h2>
-                    <form action="{% url 'studybuddy:coursefeed' dept course.course_number%}" method="post">
-
+                <h1>Make a study buddy post for: </h1> <h1>{{ course | linebreaksbr }}</h1>
+                    <form id="make_post" action="{% url 'studybuddy:coursefeed' dept course_number%}">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
                       <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>
+
                       <label>Post To: </label> &nbsp &nbsp
                       <input type="radio" id="section" name="post_type" value="section" checked>Only this section
                       <span class="firstSpan">(?)<span class="secondSpan">This study buddy post will only be displayed for this section</span></span>&nbsp &nbsp

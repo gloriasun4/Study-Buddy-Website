@@ -14,11 +14,13 @@ def schedule(request, roomNumber):
         room = Room.objects.get(pk=roomNumber)
 
         context = {
-            'room': room
+            'room': room,
+            'student': User.objects.get(email=request.user.email),
         }
     else:
         context = {
-            'noRoom': roomNumber
+            'noRoom': roomNumber,
+            'student': User.objects.get(email=request.user.email),
         }
 
     return render(request, template_name, context)
@@ -62,7 +64,8 @@ def upcomingSessions(request):
     context = {
         'study_sessions': user_sessions.filter(accepted='yes'),
         'pending_sessions': user_sessions.filter(accepted='?'),
-        'declined_sessions': user_sessions.filter(accepted='no')
+        'declined_sessions': user_sessions.filter(accepted='no'),
+        'student': User.objects.get(email=request.user.email),
     }
 
     return render(request, template_name, context)

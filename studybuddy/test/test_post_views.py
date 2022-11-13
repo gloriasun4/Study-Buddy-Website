@@ -21,6 +21,8 @@ class MakePostViewTest(TestCase):
         self.test_course_number = 12345
         self.test_description = 'testCourseDescription'
 
+        User.objects.create(email=self.test_email)
+
         Course.objects.create(subject=self.test_subject.upper(),
                               catalog_number=self.test_catalog_number,
                               instructor=self.test_instructor,
