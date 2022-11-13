@@ -316,7 +316,11 @@
                                 <li style="list-style-type: none">
                                     {{ session | linebreaksbr }}
                                 </li><br>
-                                <button class="btn">Delete</button>
+                                <form action="" method = "post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="session_pk" value="{{session.pk}}">
+                                    <input name='delete' type="submit" value="Delete" class="btn">
+                                </form>
                             {% endfor %}
                         {% else %}
                             <p>You currently do have any scheduled study sessions</p>
@@ -337,7 +341,6 @@
                         </span>
                     </button>
                     <div class="content">
-                        <p>TEMPORARY: should we rename?</p>
                         {% if pending_sessions %}
                             {% for session in pending_sessions %}
                                 <li style="list-style-type: none">
