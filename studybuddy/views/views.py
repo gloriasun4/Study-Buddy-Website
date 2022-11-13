@@ -221,7 +221,7 @@ def enrollcourse(request, dept, course_number):
 
     template_name = 'enroll.html'
 
-    if (Course.objects.filter(course_number=course_number).exists()):
+    if Course.objects.filter(course_number=course_number).exists():
         context = {
             'dept': dept.upper(),
             'course': Course.objects.get(course_number=course_number),
@@ -249,7 +249,7 @@ def updatecourseload(request, dept, course_number):
     action = request.POST['choice']
     if action == "YesD":
         EnrolledClass.objects.filter(course=course, student=account).delete()
-    elif action == "YesE":
+    elif action == "YesE" and not EnrolledClass.objects.filter(course=course, student=account).exists():
         enrolled = EnrolledClass(course=course, student=account)
         enrolled.save()
 
