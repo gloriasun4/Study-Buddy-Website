@@ -129,7 +129,7 @@ class StudySession(models.Model):
     """
     # if post is deleted, the study session should still remain, because deletion of a post means
     # the user no longer wants the post/they have found a study buddy, but study sessions schedule should remain
-    post = models.ForeignKey(Post, on_delete=models.PROTECT, null=True)
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
     users = models.ManyToManyField(User)
 
     # currently just setting it the room name
