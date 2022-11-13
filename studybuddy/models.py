@@ -21,6 +21,7 @@ class User(models.Model):
     def __str__(self):
         return self.email
 
+
 # implementing friends
 class Friend_Request(models.Model):
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
@@ -29,6 +30,7 @@ class Friend_Request(models.Model):
 
     def __str__(self):
         return self.from_user.email
+
 
 class Room(models.Model):
     name = models.CharField(max_length=255)
@@ -132,12 +134,11 @@ class StudySession(models.Model):
     # post = models.OneToOneField(Post, on_delete=models.PROTECT, )
 
     # currently just setting it the room name
-    name = models.CharField(max_length=50, default="Study Session") #update after figuring out room/post/user relation
+    name = models.CharField(max_length=50, default="Study Session")  # update after figuring out room/post/user relation
     date = models.DateField(default=timezone.now().strftime("%m-%d-%Y"))
     start = models.TimeField(default=timezone.now().strftime("%H-%M"))
     end = models.TimeField(default=(timezone.now() + datetime.timedelta(hours=1)).strftime("%H-%M"))
     accepted = models.CharField(max_length=4, default="?")
-
 
     def __str__(self):
         if type(self.start) != str:

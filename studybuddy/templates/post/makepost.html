@@ -251,9 +251,9 @@
       </nav>
         <div class="d-flex justify-content-center">
             <div class="sb-form">
-                {% if valid %}
+                {% if course %}
                 <h1>Make a study buddy post for: </h1> <h1>{{ course | linebreaksbr }}</h1>
-                    <form id="make_post" action="{% url 'studybuddy:coursefeed' dept course.course_number%}">
+                    <form id="make_post" action="{% url 'studybuddy:coursefeed' dept course_number%}">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
                       <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>
@@ -274,8 +274,8 @@
                       <input onClick='alertWhenFormNotFilled()' id='make' name='submit' type="button" value="Submit Post">
                     </form>
                 {% else %}
-                    <h1>The course number {{ course }} in {{ dept }} is not available to make a post</h1>
-                    <p>Note: The department {{ dept }} you are looking for does not exist or course number {{ course }} in {{ dept }} is not a available course.</p>
+                    <h1>The course number {{ course_number }} in {{ dept }} is not available to make a post</h1>
+                    <p>Note: The department {{ dept }} you are looking for does not exist or course number {{ course_number }} in {{ dept }} is not valid course.</p>
                 {% endif %}
         </div>
     </div>
@@ -331,7 +331,7 @@
 
             end.setAttribute('value', year + "-" + month + "-" + day)
             form.setAttribute('method', 'post');
-            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course.course_number%}')
+            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
         }
         else if(new Date(start).getTime() > new Date(end).getTime()) {
@@ -341,7 +341,7 @@
         else {
             console.log("here")
             form.setAttribute('method', 'post');
-            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course.course_number%}')
+            form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
         }
     }

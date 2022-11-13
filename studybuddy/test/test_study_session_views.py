@@ -42,7 +42,6 @@ class ScheduleViewTest(TestCase):
         """
         response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
         self.assertEqual(response.status_code, 200)
-        print(response.content)
         self.assertTemplateUsed(response, 'schedule_sessions/schedule.html')
 
     def test_displays_scheduling_form(self):
@@ -50,7 +49,22 @@ class ScheduleViewTest(TestCase):
         upcoming study session can be booked for a room
         """
         response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
-        print(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Schedule a study session for: ' + self.test_room)
+
+    def test_displays_message_when_room_is_not_valid(self):
+        """
+        when room is not valid, appropriate message is displayed
+        """
+        # given
+        Room.objects.all().delete()
+
+        # when
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+
+        # then
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Room ' + self.test_room + ' does not exist')
 
 
 class UpcomingSessionsViewTest(TestCase):
@@ -63,6 +77,7 @@ class UpcomingSessionsViewTest(TestCase):
         self.start = '01:30'
         self.end = '2:30'
         self.test_accepted = '?'
+        self.test_room = 'testRoom'
 
         self.test_request_factory = RequestFactory()
         User.objects.create(email=self.test_email)
@@ -154,3 +169,28 @@ class UpcomingSessionsViewTest(TestCase):
         # then
         self.assertEqual(response.status_code, 200)
         mock_deleteSession.assert_called_once_with(test_view_delete_session_request)
+
+    def test_schedule_creates_study_session(self):
+        """
+        when a user schedules a study session, the study session is added
+        """
+        # given
+        StudySession.objects.all().delete()
+        Room.objects.create(name=self.test_room, slug=self.test_room)
+
+        test_view_schedule_session_request = self.test_request_factory.post(
+            '/studybuddy/upcomingSessions', {'schedule' : 'schedule',
+                                             'date' : self.test_date,
+                                             'start' : self.start,
+                                             'end' : self.end,
+                                             'roomName' : self.test_room})
+        test_view_schedule_session_request.user = self.test_user
+
+        self.assertEqual(StudySession.objects.count(), 0)
+
+        # when
+        response = upcomingSessions(test_view_schedule_session_request)
+
+        # then
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(StudySession.objects.count(), 1)

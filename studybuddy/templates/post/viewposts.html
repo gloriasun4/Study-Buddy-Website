@@ -269,45 +269,46 @@
                     <h1>My Posts</h1>
                 </div>
                 {% if enrolled_courses %}
-                {% for enrolled_course in enrolled_courses %}
-                <div class="wrapper">
-                    <div class="dropdown">
-                        <button type="button" class="collapsible">{{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}</button>
-                        <div class="content">
-                          {% for post in user_posts %}
-                            {% if post.course.course_number == enrolled_course.course.course_number %}
-                                <li style="list-style-type: none">
-                                    {{ post | linebreaksbr }}
-                                    <form action="" method = "post">
-                                    {% csrf_token %}
-                                    <!-- link to maybe some pop up to show post + post.description -->
-                                    <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
-                                    <span class="firstSpan">
-                                        <button class="btn btn-lg">View Description</button>
-                                    <span class="secondSpan">{{ post.description }}</span></span>
-                                        <input type="hidden" name="delete_source" value="get_posts">
-                                        <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                        <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
-                                    </form>
-                                </li>
-                              {% endif %}
-                            <br>
-                        {% endfor %}
-                            {% comment %}
-                                Showing them they don't have a course in specified class???
-                                {% if has_post == False %}
-                                    <p>You have not made any posts for this class</p>
-                                {% endif %}
-                            {% endcomment %}
-                          </div>
-                        </div>
-                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
-                        <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
-                            View Course Feed
-                        </a>
-                    </button>
-                </div>
-                {% endfor %}
+                    {% for enrolled_course in enrolled_courses %}
+                    <div class="wrapper">
+                        <div class="dropdown">
+                            <button type="button" class="collapsible">{{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}</button>
+                            <div class="content">
+                              {% for post in user_posts %}
+                                {% if post.course.course_number == enrolled_course.course.course_number %}
+                                    <li style="list-style-type: none">
+                                        {{ post | linebreaksbr }}
+                                        <form action="" method = "post">
+                                        {% csrf_token %}
+                                        <!-- link to maybe some pop up to show post + post.description -->
+                                        <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
+                                        <span class="firstSpan">
+                                            <button class="btn btn-lg">View Description</button>
+                                        <span class="secondSpan">{{ post.description }}</span></span>
+                                            <input type="hidden" name="delete_source" value="get_posts">
+                                            <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                            <input name="delete" type="submit" value="Delete Post" class="btn btn-lg">
+                                        </form>
+                                    </li>
+                                  {% endif %}
+                                <br>
+                            {% endfor %}
+                                {% comment %}
+                                    Showing them they don't have a course in specified class???
+                                    {% if has_post == False %}
+                                        <p>You have not made any posts for this class</p>
+                                    {% endif %}
+                                {% endcomment %}
+                              </div>
+                            </div>
+                        <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
+                            <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}">
+                                View Course Feed
+                            </a>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
                 {% if unenrolled_posts %}
                 <div class="wrapper">
                     <div class="dropdown">
@@ -320,7 +321,7 @@
                                 {{ post | linebreaksbr }}
                                 <form action="" method = "post">
                                     {% csrf_token %}
-                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.catalog_number%}">
+                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.course_number%}">
                                         View Course Feed
                                     </button>
                                     <span class="firstSpan">
@@ -335,7 +336,6 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
                 {% else %}
                     <p>You have not made any posts to find a study buddy and have not enrolled in any classes</p>
                 {% endif %}

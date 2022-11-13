@@ -1,5 +1,5 @@
 from django.test import TestCase
-from studybuddy.models import User, Course, Post, StudySession
+from studybuddy.models import User, Course, Post, StudySession, EnrolledClass
 
 
 class CourseTest(TestCase):
@@ -12,11 +12,11 @@ class CourseTest(TestCase):
         self.test_description = 'testDescription'
 
         self.test_course = Course.objects.create(subject=self.test_subject,
-                              catalog_number=self.test_catalog_number,
-                              instructor=self.test_instructor,
-                              section=self.test_section,
-                              course_number=self.test_course_number,
-                              description=self.test_description)
+                                                 catalog_number=self.test_catalog_number,
+                                                 instructor=self.test_instructor,
+                                                 section=self.test_section,
+                                                 course_number=self.test_course_number,
+                                                 description=self.test_description)
 
     def test_course_str(self):
         """
@@ -36,11 +36,11 @@ class CourseTest(TestCase):
         """
         # given
         test_course = Course(subject=self.test_subject,
-                           catalog_number=self.test_catalog_number,
-                           instructor='-',
-                           section=self.test_section,
-                           course_number=self.test_course_number,
-                           description=self.test_description)
+                             catalog_number=self.test_catalog_number,
+                             instructor='-',
+                             section=self.test_section,
+                             course_number=self.test_course_number,
+                             description=self.test_description)
 
         # then
         expectedStr = self.test_subject + self.test_catalog_number + ": " + self.test_description + ' \n ' + \
@@ -51,9 +51,6 @@ class CourseTest(TestCase):
     def test_subject_label(self):
         expected_label = self.test_course._meta.get_field('subject').verbose_name
         self.assertEqual(expected_label, 'subject')
-
-    # test for a class being added successfully to the model
-    # create a mock department and assert true/false
 
 
 class UserTest(TestCase):
@@ -94,24 +91,24 @@ class PostTest(TestCase):
         self.test_course_number = '12345'
         self.test_description = 'testDescription'
 
-        test_course = Course.objects.create(subject=self.test_subject,
-                                            catalog_number=self.test_catalog_number,
-                                            instructor=self.test_instructor,
-                                            section=self.test_section,
-                                            course_number=self.test_course_number,
-                                            description=self.test_description)
+        self.test_course = Course.objects.create(subject=self.test_subject,
+                                                 catalog_number=self.test_catalog_number,
+                                                 instructor=self.test_instructor,
+                                                 section=self.test_section,
+                                                 course_number=self.test_course_number,
+                                                 description=self.test_description)
 
         self.test_email = 'test@email.com'
 
-        test_user = User.objects.create(email=self.test_email)
+        self.test_user = User.objects.create(email=self.test_email)
 
         self.test_author = 'testAuthor'
         self.test_topic = 'test_topic'
-        self.start_date = '01-01-2022'
-        self.end_date = '01-02-2022'
+        self.start_date = '2023-01-01'
+        self.end_date = '2023-01-02'
 
-        Post.objects.create(course=test_course,
-                            user=test_user,
+        Post.objects.create(course=self.test_course,
+                            user=self.test_user,
                             author=self.test_author,
                             topic=self.test_topic,
                             startDate=self.start_date,
@@ -124,7 +121,7 @@ class PostTest(TestCase):
         # given
         expectedStr = self.test_topic + '\n' + \
                       'Author: ' + self.test_author + '\n' + \
-                      'Time Frame: ' + self.start_date + ' to ' + self.end_date + '\n'
+                      'Time Frame: ' + '01-01-2023' + ' to ' + '01-02-2023' + '\n'
 
         # when
         actualStr = Post.objects.get(author=self.test_author).__str__()
@@ -132,11 +129,33 @@ class PostTest(TestCase):
         # then
         self.assertEqual(actualStr, expectedStr)
 
+    def test_post_cascades_when_users_is_deleted(self):
+        """
+        when a user is deleted, the posts they have made are also deleted
+        """
+        # given
+        self.assertEqual(Post.objects.filter(user=self.test_user).count(), 1)
+        User.objects.filter(email=self.test_email).delete()
+
+        # then
+        self.assertEqual(Post.objects.filter(user=self.test_user).count(), 0)
+
+    def test_post_cascades_when_course_is_deleted(self):
+        """
+        when a course is removed from the system, the posts related to the course is also deleted
+        """
+        # given
+        self.assertEqual(Post.objects.filter(course=self.test_course).count(), 1)
+        Course.objects.filter(course_number=self.test_course_number).delete()
+
+        # then
+        self.assertEqual(Post.objects.filter(course=self.test_course).count(), 0)
+
 
 class StudySessionTest(TestCase):
     def setUp(self):
         self.test_name = 'testName'
-        self.test_date = '01-01-2022'
+        self.test_date = '2023-01-01'
         self.test_start = '11:22'
         self.test_end = '12:22'
         self.test_accepted = '?'
@@ -152,7 +171,7 @@ class StudySessionTest(TestCase):
         """
         # given
         expected_str = "Study session for: " + self.test_name + '\n' \
-                       + "Scheduled on: " + self.test_date + '\n' \
+                       + "Scheduled on: " + '01-01-2023' + '\n' \
                        + "Time Frame: " + self.test_start + ' to ' + self.test_end
 
         # when

@@ -21,6 +21,13 @@ class MakePostViewTest(TestCase):
         self.test_course_number = 12345
         self.test_description = 'testCourseDescription'
 
+        Course.objects.create(subject=self.test_subject.upper(),
+                              catalog_number=self.test_catalog_number,
+                              instructor=self.test_instructor,
+                              section=self.test_section,
+                              course_number=self.test_course_number,
+                              description=self.test_description)
+
         # mock user login
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
         self.client.login(username=self.test_username, password=self.test_password)
@@ -60,6 +67,8 @@ class MakePostViewTest(TestCase):
         expected_response = 'The course number ' + str(self.test_course_number) + ' in ' + self.test_subject.upper() + \
                             ' is not available to make a post'
 
+        Course.objects.all().delete()
+
         # when
         response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
                                                                         self.test_course_number)))
@@ -72,14 +81,6 @@ class MakePostViewTest(TestCase):
         """
         when given a valid course number/department, the template render the form to make a post
         """
-        # given
-        Course.objects.create(subject=self.test_subject.upper(),
-                              catalog_number=self.test_catalog_number,
-                              instructor=self.test_instructor,
-                              section=self.test_section,
-                              course_number=self.test_course_number,
-                              description=self.test_description)
-
         # when
         response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
                                                                         self.test_course_number)))

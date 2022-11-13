@@ -10,18 +10,13 @@ def makepost(request, dept, course_number):
 
     template_name = 'post/makepost.html'
 
-    email = request.user.email
+    context = {
+        'dept': dept.upper(),
+        'course_number': course_number,
+    }
+
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
-        context = {
-            'dept': dept,
-            'course': Course.objects.get(course_number=course_number),
-            'valid': 'true'
-        }
-    else:
-        context = {
-            'dept': dept.upper(),
-            'course': course_number
-        }
+        context['course'] = Course.objects.get(course_number=course_number)
 
     return render(request, template_name, context)
 
@@ -106,7 +101,7 @@ def viewposts(request):
 
     for post in user_posts:
         if not enrolled_courses.filter(course=post.course).exists():
-            # if the student is enrolled in the class remove it from unenrolled list
+            # if the student is not enrolled in the class append the post pk
             unenrolled_posts_pk.append(post.pk)
 
     unenrolled_posts = None
@@ -116,16 +111,12 @@ def viewposts(request):
         else:
             unenrolled_posts = unenrolled_posts | Post.objects.filter(pk=pk)
 
-    if unenrolled_posts is None:
-        context = {
-            'user_posts': user_posts,
-            'enrolled_courses': enrolled_courses
-        }
-    else:
-        context = {
-            'user_posts': user_posts,
-            'enrolled_courses': enrolled_courses,
-            'unenrolled_posts': unenrolled_posts
-        }
+    context = {
+        'user_posts': user_posts,
+        'enrolled_courses': enrolled_courses
+    }
+
+    if unenrolled_posts is not None:
+        context ['unenrolled_posts'] = unenrolled_posts
 
     return render(request, template_name, context)

@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from studybuddy.models import User, Friend_Request
 
 
-@login_required
 def send_friend_request(request, requestee_email):
     '''
     return 0: friend request was already sent and is pending approval
@@ -20,7 +18,7 @@ def send_friend_request(request, requestee_email):
     else:
         return 0
 
-@login_required
+
 def accept_friend_request(request, requester_email):
     from_user = User.objects.get(email=requester_email)
     to_user = User.objects.get(email=request.user.email)
@@ -52,14 +50,14 @@ def view_friends(request):
 
     from_user = User.objects.get(email=request.user.email)
     # get the friend requests that are sent to the current user
-    friend_request = Friend_Request.objects.filter(to_user = from_user)
-    sent_requests = Friend_Request.objects.filter(from_user = from_user)
+    friend_request = Friend_Request.objects.filter(to_user=from_user)
+    sent_requests = Friend_Request.objects.filter(from_user=from_user)
     friends = from_user.friends.all()
 
     context = {
         'friends': friends,
         'friend_requests': friend_request,
-        'sent_requests' : sent_requests,
+        'sent_requests': sent_requests,
         # add declined?
     }
 
