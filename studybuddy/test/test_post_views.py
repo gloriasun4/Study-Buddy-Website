@@ -31,8 +31,7 @@ class MakePostViewTest(TestCase):
 
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
-        response = self.client.get(
-            '/studybuddy/' + self.test_subject + '/' + str(self.test_course_number) + '/makepost',
+        response = self.client.get('/studybuddy/' + self.test_subject + '/' + str(self.test_course_number) + '/makepost',
             follow=True)
         self.assertEqual(response.status_code, 200)
 

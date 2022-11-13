@@ -100,8 +100,8 @@ class Post(models.Model):
     def __str__(self):
         author = "Author: " + self.author
         if type(self.startDate) != str:
-            time_frame = "Time Frame: " + self.startDate.strftime("%Y-%m-%d") + " to " + self.endDate.strftime(
-                "%Y-%m-%d")
+            time_frame = "Time Frame: " + self.startDate.strftime("%m-%d-%Y") + " to " + self.endDate.strftime(
+                "%m-%d-%Y")
         else:
             time_frame = "Time Frame: " + self.startDate + " to " + self.endDate
 
@@ -133,7 +133,7 @@ class StudySession(models.Model):
 
     # currently just setting it the room name
     name = models.CharField(max_length=50, default="Study Session") #update after figuring out room/post/user relation
-    date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    date = models.DateField(default=timezone.now().strftime("%m-%d-%Y"))
     start = models.TimeField(default=timezone.now().strftime("%H-%M"))
     end = models.TimeField(default=(timezone.now() + datetime.timedelta(hours=1)).strftime("%H-%M"))
     accepted = models.CharField(max_length=4, default="?")
@@ -146,7 +146,7 @@ class StudySession(models.Model):
             time_frame = "Time Frame: " + self.start + " to " + self.start
 
         if type(self.date) != str:
-            date = "Scheduled on: " + self.date.strftime("%Y-%m-%d")
+            date = "Scheduled on: " + self.date.strftime("%m-%d-%Y")
         else:
             date = "Scheduled on: " + self.date
 

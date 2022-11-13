@@ -1,3 +1,5 @@
+import datetime
+# from datetime import datetime
 from django.shortcuts import render
 from studybuddy.models import Post, Course, User, EnrolledClass
 
@@ -11,14 +13,12 @@ def makepost(request, dept, course_number):
     email = request.user.email
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         context = {
-            'email': email,
             'dept': dept,
             'course': Course.objects.get(course_number=course_number),
             'valid': 'true'
         }
     else:
         context = {
-            'email': email,
             'dept': dept.upper(),
             'course': course_number
         }
@@ -42,6 +42,7 @@ def submitpost(request, dept, course_number):
         if start_date == "":
             start_date = Post._meta.get_field('startDate').get_default()
 
+        print(end_date)
         if end_date == "":
             end_date = Post._meta.get_field('endDate').get_default()
 

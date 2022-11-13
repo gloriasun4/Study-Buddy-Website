@@ -107,8 +107,8 @@ class PostTest(TestCase):
 
         self.test_author = 'testAuthor'
         self.test_topic = 'test_topic'
-        self.start_date = '1111-01-01'
-        self.end_date = '1111-01-02'
+        self.start_date = '01-01-2022'
+        self.end_date = '01-02-2022'
 
         Post.objects.create(course=test_course,
                             user=test_user,
@@ -136,7 +136,7 @@ class PostTest(TestCase):
 class StudySessionTest(TestCase):
     def setUp(self):
         self.test_name = 'testName'
-        self.test_date = '1111-01-01'
+        self.test_date = '01-01-2022'
         self.test_start = '11:22'
         self.test_end = '12:22'
         self.test_accepted = '?'
