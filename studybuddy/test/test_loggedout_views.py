@@ -10,7 +10,7 @@ class LoginViewTest(TestCase):
         self.test_dept = 'testDept'
         self.test_course_number = 12345
         self.test_requestee_email = 'test_requestee@email.com'
-        self.test_room = 'testRoom'
+        self.test_room_number = 1
 
     def test_homepage(self):
         response = self.client.get(reverse('studybuddy:index'))
@@ -88,7 +88,7 @@ class LoginViewTest(TestCase):
         self.assertTemplateUsed(response, 'index.html')
 
     def test_schedule(self):
-        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Do you want to study with me?")
         self.assertTemplateUsed(response, 'index.html')

@@ -274,12 +274,12 @@
 
 {% block scripts %}
 
-{{ room.name|json_script:"json-roomname" }}
+{{ room.pk|json_script:"json-room_pk" }}
 {{ request.user.email | json_script:"json-email" }}
 {{ username | json_script:"json-username" }}
 
 <script>
-    const roomName = JSON.parse(document.getElementById('json-roomname').textContent)
+    const room_pk = JSON.parse(document.getElementById('json-room_pk').textContent)
     const userEmail = JSON.parse(document.getElementById('json-email').textContent)
     const userName = JSON.parse(document.getElementById('json-username').textContent)
 
@@ -329,7 +329,7 @@
         chatSocket.send(JSON.stringify({
             'message': message,
             'email': userEmail,
-            'room': roomName
+            'room_pk': room_pk
         }));
 
         messageInputDom.value = '';

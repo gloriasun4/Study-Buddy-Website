@@ -13,10 +13,18 @@ class ScheduleViewTest(TestCase):
         self.test_email = 'test@email.com'
         self.test_username = 'testName'
         self.test_password = 'testPassword'
-        self.test_room = 'testRoom'
+        self.test_room_number = 1
 
-        test_post = Post.objects.create(topic='testPost')
-        Room.objects.create(name=self.test_room, Post=test_post)
+        self.test_User = User.objects.create(email=self.test_email)
+        test_course = Course.objects.create(subject=test_utils.TEST_SUBJECT.upper(),
+                                            catalog_number=test_utils.TEST_CATALOG_NUMBER,
+                                            instructor=test_utils.TEST_INSTRUCTOR,
+                                            section=test_utils.TEST_SECTION,
+                                            course_number=test_utils.TEST_COURSE_NUMBER,
+                                            description=test_utils.TEST_DESCRIPTION)
+
+        test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_User)
+        Room.objects.create(name=test_utils.TEST_ROOM_NAME, post=test_post)
 
         # mock user login
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
@@ -28,21 +36,21 @@ class ScheduleViewTest(TestCase):
 
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
-        response = self.client.get('/studybuddy/' + self.test_room + '/schedule', follow=True)
+        response = self.client.get('/studybuddy/' + str(self.test_room_number) + '/schedule', follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
         """
         schedule view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
         """
         schedule view uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'schedule_sessions/schedule.html')
 
@@ -50,9 +58,9 @@ class ScheduleViewTest(TestCase):
         """
         upcoming study session can be booked for a room
         """
-        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Schedule a study session for: ' + self.test_room)
+        self.assertContains(response, 'Schedule a study session for: ' + test_utils.TEST_ROOM_NAME)
 
     def test_displays_message_when_room_is_not_valid(self):
         """
@@ -62,11 +70,11 @@ class ScheduleViewTest(TestCase):
         Room.objects.all().delete()
 
         # when
-        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room,)))
+        response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
 
         # then
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Room ' + self.test_room + ' does not exist')
+        self.assertContains(response, 'The room you are trying to look for does not exist')
 
 
 class UpcomingSessionsViewTest(TestCase):
@@ -82,7 +90,7 @@ class UpcomingSessionsViewTest(TestCase):
         self.test_room = 'testRoom'
 
         self.test_request_factory = RequestFactory()
-        self.test_user = User.objects.create(email=self.test_email)
+        self.test_User = User.objects.create(email=self.test_email)
 
         StudySession.objects.create(name=self.test_study_session_name,
                                     date=self.test_date,
@@ -186,15 +194,15 @@ class UpcomingSessionsViewTest(TestCase):
                                             course_number=test_utils.TEST_COURSE_NUMBER,
                                             description=test_utils.TEST_DESCRIPTION)
 
-        test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_user)
-        Room.objects.create(name=self.test_room, Post=test_post)
+        test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_User)
+        Room.objects.create(name=self.test_room, post=test_post)
 
         test_view_schedule_session_request = self.test_request_factory.post(
             '/studybuddy/upcomingSessions', {'schedule': 'schedule',
                                              'date': self.test_date,
                                              'start': self.start,
                                              'end': self.end,
-                                             'roomName': self.test_room})
+                                             'room_pk': test_utils.TEST_PK})
         test_view_schedule_session_request.user = self.test_user
 
         self.assertEqual(StudySession.objects.count(), 0)

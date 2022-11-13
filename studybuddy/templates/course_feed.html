@@ -263,7 +263,7 @@
                     <ul style="list-style-type: none">
                         {% for post in feed_posts %}
                             <li>
-                            <form action="" method = "post">
+                            <form method = "post">
                                 {% csrf_token %}
                                 {{ post | linebreaksbr }}
                                 <!-- link to maybe some pop up to show post + post.description -->
