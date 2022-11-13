@@ -60,7 +60,8 @@ class ScheduleViewTest(TestCase):
         """
         response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Schedule a study session for: ' + test_utils.TEST_ROOM_NAME)
+        self.assertContains(response, 'Schedule a study session for: ')
+        self.assertContains(response, test_utils.TEST_ROOM_NAME)
 
     def test_displays_message_when_room_is_not_valid(self):
         """
