@@ -297,6 +297,11 @@
                       margin-left: 10px;
                       margin-right: 10px;
                   }
+
+                  .content .msg {
+                    margin-top: 15px;
+                    font-size: 18px;
+                }
             </style>
         </head>
 
@@ -385,7 +390,7 @@
                             {% for friend in friends %}
                                 <form action="" method="post">
                                     {% csrf_token %}
-                                    <li style="list-style-type: none">
+                                    <li style="list-style-type: none" class="msg">
                                         {{ friend | linebreaksbr }} &nbsp &nbsp
                                         <input type="hidden" name="remove_email" value="{{friend.email}}">
                                         <input name='unfriend' type="submit" value="Unfriend" class="btn">
@@ -393,7 +398,7 @@
                                 </form> <br>
                             {% endfor %}
                         {% else %}
-                            <p>You currently have no accepted any friend requests</p>
+                            <p class="msg">You currently have no accepted any friend requests</p>
                         {% endif %}
                     </div>
                 </div>
@@ -415,7 +420,7 @@
                             {% for friend_request in friend_requests %}
                                 <form action="" method = "post">
                                     {% csrf_token %}
-                                    <li style="list-style-type: none">
+                                    <li style="list-style-type: none" class="msg">
                                         {{ friend_request | linebreaksbr }} &nbsp &nbsp
                                     <input type="hidden" name="ad_email" value="{{friend_request.from_user.email}}">
                                     <input name='accept' type="submit" value="Accept" class="btn"> &nbsp &nbsp
@@ -424,7 +429,7 @@
                                 </form> <br>
                             {% endfor %}
                         {% else %}
-                            <p>You currently do have any friend requests from other users</p>
+                            <p class="msg">You currently do have any friend requests from other users</p>
                         {% endif %}
                     </div>
                 </div>
@@ -444,12 +449,12 @@
                     <div class="content">
                         {% if sent_requests %}
                             {% for sent_request in sent_requests %}
-                                <li style="list-style-type: none">
+                                <li style="list-style-type: none" class="msg">
                                     {{ sent_request.to_user | linebreaksbr }}
                                 </li> <br>
                             {% endfor %}
                         {% else %}
-                            <p>You have not sent any friend requests to other users</p>
+                            <p class="msg">You have not sent any friend requests to other users</p>
                         {% endif %}
                     </div>
                 </div>
@@ -468,7 +473,7 @@
                         </span>
                     </button>
                     <div class="content">
-                        <p>Should we keep this??</p>
+                        <p class="msg">Should we keep this??</p>
                         {% if declined_sessions %}
                             {% for session in declined_sessions %}
                                 <li style="list-style-type: none">
@@ -477,7 +482,7 @@
                                 </li><br>
                             {% endfor %}
                         {% else %}
-                            <p>You currently do have any declined friend requests</p>
+                            <p class="msg">You currently do have any declined friend requests</p>
                         {% endif %}
                     </div>
                 </div>
