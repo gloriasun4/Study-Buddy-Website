@@ -43,7 +43,8 @@ def room(request, slug):
         return render(request, template_name="index.html")
 
     room = Room.objects.get(slug=slug)
-    messages = Message.objects.filter(room=room)[0:25]
+    # messages = Message.objects.filter(room=room)[0:25]
+    messages = Message.objects.filter(room=room)
 
     context = {
         'room': room,
