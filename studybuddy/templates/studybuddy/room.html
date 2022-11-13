@@ -285,7 +285,9 @@
 
     const endpoint = ((window.location.protocol === "https:") ? "wss://" : "ws://")
                     + window.location.host
-                    + window.location.pathname
+                    + '/studybuddy/chat/rooms/'
+                    + room_pk
+                    + '/'
 
     console.log(endpoint);
 
