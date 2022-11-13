@@ -9,9 +9,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from studybuddy.models import User, Departments, Course, Post, EnrolledClass, Room, Message, Friend_Request
 
 
-# class index(generic.TemplateView):
-#     template_name = 'homepage.html'
-
 def index(request):
     if request.user.is_anonymous or not User.objects.filter(email=request.user.email).exists():
         return render(request, template_name="index.html")
@@ -226,7 +223,7 @@ def enrollcourse(request, dept, course_number):
 
     template_name = 'enroll.html'
 
-    if (Course.objects.filter(course_number=course_number).exists()):
+    if Course.objects.filter(course_number=course_number).exists():
         context = {
             'dept': dept.upper(),
             'course': Course.objects.get(course_number=course_number),
@@ -254,58 +251,12 @@ def updatecourseload(request, dept, course_number):
     action = request.POST['choice']
     if action == "YesD":
         EnrolledClass.objects.filter(course=course, student=account).delete()
-    elif action == "YesE":
+    elif action == "YesE" and not EnrolledClass.objects.filter(course=course, student=account).exists():
         enrolled = EnrolledClass(course=course, student=account)
         enrolled.save()
 
     return HttpResponseRedirect(reverse('studybuddy:index'))
 
-
-# implementing friends
-@login_required
-def send_friend_request(request, requestee_email):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
-
-    email = request.user.email
-    from_user = User.objects.get(email__exact=email)
-
-    if User.objects.filter(email__exact=requestee_email).exists():
-        to_user = User.objects.filter(email__exact=requestee_email).exists()
-        if from_user.email == str(request.user.email):
-            friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
-            if created:
-                return HttpResponse("friend request sent")
-            else:
-                return HttpResponse("friend request was already sent")
-        else:
-            return HttpResponse('Invalid')
-    else:
-        return HttpResponse("This user, " + requestee_email + " does not exist")
-
-
-@login_required
-def accept_friend_request(request, requester_email):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
-
-    email = request.user.email
-    from_user = User.objects.get(email=requester_email)
-    to_user = User.objects.get(email=email)
-
-    if Friend_Request.objects.filter(from_user=from_user).count() == 0:
-        return HttpResponse("You have no pending requests from " + requester_email)
-    if to_user.email == str(request.user.email):
-        friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
-        friend_request = friend_request_query_set.first()
-        friend_request.to_user.friends.add(friend_request.from_user)
-        print(friend_request.to_user.friends.all())
-        friend_request.from_user.friends.add(friend_request.to_user)
-        print(friend_request.from_user.friends.all())
-        friend_request.delete()
-        return HttpResponse("friend request accepted")
-    else:
-        return HttpResponse('Invalid')
 
 # def disenrollcourse(reques, dept, course_number):
 #     template_name = 'disenroll.html'
