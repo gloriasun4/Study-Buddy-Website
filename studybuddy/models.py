@@ -32,21 +32,6 @@ class Friend_Request(models.Model):
         return self.from_user.email
 
 
-class Room(models.Model):
-    name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
-
-
-class Message(models.Model):
-    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
-    content = models.TextField()
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ('date_added',)
-
-
 class Departments(models.Model):
     dept = models.CharField(max_length=4)
 
@@ -65,9 +50,13 @@ class Course(models.Model):
     class Meta:
         unique_together = ["subject", "catalog_number", "instructor", "section", "course_number", "description"]
 
+    def class_str(self):
+        course_level = self.subject + self.catalog_number
+        return course_level + ": " + self.description
+
     def __str__(self):
         course_level = self.subject + self.catalog_number
-        if (self.instructor == '-'):
+        if self.instructor == '-':
             inst = "Not available"
         else:
             inst = self.instructor
@@ -118,20 +107,30 @@ class EnrolledClass(models.Model):
         return self.course.subject + " " + self.course.course_number
 
 
+class Room(models.Model):
+    name = models.CharField(max_length=255)
+    post = models.OneToOneField(Post, on_delete=models.CASCADE)
+    users = models.ManyToManyField(User)
+
+
+class Message(models.Model):
+    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('date_added',)
+
+
 class StudySession(models.Model):
-    '''
-    a study session is associated with a user
-    ask gloria about how the chat room will be associated
-
-    have students accept/decline study session???
-
-    if chat room is associated with a user:
-    '''
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, )
-
+    """
+    a study session is associated with a post
+    """
     # if post is deleted, the study session should still remain, because deletion of a post means
     # the user no longer wants the post/they have found a study buddy, but study sessions schedule should remain
-    # post = models.OneToOneField(Post, on_delete=models.PROTECT, )
+    post = models.OneToOneField(Post, on_delete=models.PROTECT, null=True)
+    users = models.ManyToManyField(User)
 
     # currently just setting it the room name
     name = models.CharField(max_length=50, default="Study Session")  # update after figuring out room/post/user relation

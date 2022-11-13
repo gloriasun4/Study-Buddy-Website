@@ -1,9 +1,10 @@
 from unittest import mock
 from django.urls import reverse
 from django.test import TestCase
+from studybuddy.test import test_utils
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
-from studybuddy.models import Room, User, StudySession
+from studybuddy.models import Room, User, StudySession, Post, Course
 from studybuddy.views.study_session_views import upcomingSessions
 
 
@@ -14,7 +15,8 @@ class ScheduleViewTest(TestCase):
         self.test_password = 'testPassword'
         self.test_room = 'testRoom'
 
-        Room.objects.create(name=self.test_room, slug=self.test_room)
+        test_post = Post.objects.create(topic='testPost')
+        Room.objects.create(name=self.test_room, Post=test_post)
 
         # mock user login
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
@@ -80,7 +82,7 @@ class UpcomingSessionsViewTest(TestCase):
         self.test_room = 'testRoom'
 
         self.test_request_factory = RequestFactory()
-        User.objects.create(email=self.test_email)
+        self.test_user = User.objects.create(email=self.test_email)
 
         StudySession.objects.create(name=self.test_study_session_name,
                                     date=self.test_date,
@@ -176,14 +178,23 @@ class UpcomingSessionsViewTest(TestCase):
         """
         # given
         StudySession.objects.all().delete()
-        Room.objects.create(name=self.test_room, slug=self.test_room)
+
+        test_course = Course.objects.create(subject=test_utils.TEST_SUBJECT.upper(),
+                                            catalog_number=test_utils.TEST_CATALOG_NUMBER,
+                                            instructor=test_utils.TEST_INSTRUCTOR,
+                                            section=test_utils.TEST_SECTION,
+                                            course_number=test_utils.TEST_COURSE_NUMBER,
+                                            description=test_utils.TEST_DESCRIPTION)
+
+        test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_user)
+        Room.objects.create(name=self.test_room, Post=test_post)
 
         test_view_schedule_session_request = self.test_request_factory.post(
-            '/studybuddy/upcomingSessions', {'schedule' : 'schedule',
-                                             'date' : self.test_date,
-                                             'start' : self.start,
-                                             'end' : self.end,
-                                             'roomName' : self.test_room})
+            '/studybuddy/upcomingSessions', {'schedule': 'schedule',
+                                             'date': self.test_date,
+                                             'start': self.start,
+                                             'end': self.end,
+                                             'roomName': self.test_room})
         test_view_schedule_session_request.user = self.test_user
 
         self.assertEqual(StudySession.objects.count(), 0)

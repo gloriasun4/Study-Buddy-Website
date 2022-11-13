@@ -4,21 +4,21 @@ from django.shortcuts import render
 from studybuddy.models import Room, StudySession
 
 
-def schedule(request, roomname):
+def schedule(request, roomNumber):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
     template_name = "schedule_sessions/schedule.html"
 
-    if Room.objects.filter(slug=roomname):
-        room = Room.objects.get(slug=roomname)
+    if Room.objects.filter(pk=roomNumber):
+        room = Room.objects.get(pk=roomNumber)
 
         context = {
             'room': room
         }
     else:
         context = {
-            'noRoom': roomname
+            'noRoom': roomNumber
         }
 
     return render(request, template_name, context)

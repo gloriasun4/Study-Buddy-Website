@@ -213,7 +213,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="alldepartments"> Departments </a></li>
                         <li class="nav-item"><a class="nav-link" href="account"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="chat"> Back to Chat </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> My Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"> Logout </a></li>
                     </ul>
                 </div>
@@ -223,7 +223,7 @@
             <div class="sb-form">
                 <form method="get">
                     <div class="wrapper">
-                        <h1 class="title"> {{ room.name }} </h1>
+                        <h1 class="title"> {{ room.post.course.class_str }} <br> Topic: {{ room.name }} </h1>
                         
                     </div>
                       <!-- <div class="form-group">
@@ -254,7 +254,7 @@
                         <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message" id="chat-message-input">
                         <button class="btn btn-lg" id="chat-message-submit">Submit</button>
                     </form>
-                    <form method="post" action="{% url 'studybuddy:schedule' room.slug %}">
+                    <form method="post" action="{% url 'studybuddy:schedule' room.pk %}">
                         {% csrf_token %}
                         <button class="btn btn-lg" id="schedule">Schedule Study Session</button>
                     </form>
@@ -274,7 +274,7 @@
 
 {% block scripts %}
 
-{{ room.slug|json_script:"json-roomname" }}
+{{ room.name|json_script:"json-roomname" }}
 {{ request.user.email | json_script:"json-email" }}
 {{ username | json_script:"json-username" }}
 
@@ -316,6 +316,7 @@
     }
 
     chatSocket.onclose = function(e) {
+        console.log('error', e)
         console.log('onclose')
     }
 

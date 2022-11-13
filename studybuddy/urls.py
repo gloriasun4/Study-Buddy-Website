@@ -1,5 +1,5 @@
 from django.urls import path
-from studybuddy.views import views, post_views, study_session_views, friend_views
+from studybuddy.views import views, post_views, study_session_views, friend_views, room_views
 
 app_name = 'studybuddy'
 urlpatterns = [
@@ -14,8 +14,8 @@ urlpatterns = [
 
     path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
     path('chat/', views.chat, name='chat'),
-    path('chat/rooms/', views.rooms, name='rooms'),
-    path('chat/rooms/<str:slug>/', views.room, name='room'),
+    path('chat/rooms/', room_views.rooms, name='rooms'),
+    path('chat/rooms/<int:roomNumber>/', room_views.room, name='room'),
     path('<str:dept>/', views.department, name='department'),
     path('<str:dept>/<int:course_number>/', views.coursefeed, name ='coursefeed'),
 
@@ -26,6 +26,6 @@ urlpatterns = [
     path('<str:dept>/<int:course_number>/updatecourseload', views.updatecourseload, name = 'ucl'),
     #path('<str:email>/<str:dept>/<int:course_number>/disenroll', views.enrollcourse, name = 'disenroll'),
 
-    path('<str:roomname>/schedule', study_session_views.schedule, name='schedule'),
+    path('<int:roomNumber>/schedule', study_session_views.schedule, name='schedule'),
     path('upcomingSessions', study_session_views.upcomingSessions, name='upcomingSessions'),
 ]

@@ -1,12 +1,13 @@
 import requests, json
+
+from studybuddy.views import room_views
 from . import post_views
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
-from studybuddy.models import User, Departments, Course, Post, EnrolledClass, Room, Message, Friend_Request
+from django.http import HttpResponseRedirect
+from studybuddy.models import User, Departments, Course, Post, EnrolledClass
 
 
 def index(request):
@@ -27,31 +28,6 @@ def chat(request):
         return render(request, template_name="index.html")
 
     return render(request, 'studybuddy/chat.html')
-
-
-def rooms(request):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
-
-    rooms = Room.objects.all()
-
-    return render(request, 'studybuddy/rooms.html', {'rooms': rooms})
-
-
-def room(request, slug):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
-
-    room = Room.objects.get(slug=slug)
-    messages = Message.objects.filter(room=room)[0:25]
-
-    context = {
-        'room': room,
-        'messages': messages,
-        'username': User.objects.get(email=request.user.email).username
-    }
-
-    return render(request, 'studybuddy/room.html', context)
 
 
 def addAccount(request):
@@ -189,6 +165,9 @@ def coursefeed(request, dept, course_number):
 
     if request.POST.get('submit'):
         post_views.submitpost(request, dept, course_number)
+
+    if request.POST.get('message'):
+        return room_views.room(request, room_views.addRoom(request))
 
     if Course.objects.filter(course_number=course_number).exists() and Course.objects.filter(subject=dept):
         course = Course.objects.get(course_number=course_number)
