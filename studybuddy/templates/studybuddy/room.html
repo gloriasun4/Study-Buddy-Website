@@ -220,7 +220,7 @@
             <div class="sb-form">
                 <form method="get">
                     <div class="wrapper">
-                        <h1 class="title"> {{ room.name }} </h1>
+                        <h1 class="title"> {{ room.post.course.class_str }} <br> Topic: {{ room.name }} </h1>
                         
                     </div>
                       <!-- <div class="form-group">
@@ -249,14 +249,11 @@
                         <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message" id="chat-message-input">
                         <button class="btn btn-sm" id="chat-message-submit">Submit</button>
                     </form>
-                    <form method="post" action="{% url 'studybuddy:schedule' room.slug %}">
+                    <form method="post" action="{% url 'studybuddy:schedule' room.pk %}">
                         {% csrf_token %}
                         <button class="btn btn-sm" id="schedule">Schedule Study Session</button>
                     </form>
                 </div>
-                </form> 
-
-
             </div>
         </div>
 
@@ -272,18 +269,20 @@
 
 {% block scripts %}
 
-{{ room.slug|json_script:"json-roomname" }}
+{{ room.pk|json_script:"json-room_pk" }}
 {{ request.user.email | json_script:"json-email" }}
 {{ username | json_script:"json-username" }}
 
 <script>
-    const roomName = JSON.parse(document.getElementById('json-roomname').textContent)
+    const room_pk = JSON.parse(document.getElementById('json-room_pk').textContent)
     const userEmail = JSON.parse(document.getElementById('json-email').textContent)
     const userName = JSON.parse(document.getElementById('json-username').textContent)
 
     const endpoint = ((window.location.protocol === "https:") ? "wss://" : "ws://")
                     + window.location.host
-                    + window.location.pathname
+                    + '/studybuddy/chat/rooms/'
+                    + room_pk
+                    + '/'
 
     console.log(endpoint);
 
@@ -314,6 +313,7 @@
     }
 
     chatSocket.onclose = function(e) {
+        console.log('error', e)
         console.log('onclose')
     }
 
@@ -326,7 +326,7 @@
         chatSocket.send(JSON.stringify({
             'message': message,
             'email': userEmail,
-            'room': roomName
+            'room_pk': room_pk
         }));
 
         messageInputDom.value = '';

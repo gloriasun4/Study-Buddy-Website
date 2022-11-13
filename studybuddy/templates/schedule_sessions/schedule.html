@@ -258,7 +258,7 @@
     <div class="d-flex justify-content-center">
         {% if noRoom %}
             <div class="sb-form">
-                <h1>Room {{ noRoom }} does not exist</h1>
+                <h1>The room you are trying to look for does not exist</h1>
             </div>
         {% else %}
             <div class="sb-form">
@@ -279,7 +279,7 @@
                         <label for="end"> End Time: </label>
                         <input type="time" id="end" name="end" value={{end}}><br><br>
 
-                        <input type="hidden" name="roomName" value="{{ room.name }}">
+                        <input type="hidden" name="room_pk" value="{{ room.pk }}">
 
                         <input onClick='alertWhenFormNotFilled()' name="schedule" id="schedule" type="button" value="Schedule">
                 </form>

@@ -276,7 +276,7 @@
                     <ul style="list-style-type: none">
                         {% for post in feed_posts %}
                             <li>
-                            <form action="#" method = "post">
+                            <form method = "post">
                                 {% csrf_token %}
                                 {{ post | linebreaksbr }}
                                 <!-- link to maybe some pop up to show post + post.description -->
@@ -291,7 +291,8 @@
                                     <input name='delete' type="submit" value="Delete Post" class="btn btn-sm">
                                 {% else %}
                                     <!-- this will link to chat room -->
-                                    <button class="btn btn-sm" formaction=""><a name="message">Message Me!</a></button>
+                                    <input type="hidden" name="post_pk" value="{{post.pk}}">
+                                    <input type="submit" name="message" value="Message Me!" class="btn btn-lg">
                                 {% endif %}
                             </form>
                             </li>

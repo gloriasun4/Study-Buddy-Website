@@ -1,24 +1,24 @@
 import datetime
 from django.utils import timezone
 from django.shortcuts import render
-from studybuddy.models import Room, StudySession
+from studybuddy.models import Room, StudySession, User
 
 
-def schedule(request, roomname):
+def schedule(request, roomNumber):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
     template_name = "schedule_sessions/schedule.html"
 
-    if Room.objects.filter(slug=roomname):
-        room = Room.objects.get(slug=roomname)
+    if Room.objects.filter(pk=roomNumber):
+        room = Room.objects.get(pk=roomNumber)
 
         context = {
             'room': room
         }
     else:
         context = {
-            'noRoom': roomname
+            'noRoom': roomNumber
         }
 
     return render(request, template_name, context)
@@ -40,15 +40,29 @@ def upcomingSessions(request):
         date = request.POST.get('date')
         start = request.POST.get('start')
         end = request.POST.get('end')
-        roomName = request.POST.get('roomName')
+        room_pk = request.POST.get('room_pk')
 
-        if not StudySession.objects.filter(date=date, start=start, end=end, name=roomName).exists():
-            StudySession.objects.create(date=date, start=start, end=end, name=roomName)
+        room = Room.objects.get(pk=room_pk)
+
+        # if not StudySession.objects.filter(date=date, start=start, end=end, name=room.name).exists():
+        session = StudySession.objects.create(date=date,
+                                                  start=start,
+                                                  end=end,
+                                                  name=room.name,
+                                                  post=room.post)
+        for user in room.users.all():
+            session.users.add(user)
+
+    user_sessions = StudySession.objects.filter(users=User.objects.get(email=request.user.email))
+
+    for session in StudySession.objects.all():
+        print(session.users)
+    print(user_sessions)
 
     context = {
-        'study_sessions': StudySession.objects.filter(accepted='yes'),
-        'pending_sessions': StudySession.objects.filter(accepted='?'),
-        'declined_sessions' : StudySession.objects.filter(accepted='no')
+        'study_sessions': user_sessions.filter(accepted='yes'),
+        'pending_sessions': user_sessions.filter(accepted='?'),
+        'declined_sessions': user_sessions.filter(accepted='no')
     }
 
     return render(request, template_name, context)

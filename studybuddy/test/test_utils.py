@@ -3,6 +3,15 @@
 from nose.tools import nottest
 from studybuddy.models import Course
 
+TEST_DEPT = 'testDept'
+TEST_SUBJECT = 'testDept'
+TEST_CATALOG_NUMBER = 1234
+TEST_INSTRUCTOR = 'testInstructor'
+TEST_SECTION = 000
+TEST_COURSE_NUMBER = 12345
+TEST_DESCRIPTION = 'testCourseDescription'
+TEST_ROOM_NAME = 'testRoom'
+TEST_PK = 1
 
 @nottest
 def create_default_test_course():

@@ -306,7 +306,7 @@
             form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
         }
-        else if(new Date(start).getTime() > new Date(end).getTime()) {
+        else if(new Date(start).getTime() > new Date(end.value).getTime()) {
             form.setAttribute('action', "")
             alert('end date must be later than start date');
         }
