@@ -188,5 +188,5 @@ NOSE_ARGS = [
     '--with-coverage', # show coverage report
     '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
     # '--cover-html', # maybe add this?
-    '--cover-min-percentage=15', # not sure what our values are yet, still trying to mock models
+    '--cover-min-percentage=50', # not sure what our values are yet, still trying to mock models
 ]

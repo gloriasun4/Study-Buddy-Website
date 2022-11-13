@@ -1,0 +1,73 @@
+Given link: https://cs-3240-my-study-buddy.herokuapp.com/
+The following tests should be done in order
+
+Test 1: Google login and on homepage
+    1) Click on the button in the center of the screen labelled "Login With Google"
+    2) Log in to your desired google account (should we expand this?)
+    3) User should see the homepage with "Welcome to the Study Buddy App"
+
+Test 2: User is able to add a course to their own course load
+    1) If not logged in on homepage, follow Test 1
+    2) Click on "Update Course Schedule" in the middle of the screen
+    3) Click on the search bar with placeholder text of "Search for departments.."
+    4) Type "cs"
+    5) Click on the button labelled "CS"
+    6) User should arrive on a screen with "Choose the class you would like to find a study buddy in" bolded on the
+       screen
+    7) Click on the search bar with placeholder text of "Search for courses in CS.."
+    8) Type "3240"
+    8) Click on the button labelled
+        "CS3240: Advanced Software Development Techniques
+        Instructor: Mark Sherriff
+        (Section: 002)"
+    9) User should arrive on a screen asking "Would you like to enroll in this course?"
+    10) Click on the button labelled "Continue"
+    11) User should arrive back on homepage and see "CS 3240" on the screen
+
+Test 3: User is able to make a post with default values for only the section they are enrolled in
+    1) If user is not on homepage, follow Test 1 to log in
+    2) If user does not see "CS 3240" on their homepage, follow Test 2 to add course
+    3) Click on the button labelled "CS 3240", located near the center of the screen
+    4) User should arrive on a screen saying:
+        "Find study buddy for:
+         CS3240: Advanced Software Development Techniques
+         Instructor: Mark Sherriff
+         (Section: 002)"
+    5) Click on the button labelled "Create a post!", located near the bottom center of the screen
+    6) User should arrive on a screen saying:
+        "Make a study buddy post for:
+         CS3240: Advanced Software Development Techniques
+         Instructor: Mark Sherriff
+         (Section: 002)"
+    7) Click on the button labelled "Submit Post"
+    8) User should arrive back on the same screen as step 4
+    9) If not already seen on the screen, user should scroll down and see "Studybuddy posts for this course"
+        along with the new post they just made
+        "No topic was provided by the author of this post
+        Author: sofia
+        Time Frame: 2022-11-12 to 2022-11-19"
+        **Where author is the user's name and Time Frame has the day they created the post through one week later
+
+Test 3: User is able to make a post with default values for only the section they are enrolled in
+    1) If user is not on homepage, follow Test 1 to log in
+    2) If user does not see "CS 3240" on their homepage, follow Test 2 to add course
+    3) Click on the button labelled "CS 3240", located near the center of the screen
+    4) User should arrive on a screen saying:
+        "Find study buddy for:
+         CS3240: Advanced Software Development Techniques
+         Instructor: Mark Sherriff
+         (Section: 002)"
+    5) Click on the button labelled "Create a post!", located near the bottom center of the screen
+    6) User should arrive on a screen saying:
+        "Make a study buddy post for:
+         CS3240: Advanced Software Development Techniques
+         Instructor: Mark Sherriff
+         (Section: 002)"
+    7) Click on the button labelled "Submit Post"
+    8) User should arrive back on the same screen as step 4
+    9) If not already seen on the screen, user should scroll down and see "Studybuddy posts for this course"
+        along with the new post they just made
+        "No topic was provided by the author of this post
+        Author: sofia
+        Time Frame: 2022-11-12 to 2022-11-19"
+        **Where author is the user's name and Time Frame has the day they created the post through one week later
