@@ -232,10 +232,10 @@
                     <div class="chat-messages space-y-3" id="chat-messages">
                         {% for message in messages %}
                         <div class="p-4 bg-gray-200 rounded-xl">
-                            {% if message.user.username == "" %}
+                            {% if message.user.name == "" %}
                                 <p class="font-semibold"> {{ message.user.email }} : {{ message.content }} </p>
                             {% else %}
-                                <p class="font-semibold"> {{ message.user.username }} : {{ message.content }} </p>
+                                <p class="font-semibold"> {{ message.user.name }} : {{ message.content }} </p>
                             {% endif %}
                         </div>
                         {% endfor %}
@@ -301,10 +301,10 @@
 
         if (data.message) {
             let html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                html+= '<p class="font-semibold">' + userName + " : " + data.message + '</p></div>';
-            if(userName == "") {
+                html+= '<p class="font-semibold">' + data.username + " : " + data.message + '</p></div>';
+            if(data.username == "") {
                 html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                html+= '<p class="font-semibold">' + userEmail + " : " + data.message + '</p></div>';
+                html+= '<p class="font-semibold">' + data.email + " : " + data.message + '</p></div>';
             }
             document.querySelector('#chat-messages').innerHTML += html;
         } else {

@@ -1,0 +1,22 @@
+Admin before performing test please check for the following:
+
+Please use the admin account at (https://cs-3240-my-study-buddy.herokuapp.com/admin/) to perform any needed actions:
+Admin username: adminX
+Admin password: projectb15
+
+Check 1:
+https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/
+At the above link check for a post titled "Beta Testing"
+With author of "adminX" and time frame of 11-21-2022 to 11-28-2022
+
+If the above most doesn't exist
+Proceed to this link: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/makepost?myBtn=
+In topic enter: "Beta Testing"
+Keep "post to" as: "Only this section"
+Start Date of: 11/21/2022
+End Date of: 11/28/2022
+Description of: "this post is more for beta testing script 1"
+Click on the submit post button
+Now make sure Check 1 is fulfilled
+
+Check 2:

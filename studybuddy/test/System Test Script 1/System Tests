@@ -1,3 +1,4 @@
+Script 1: User creates default course
 Given link: https://cs-3240-my-study-buddy.herokuapp.com/
 The following tests should be done in order
 
@@ -71,3 +72,5 @@ Test 3: User is able to make a post with default values for only the section the
         Author: sofia
         Time Frame: 2022-11-12 to 2022-11-19"
         **Where author is the user's name and Time Frame has the day they created the post through one week later
+
+Test 4) User is able to message another user to study together
