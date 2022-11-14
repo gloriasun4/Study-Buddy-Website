@@ -30,6 +30,7 @@ def upcomingSessions(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
+    email = request.user.email
     template_name = "schedule_sessions/upcomingSessions.html"
     if request.POST.get('accept'):
         acceptSession(request)
@@ -48,25 +49,46 @@ def upcomingSessions(request):
 
         # if not StudySession.objects.filter(date=date, start=start, end=end, name=room.name).exists():
         session = StudySession.objects.create(date=date,
-                                                  start=start,
-                                                  end=end,
-                                                  name=room.name,
-                                                  post=room.post)
+                                              start=start,
+                                              end=end,
+                                              name=room.name,
+                                              post=room.post,
+                                              author=email)
         for user in room.users.all():
             session.users.add(user)
 
-    user_sessions = StudySession.objects.filter(users=User.objects.get(email=request.user.email))
-
-    for session in StudySession.objects.all():
-        print(session.users)
-    print(user_sessions)
-
     context = {
-        'study_sessions': user_sessions.filter(accepted='yes'),
-        'pending_sessions': user_sessions.filter(accepted='?'),
-        'declined_sessions': user_sessions.filter(accepted='no'),
-        'student': User.objects.get(email=request.user.email),
+        'student': User.objects.get(email=request.user.email)
     }
+
+    # remove any sessions that are past date
+
+
+    user_sessions = StudySession.objects.filter(users=User.objects.get(email=email))
+
+    pending_sessions = None
+    sent_sessions = None
+    if user_sessions:
+        for session in user_sessions:
+            # if the owner of the session is not the user checking their study sessions
+            if session.author != request.user.email:
+                if pending_sessions is None:
+                    pending_sessions = StudySession.objects.filter(pk=session.pk)
+                else:
+                    pending_sessions = pending_sessions | StudySession.objects.filter(pk=session.pk)
+            # else if the owner of the session is the user checking their study sessions
+            else:
+                if sent_sessions is None:
+                    sent_sessions = StudySession.objects.filter(pk=session.pk)
+                else:
+                    sent_sessions = sent_sessions | StudySession.objects.filter(pk=session.pk)
+
+        context['study_sessions'] = user_sessions.filter(accepted='yes')
+        if pending_sessions:
+            context['pending_sessions'] = pending_sessions.filter(accepted='?')
+        context['declined_sessions'] = user_sessions.filter(accepted='no')
+        if sent_sessions:
+            context['sent_sessions'] = sent_sessions.filter(accepted='?')
 
     return render(request, template_name, context)
 

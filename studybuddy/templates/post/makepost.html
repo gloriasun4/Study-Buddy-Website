@@ -267,11 +267,16 @@
         const end = document.getElementById('end_date');
         const form = document.getElementById('make_post');
         const make = document.getElementById('make');
+        const today = Date.now()
 
         console.log(start)
         console.log(end.value)
 
-        if(end.value == "" && start != "") {
+        if(start != "" && new Date(start).getTime() < today) {
+            console.log("starts in the past")
+            alert("The start date can not start in the past")
+        }
+        else if(end.value == "" && start != "") {
             let year = start.getYear() + 1900;
             let month = start.getMonth() + 1;
             let day = start.getDate() + 8;

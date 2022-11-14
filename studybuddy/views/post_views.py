@@ -1,5 +1,3 @@
-import datetime
-# from datetime import datetime
 from django.shortcuts import render
 from studybuddy.models import Post, Course, User, EnrolledClass
 
@@ -117,9 +115,6 @@ def viewposts(request):
         'enrolled_courses': enrolled_courses,
         'student': User.objects.get(email=request.user.email),
     }
-
-    print(unenrolled_posts is None)
-    print(enrolled_courses.count()== 0)
 
     if enrolled_courses.count()== 0 and unenrolled_posts is None:
         context['no_courses_and_post'] = True

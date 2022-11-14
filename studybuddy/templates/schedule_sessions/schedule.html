@@ -299,6 +299,7 @@
         const date = document.getElementById('date').value;
         const form = document.getElementById('schedule-form');
         const schedule = document.getElementById('schedule');
+        const today = Date.now()
 
         let noDate = false;
         let noStart = false;
@@ -325,14 +326,23 @@
         }
 
         if(noDate || noStart || noEnd) {
+            console.log("missing attributes")
+            form.setAttribute('action', "")
             alert(alertMessage);
         }
-
-        if(start > end) {
+        else if(new Date(date).getTime() < today) {
+            console.log("starts in the past")
+            form.setAttribute('action', "")
+            alert("The date of the study session can not happen in the past")
+        }
+        else if(start > end) {
+            console.log("starts after end")
             form.setAttribute('action', "")
             alert('end time must be later than start time');
         }
         else {
+            console.log('all requirements met!')
+            form.setAttribute('action', "{% url 'studybuddy:upcomingSessions' %}")
             form.setAttribute('method', 'post');
             schedule.setAttribute('type', 'submit');
         }
