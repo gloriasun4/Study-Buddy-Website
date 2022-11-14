@@ -101,7 +101,7 @@ def UpdateAccount(request):
 
 class alldepartments(generic.ListView):
     model = Departments
-    template_name = ('alldepartments.html')
+    # template_name = get_template_name()
 
     # Get the json for all the departments
     deptList = requests.get('http://luthers-list.herokuapp.com/api/deptlist/')
@@ -119,6 +119,18 @@ class alldepartments(generic.ListView):
     def get_queryset(self):
         return Departments.objects.all()
 
+    # Source: https://stackoverflow.com/questions/9899113/get-request-session-from-a-class-based-generic-view
+    def get_context_data(self, *args, **kwargs):
+        context = super(alldepartments, self).get_context_data(*args, **kwargs)
+        if not self.request.user.is_anonymous:
+            context['student'] = User.objects.get(email=self.request.user.email)
+        return context
+
+    def get_template_names(self, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return 'index.html'
+        return 'alldepartments.html'
+
 
 def department(request, dept):
     if request.user.is_anonymous:
@@ -127,7 +139,7 @@ def department(request, dept):
     if dept == "viewpost":
         return post_views.viewposts(request)
 
-    template_name = ('department.html')
+    template_name = 'department.html'
 
     # Get the json file for the request department
     dept = dept.upper()
@@ -154,7 +166,13 @@ def department(request, dept):
                               description=current_class.get('description'))
             newClass.save()
 
-    return render(request, template_name, {'department_list': Course.objects.filter(subject=dept), 'dept': dept})
+    context = {
+        'student': User.objects.get(email=request.user.email),
+        'department_list': Course.objects.filter(subject=dept),
+        'dept': dept
+    }
+
+    return render(request, template_name, context)
 
 
 def coursefeed(request, dept, course_number):

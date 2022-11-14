@@ -89,6 +89,9 @@ def upcomingSessions(request):
         context['declined_sessions'] = user_sessions.filter(accepted='no')
         if sent_sessions:
             context['sent_sessions'] = sent_sessions.filter(accepted='?')
+    # if the user doesn't have any sessions associated to them, show a message on how to schedule sessions
+    else:
+        context['no_sessions'] = True
 
     return render(request, template_name, context)
 

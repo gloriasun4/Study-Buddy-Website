@@ -288,6 +288,15 @@
     <div class="d-flex justify-content-center">
         <div class="sb-form">
             <h1>My Upcoming Study Sessions</h1>
+            {% if no_sessions %}
+                <p>
+                    Note: You currently do not have any study sessions. To create a session you must have either message
+                    indicated interest in a user's study buddy post or have a post with people who have indicated
+                    interest in studying with you. <br>
+                    To check: you may go to the 'Chat Rooms' option in the navigation bar at the top of the screen.
+                    If you have a room opened, then you may chat with the users and will see a schedule study session option
+                </p>
+            {% endif %}
             <div class="wrapper">
                 <div class="dropdown">
                     <button type="button" class="collapsible">
