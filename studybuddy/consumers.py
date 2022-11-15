@@ -48,13 +48,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event['message']
         email = event['email']
         room_pk = event['room_pk']
-        username = User.objects.get(email=email).username
+        name = User.objects.get(email=email).name
+
+        print('name', name)
 
         await self.send(text_data=json.dumps({
             'message': message,
             'email': email,
             'room_pk': room_pk,
-            'username': username
+            'name': name
         }))
 
     @sync_to_async

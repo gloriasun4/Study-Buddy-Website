@@ -6,11 +6,16 @@ def send_friend_request(request, requestee_email):
     '''
     return 0: friend request was already sent and is pending approval
            1: friend request was created and sent
+           2: the 2 users are already friends
     '''
 
     # This method is called after already processing to and from users are valid
     from_user = User.objects.get(email__exact=request.user.email)
     to_user = User.objects.get(email__exact=requestee_email)
+
+    if from_user.friends.all().filter(email=requestee_email):
+        print('2')
+        return 2
 
     friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
     if created:
@@ -80,6 +85,8 @@ def view_friends(request):
             # if returned 1, means the friend request was created
             if send == 1:
                 context['sent'] = True
+            elif send == 2:
+                context['already_friends'] = True
             # else it returned a 0 meaning the friend request was already pending
             else:
                 context['alreadySent'] = True

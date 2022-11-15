@@ -141,7 +141,7 @@ class StudySession(models.Model):
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
     users = models.ManyToManyField(User)
     # If the author of the study session is removed the system, their study sessions should also be removed
-    author = models.CharField(max_length=10)
+    author = models.CharField(max_length=100)
 
     # currently just setting it the room name
     name = models.CharField(max_length=50, default="Study Session")  # update after figuring out room/post/user relation
