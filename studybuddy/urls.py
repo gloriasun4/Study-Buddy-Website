@@ -12,7 +12,7 @@ urlpatterns = [
     path('account/edit/', views.EditAccount, name='editAccount'),
     path('account/update/', views.UpdateAccount, name='updateAccount'),
 
-    path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
+    # path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
     path('chat/', views.chat, name='chat'),
     path('chat/rooms/', room_views.rooms, name='rooms'),
     path('chat/rooms/<int:roomNumber>/', room_views.room, name='room'),

@@ -78,7 +78,7 @@ class Post(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, )
     user = models.ForeignKey(User, on_delete=models.CASCADE, )
     author = models.CharField(max_length=30, default="Author of this post chose to be anonymous")
-    topic = models.CharField(max_length=30, default="No topic was provided by the author of this post")
+    topic = models.CharField(max_length=100, default="No topic was provided by the author of this post")
     startDate = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     endDate = models.DateField(default=(timezone.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d"))
     description = models.TextField(default="No description was provided by the author of this post")
