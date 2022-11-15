@@ -58,9 +58,12 @@ def view_friends(request):
         'friends': friends,
         'friend_requests': friend_request,
         'sent_requests': sent_requests,
-        'student': User.objects.get(email=request.user.email),
+        'student_name': from_user.name,
         # add declined?
     }
+
+    if from_user.name == "":
+        context['student_name'] = request.user
 
     # if the user sent a friend request
     if request.POST.get('request'):

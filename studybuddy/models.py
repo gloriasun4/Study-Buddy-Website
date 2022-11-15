@@ -84,9 +84,11 @@ class Post(models.Model):
     description = models.TextField(default="No description was provided by the author of this post")
     post_type = models.TextField(default="section")
 
-    def was_published_recently(self):
+    def past_end_date(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.endDate <= now
+        # returns true if endDate has passed
+        # returns false if endDate is still valid
+        return now > self.endDate
 
     def __str__(self):
         author = "Author: " + self.author

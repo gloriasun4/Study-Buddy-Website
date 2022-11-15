@@ -9,19 +9,20 @@ def schedule(request, roomNumber):
         return render(request, template_name="index.html")
 
     template_name = "schedule_sessions/schedule.html"
+    email=request.user.email
+
+    context = {
+        'student_name': User.objects.get(email=email).name
+    }
+
+    if User.objects.get(email=email).name == "":
+        context['student_name'] = request.user
 
     if Room.objects.filter(pk=roomNumber):
         room = Room.objects.get(pk=roomNumber)
-
-        context = {
-            'room': room,
-            'student': User.objects.get(email=request.user.email),
-        }
+        context['room'] = room
     else:
-        context = {
-            'noRoom': roomNumber,
-            'student': User.objects.get(email=request.user.email),
-        }
+        context['noRoom'] = roomNumber
 
     return render(request, template_name, context)
 
@@ -58,11 +59,16 @@ def upcomingSessions(request):
             session.users.add(user)
 
     context = {
-        'student': User.objects.get(email=request.user.email)
+        'student_name': User.objects.get(email=request.user.email).name
     }
 
-    # remove any sessions that are past date
+    if User.objects.get(email=email).name == "":
+        context['student_name'] = request.user
 
+    # remove any sessions that are today but end time has already passed
+    StudySession.objects.filter(date=timezone.localtime(), end__lt=timezone.localtime()).delete()
+    # remove any sessions that are past date
+    StudySession.objects.filter(date__lt=timezone.localtime()).delete()
 
     user_sessions = StudySession.objects.filter(users=User.objects.get(email=email))
 
