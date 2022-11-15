@@ -355,6 +355,12 @@
                         list once they have accepted your request.
                     </p>
                 {% endif %}
+                {% if already_friends %}
+                    <p>
+                        You are already friends with user with email {{ toEmail }}. You can see them in the 'My Friends'
+                        dropdown
+                    </p>
+                {% endif %}
                 {% if alreadySent %}
                     <p>
                         You have already sent a friend request to {{ toEmail }}, its pending acceptance from the user
