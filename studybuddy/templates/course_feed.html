@@ -233,8 +233,14 @@
                       <div class="form-group">
                         <a href="{% url 'studybuddy:department' dept%}" name="myBtn" class="btn">Choose another class in the same department</a>
 
-                        {% if valid %}
-                        <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">Remove course from schedule</a>
+                        {% if enrolled %}
+                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">
+                                Remove course from schedule
+                            </a>
+                        {% else %}
+                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">
+                                Add course to schedule
+                            </a>
                      {% endif %}
 
                         {% if valid %}

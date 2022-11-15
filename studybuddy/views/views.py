@@ -204,9 +204,10 @@ def coursefeed(request, dept, course_number):
     if request.POST.get('message'):
         return room_views.room(request, room_views.addRoom(request))
 
+    email = request.user.email
     context = {
         'dept': dept.upper(),
-        'student_name': User.objects.get(email=request.user.email).name,
+        'student_name': User.objects.get(email=email).name,
     }
 
     if Course.objects.filter(course_number=course_number).exists() and Course.objects.filter(subject=dept):
@@ -222,6 +223,8 @@ def coursefeed(request, dept, course_number):
         context['valid'] = 'true'
         context['feed_posts'] = post_for_this_class
         context['has_posts'] = post_for_this_class.exists()
+        context['enrolled'] = EnrolledClass.objects.filter(course=Course.objects.get(course_number=course_number),
+                                                     student=User.objects.get(email=email)).exists()
 
     else:
         context['course_number'] = course_number
