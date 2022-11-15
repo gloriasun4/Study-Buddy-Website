@@ -108,39 +108,39 @@ def UpdateAccount(request):
     return HttpResponseRedirect(reverse('studybuddy:account'))
 
 
-# class alldepartments(generic.ListView):
-#     model = Departments
-#     # template_name = get_template_name()
-#
-#     # Get the json for all the departments
-#     deptList = requests.get('http://luthers-list.herokuapp.com/api/deptlist/')
-#     deptList_json = json.loads(deptList.text)
-#
-#     # makes sure there are no departments from previous calls
-#     if Departments.objects.exists():
-#         Departments.objects.all().delete()
-#
-#     # Get all of the current departments available
-#     for i in range(len(deptList_json)):
-#         newDept = Departments(dept=deptList_json[i].get("subject"))
-#         newDept.save()
-#
-#     def get_queryset(self):
-#         return Departments.objects.all()
-#
-#     # Source: https://stackoverflow.com/questions/9899113/get-request-session-from-a-class-based-generic-view
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(alldepartments, self).get_context_data(*args, **kwargs)
-#         if not self.request.user.is_anonymous:
-#             context['student_name'] = User.objects.get(email=self.request.user.email).name
-#             if User.objects.get(email=self.request.user.email).name == "":
-#                 context['student_name'] = self.request.user
-#         return context
-#
-#     def get_template_names(self, *args, **kwargs):
-#         if self.request.user.is_anonymous:
-#             return 'index.html'
-#         return 'alldepartments.html'
+class alldepartments(generic.ListView):
+    model = Departments
+    # template_name = get_template_name()
+
+    # Get the json for all the departments
+    deptList = requests.get('http://luthers-list.herokuapp.com/api/deptlist/')
+    deptList_json = json.loads(deptList.text)
+
+    # makes sure there are no departments from previous calls
+    if Departments.objects.exists():
+        Departments.objects.all().delete()
+
+    # Get all of the current departments available
+    for i in range(len(deptList_json)):
+        newDept = Departments(dept=deptList_json[i].get("subject"))
+        newDept.save()
+
+    def get_queryset(self):
+        return Departments.objects.all()
+
+    # Source: https://stackoverflow.com/questions/9899113/get-request-session-from-a-class-based-generic-view
+    def get_context_data(self, *args, **kwargs):
+        context = super(alldepartments, self).get_context_data(*args, **kwargs)
+        if not self.request.user.is_anonymous:
+            context['student_name'] = User.objects.get(email=self.request.user.email).name
+            if User.objects.get(email=self.request.user.email).name == "":
+                context['student_name'] = self.request.user
+        return context
+
+    def get_template_names(self, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return 'index.html'
+        return 'alldepartments.html'
 
 
 def department(request, dept):

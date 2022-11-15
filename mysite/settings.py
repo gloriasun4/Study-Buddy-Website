@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os, re
+import sys
 from pathlib import Path
 from socket import gethostname
 
@@ -85,7 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mysite.wsgi.application"
-# ASGI_APPLICATION = "djangochat.asgi.application"
 ASGI_APPLICATION = "mysite.asgi.application"
 
 # Source: https://github.com/redis/redis-py/issues/417
@@ -93,10 +93,6 @@ ASGI_APPLICATION = "mysite.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-        # "BACKEND": "channels_redis.core.RedisChannelLayer",
-        # 'CONFIG': {
-        #     "host": [('127.0.0.1', 6379)],
-        # },
     }
 }
 
@@ -120,6 +116,9 @@ DATABASES = {
         'PORT':  5432
     }
 }
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
 # Password validation
