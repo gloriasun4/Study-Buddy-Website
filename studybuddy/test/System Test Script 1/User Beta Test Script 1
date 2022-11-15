@@ -1,4 +1,4 @@
-Script 1: User creates default course
+Script 1
 Given link: https://cs-3240-my-study-buddy.herokuapp.com/
 The following tests should be done in order
 
@@ -63,7 +63,7 @@ Test 4: User is able to delete a post they made
     6) Be on the same page and no longer see the post from step 9 of Test 3
 
 Test 5: User is able to message another user to study together
-    **Note: admin should check admin script for actions before performing this test with the user
+    **Note: admin should check admin script (Lines 5-21) for actions to perform before testing with the user
     1) If not logged in on homepage, follow Test 1
     2) If "CS 3240" is not seen on the homepage, follow Test 2 to add course
     3) Look for the following on the screen:
@@ -84,11 +84,11 @@ Test 5: User is able to message another user to study together
        "CS3240 - Beta Testing"
        Along with the user in this meeting room: adminX and the name from login, if there isn't a name, the logged in
        email should be seen
-    ** Note: Admin should check admin script for actions before proceeding
+    ** Note: Admin should check admin script (Lines 24-31) for actions before proceeding
     9) Click on the message bar with "Your message" as a placeholder.
     10) Type "Hi! Let study together!".
     11) Click the button labelled "Send"
-    ** Note: Admin should check admin script for actions before proceeding
+    ** Note: Admin should check admin script (Lines 33-38) for actions before proceeding
     12) The following message should be seen on the screen: "adminX : Yes!"
 
 Test 6: User should be able to schedule a study session and see alerts when fields are not filled in properly
@@ -116,7 +116,7 @@ Test 6: User should be able to schedule a study session and see alerts when fiel
         Scheduled on: 11-23-2022
         Time Frame: 13:00 to 14:00"
         Along with a button labelled "Delete"
-    ** Note: Admin should check admin script for actions before proceeding
+    ** Note: Admin should check admin script (Lines 41-50) for actions before proceeding
     12) Click "Study Sessions" in the navigation bar at the top of the screen then click on the dropdown
         labelled "Scheduled Study Sessions"
     13) The following should be seen:
@@ -155,5 +155,24 @@ Test 9: User is able to see a message once they send a friend to a user in the s
     6) The following message should be seen:
         "You have successfully sent a friend request to project@email.com, they will show up on your friend list once
         they have accepted your request."
-    **Note: Admin should check admin script for actions before proceeding
-    7)
+    7) Click on the dropdown "Sent Friend Requests", "project@email.com" should be seen
+    **Note: Admin should check admin script (Lines 53-57) for actions before proceeding
+    8) Refresh the page and click on the dropdown labelled "My Friends"
+    9) "project@email.com" along with a button labelled "Unfriend" should be seen
+
+Test 10: User is able to change their account profile
+    1) If not already logged in, follow Test 1
+    2) Click on "My Account" in the navigation bar at the top of the page
+    3) On the right side of the screen, click on the button labelled "Edit Profile"
+    4) Click on the text box with "About Me:" to the left of it
+    5) Type "Nice to meet everyone!"
+    6) If not already seen on the screen, click on the labelled "Save Profile"
+    7) "Nice to meet everyone!" should be seen on the screen in blue text above "Username"
+
+Test 11: User is able to log and return to the login page
+    1) If not already logged in, follow Test 1
+    2) Click on "Logout adminX" where 'adminX' is the name of the logged in account that is located in the navigation
+       bar at the top of the screen
+    3) "Login with Google" should be seen on the screen.
+
+You have finished the beta testing scripts. Thank you for participating!
