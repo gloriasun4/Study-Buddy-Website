@@ -133,8 +133,8 @@ class alldepartments(generic.ListView):
         context = super(alldepartments, self).get_context_data(*args, **kwargs)
         if not self.request.user.is_anonymous:
             context['student_name'] = User.objects.get(email=self.request.user.email).name
-        if User.objects.get(email=self.request.user.email).name == "":
-            context['student_name'] = self.request.user
+            if User.objects.get(email=self.request.user.email).name == "":
+                context['student_name'] = self.request.user
         return context
 
     def get_template_names(self, *args, **kwargs):

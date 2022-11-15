@@ -114,6 +114,13 @@ class Room(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE)
     users = models.ManyToManyField(User)
 
+    def __str__(self):
+        course_name = self.post.course.subject + self.post.course.catalog_number
+        course_description = self.post.course.description
+        topic = 'Topic: ' + self.name
+        # return course_name + ': ' + course_description + '\n' + topic
+        return course_name + ' - ' + self.name
+
 
 class Message(models.Model):
     room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
