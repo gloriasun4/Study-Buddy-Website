@@ -57,9 +57,8 @@ class LoginViewTest(TestCase):
     def test_alldepartments(self):
         response = self.client.get(reverse('studybuddy:alldepartments'))
         self.assertEqual(response.status_code, 200)
-        # this is a class, so it's not redirected to login page, just displays a link to login with google
-        self.assertContains(response, "Login With Google")
-        self.assertTemplateUsed(response, 'alldepartments.html')
+        self.assertContains(response, "Do you want to study with me?")
+        self.assertTemplateUsed(response, 'index.html')
 
     def test_department(self):
         response = self.client.get(reverse('studybuddy:department', args = (self.test_dept,)))

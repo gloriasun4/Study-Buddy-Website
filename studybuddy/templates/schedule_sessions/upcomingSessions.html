@@ -279,7 +279,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student_name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -288,6 +288,15 @@
     <div class="d-flex justify-content-center">
         <div class="sb-form">
             <h1>My Upcoming Study Sessions</h1>
+            {% if no_sessions %}
+                <p>
+                    Note: You currently do not have any study sessions. To create a session you must have either message
+                    indicated interest in a user's study buddy post or have a post with people who have indicated
+                    interest in studying with you. <br>
+                    To check: you may go to the 'Chat Rooms' option in the navigation bar at the top of the screen.
+                    If you have a room opened, then you may chat with the users and will see a schedule study session option
+                </p>
+            {% endif %}
             <div class="wrapper">
                 <div class="dropdown">
                     <button type="button" class="collapsible">
@@ -319,11 +328,11 @@
                 <br>
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        <span class="arrowdown">&#8964</span> Study Session Requests
+                        <span class="arrowdown">&#8964</span> Pending Study Session Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
-                                Study session that are pending approval (open dropdown to accept or deline)
+                                Study session that are pending approval from you (open dropdown to accept or deline)
                             </span>
                         </span>
                     </button>
@@ -338,6 +347,37 @@
                                     <input type="hidden" name="session_pk" value="{{session.pk}}">
                                     <input name='accept' type="submit" value="Accept" class="btn btn-sm"> &nbsp &nbsp
                                     <input name='decline' type="submit" value="Decline" class="btn btn-sm">
+                                </form>
+                            {% endfor %}
+                        {% else %}
+                            <p class="msg">You currently do have any study sessions requests from other users</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="dropdown">
+                    <button type="button" class="collapsible">
+                        <span class="arrowdown">&#8964</span> Sent Study Session Requests
+                        <span class="firstSpan">
+                            (?)
+                            <span class="secondSpan">
+                                Study session that you have made and are awaiting approval from other users
+                                (open dropdown to see them)
+                            </span>
+                        </span>
+                    </button>
+                    <div class="content">
+                        {% if sent_sessions %}
+                            {% for session in sent_sessions %}
+                                <li style="list-style-type: none">
+                                    {{ session | linebreaksbr }}
+                                </li><br>
+                                <form action="" method = "post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="session_pk" value="{{session.pk}}">
+                                    <input name='delete' type="submit" value="Delete" class="btn">
                                 </form>
                             {% endfor %}
                         {% else %}

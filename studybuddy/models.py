@@ -78,15 +78,17 @@ class Post(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, )
     user = models.ForeignKey(User, on_delete=models.CASCADE, )
     author = models.CharField(max_length=30, default="Author of this post chose to be anonymous")
-    topic = models.CharField(max_length=30, default="No topic was provided by the author of this post")
+    topic = models.CharField(max_length=100, default="No topic was provided by the author of this post")
     startDate = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     endDate = models.DateField(default=(timezone.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d"))
     description = models.TextField(default="No description was provided by the author of this post")
     post_type = models.TextField(default="section")
 
-    def was_published_recently(self):
+    def past_end_date(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.endDate <= now
+        # returns true if endDate has passed
+        # returns false if endDate is still valid
+        return now > self.endDate
 
     def __str__(self):
         author = "Author: " + self.author
@@ -112,6 +114,13 @@ class Room(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE)
     users = models.ManyToManyField(User)
 
+    def __str__(self):
+        course_name = self.post.course.subject + self.post.course.catalog_number
+        course_description = self.post.course.description
+        topic = 'Topic: ' + self.name
+        # return course_name + ': ' + course_description + '\n' + topic
+        return course_name + ' - ' + self.name
+
 
 class Message(models.Model):
     room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
@@ -131,6 +140,8 @@ class StudySession(models.Model):
     # the user no longer wants the post/they have found a study buddy, but study sessions schedule should remain
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
     users = models.ManyToManyField(User)
+    # If the author of the study session is removed the system, their study sessions should also be removed
+    author = models.CharField(max_length=10)
 
     # currently just setting it the room name
     name = models.CharField(max_length=50, default="Study Session")  # update after figuring out room/post/user relation

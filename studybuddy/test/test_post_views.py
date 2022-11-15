@@ -111,7 +111,13 @@ class ViewPostViewTest(TestCase):
 
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
+        # given
+        User.objects.create(email=self.test_email)
+
+        # when
         response = self.client.get('/studybuddy/viewposts', follow=True)
+
+        # then
         self.assertEqual(response.status_code, 200)
 
     @mock.patch('studybuddy.models.User.objects')

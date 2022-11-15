@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os, re
+import sys
 from pathlib import Path
 from socket import gethostname
 
@@ -85,7 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mysite.wsgi.application"
-# ASGI_APPLICATION = "djangochat.asgi.application"
 ASGI_APPLICATION = "mysite.asgi.application"
 
 # Source: https://github.com/redis/redis-py/issues/417
@@ -93,22 +93,32 @@ ASGI_APPLICATION = "mysite.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-        # "BACKEND": "channels_redis.core.RedisChannelLayer",
-        # 'CONFIG': {
-        #     "host": [('127.0.0.1', 6379)],
-        # },
     }
 }
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dc8v87r7deel1g',
+        'USER': 'lcxaacgcqqgpck',
+        'PASSWORD': '2cef5272476a24d27a2cd98150b63a2a245abe50baf7c23d0a6cdf726bb4c03a',
+        'HOST': 'ec2-3-229-165-146.compute-1.amazonaws.com',
+        'PORT':  5432
     }
 }
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
 # Password validation
@@ -135,7 +145,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 

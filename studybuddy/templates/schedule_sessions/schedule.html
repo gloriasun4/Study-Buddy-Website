@@ -249,7 +249,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:account' %}"> My Account </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student.name}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout"> Logout {{student_name}} </a></li>
                     </ul>
                 </div>
             </div>
@@ -262,7 +262,7 @@
             </div>
         {% else %}
             <div class="sb-form">
-                <h1>Schedule a study session for: <br> {{ room.post.course.class_str }} <br> {{ room.name }}</h1>
+                <h1>Schedule a study session for: <br> {{ room }}</h1>
 
                 <form id="schedule-form" action="{% url 'studybuddy:upcomingSessions' %}">
                     {% csrf_token %}
@@ -299,6 +299,7 @@
         const date = document.getElementById('date').value;
         const form = document.getElementById('schedule-form');
         const schedule = document.getElementById('schedule');
+        const today = new Date().toLocaleString()
 
         let noDate = false;
         let noStart = false;
@@ -323,16 +324,27 @@
             noEnd = true;
             alertMessage += "End Time \n ";
         }
+        console.log(today)
 
         if(noDate || noStart || noEnd) {
+            console.log("missing attributes")
+            form.setAttribute('action', "")
             alert(alertMessage);
         }
-
-        if(start > end) {
+        else if(new Date(date).getTime() <= today) {
+            console.log(today.toISOString())
+            console.log("starts in the past")
+            form.setAttribute('action', "")
+            alert("The date of the study session can not happen in the past")
+        }
+        else if(start > end) {
+            console.log("starts after end")
             form.setAttribute('action', "")
             alert('end time must be later than start time');
         }
         else {
+            console.log('all requirements met!')
+            form.setAttribute('action', "{% url 'studybuddy:upcomingSessions' %}")
             form.setAttribute('method', 'post');
             schedule.setAttribute('type', 'submit');
         }

@@ -8,8 +8,11 @@ def rooms(request):
 
     context = {
         'rooms': Room.objects.filter(users=User.objects.get(email=request.user.email)),
-        'student': User.objects.get(email=request.user.email),
+        'student_name': User.objects.get(email=request.user.email).name,
     }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
     return render(request, 'studybuddy/rooms.html', context)
 
@@ -25,8 +28,11 @@ def room(request, roomNumber):
         'room': room,
         'messages': messages,
         'username': User.objects.get(email=request.user.email).username,
-        'student': User.objects.get(email=request.user.email),
+        'student_name': User.objects.get(email=request.user.email).name,
     }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
     return render(request, 'studybuddy/room.html', context)
 

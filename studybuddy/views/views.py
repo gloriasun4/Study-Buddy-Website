@@ -1,7 +1,5 @@
 import requests, json
-
-from studybuddy.views import room_views
-from . import post_views
+from studybuddy.views import room_views, post_views
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -17,8 +15,12 @@ def index(request):
         template_name = 'homepage.html'
 
         context = {
-            'student': User.objects.get(email=request.user.email),
+            'student_name': User.objects.get(email=request.user.email).name,
+            'student': User.objects.get(email=request.user.email)
         }
+
+        if User.objects.get(email=request.user.email).name == "":
+            context['student_name'] = request.user
 
         return render(request, template_name, context)
 
@@ -57,9 +59,13 @@ def account(request):
         'Major': user.major,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb,
-        'student': user
-
+        'student': user,
+        'student_name': user.name
     }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
+
     return render(request, 'studybuddy/account.html', context)
 
 
@@ -76,9 +82,12 @@ def EditAccount(request):
         'Major': user.major,
         'ZoomLink': user.zoomLink,
         'AboutMe': user.blurb,
-        'student': User.objects.get(email=request.user.email),
-
+        'student_name': User.objects.get(email=email).name,
     }
+
+    if User.objects.get(email=email).name == "":
+        context['student_name'] = request.user
+
     return render(request, 'studybuddy/editAccount.html', context)
 
 
@@ -101,7 +110,7 @@ def UpdateAccount(request):
 
 class alldepartments(generic.ListView):
     model = Departments
-    template_name = ('alldepartments.html')
+    # template_name = get_template_name()
 
     # Get the json for all the departments
     deptList = requests.get('http://luthers-list.herokuapp.com/api/deptlist/')
@@ -119,6 +128,20 @@ class alldepartments(generic.ListView):
     def get_queryset(self):
         return Departments.objects.all()
 
+    # Source: https://stackoverflow.com/questions/9899113/get-request-session-from-a-class-based-generic-view
+    def get_context_data(self, *args, **kwargs):
+        context = super(alldepartments, self).get_context_data(*args, **kwargs)
+        if not self.request.user.is_anonymous:
+            context['student_name'] = User.objects.get(email=self.request.user.email).name
+            if User.objects.get(email=self.request.user.email).name == "":
+                context['student_name'] = self.request.user
+        return context
+
+    def get_template_names(self, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return 'index.html'
+        return 'alldepartments.html'
+
 
 def department(request, dept):
     if request.user.is_anonymous:
@@ -127,7 +150,7 @@ def department(request, dept):
     if dept == "viewpost":
         return post_views.viewposts(request)
 
-    template_name = ('department.html')
+    template_name = 'department.html'
 
     # Get the json file for the request department
     dept = dept.upper()
@@ -154,7 +177,16 @@ def department(request, dept):
                               description=current_class.get('description'))
             newClass.save()
 
-    return render(request, template_name, {'department_list': Course.objects.filter(subject=dept), 'dept': dept})
+    context = {
+        'student_name': User.objects.get(email=request.user.email).name,
+        'department_list': Course.objects.filter(subject=dept),
+        'dept': dept
+    }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
+
+    return render(request, template_name, context)
 
 
 def coursefeed(request, dept, course_number):
@@ -172,29 +204,30 @@ def coursefeed(request, dept, course_number):
     if request.POST.get('message'):
         return room_views.room(request, room_views.addRoom(request))
 
+    context = {
+        'dept': dept.upper(),
+        'student_name': User.objects.get(email=request.user.email).name,
+    }
+
     if Course.objects.filter(course_number=course_number).exists() and Course.objects.filter(subject=dept):
         course = Course.objects.get(course_number=course_number)
-        Post.objects.filter(endDate__lt=timezone.now()).delete()
+        Post.objects.filter(endDate__lt=timezone.localtime()).delete()
         post_for_this_class = Post.objects.filter(
             course=course)  # this will find posts that are related to this specific section only
 
         for catalog_course in Course.objects.filter(subject=course.subject, catalog_number=course.catalog_number):
             post_for_this_class = post_for_this_class | Post.objects.filter(course=catalog_course, post_type='course')
 
-        context = {
-            'dept': dept.upper(),
-            'course': course,
-            'valid': 'true',
-            'feed_posts': post_for_this_class,
-            'has_posts': post_for_this_class.exists(),
-            'student': User.objects.get(email=request.user.email),
-        }
+        context['course'] = course
+        context['valid'] = 'true'
+        context['feed_posts'] = post_for_this_class
+        context['has_posts'] = post_for_this_class.exists()
+
     else:
-        context = {
-            'dept': dept.upper(),
-            'course_number': course_number,
-            'student': User.objects.get(email=request.user.email),
-        }
+        context['course_number'] = course_number
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
     return render(request, template_name, context)
 
@@ -205,21 +238,21 @@ def enrollcourse(request, dept, course_number):
 
     template_name = 'enroll.html'
 
+    context = {
+        'student_name': User.objects.get(email=request.user.email).name,
+        'dept': dept.upper(),
+    }
+
     if Course.objects.filter(course_number=course_number).exists():
-        context = {
-            'student': User.objects.get(email=request.user.email),
-            'dept': dept.upper(),
-            'course': Course.objects.get(course_number=course_number),
-            'valid': 'true',
-            'enrolled': EnrolledClass.objects.filter(course=Course.objects.get(course_number=course_number),
+        context['course'] = Course.objects.get(course_number=course_number)
+        context['valid'] = 'true'
+        context['enrolled'] = EnrolledClass.objects.filter(course=Course.objects.get(course_number=course_number),
                                                      student=User.objects.get(email=request.user.email)).exists()
-        }
     else:
-        context = {
-            'dept': dept.upper(),
-            'course': course_number,
-            'student': User.objects.get(email=request.user.email),
-        }
+        context['course'] = course_number
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
     return render(request, template_name, context)
 

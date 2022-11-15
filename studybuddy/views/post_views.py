@@ -1,5 +1,4 @@
-import datetime
-# from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import render
 from studybuddy.models import Post, Course, User, EnrolledClass
 
@@ -13,8 +12,11 @@ def makepost(request, dept, course_number):
     context = {
         'dept': dept.upper(),
         'course_number': course_number,
-        'student': User.objects.get(email=request.user.email),
+        'student_name': User.objects.get(email=request.user.email).name,
     }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         context['course'] = Course.objects.get(course_number=course_number)
@@ -48,13 +50,18 @@ def submitpost(request, dept, course_number):
         if description == "":
             description = Post._meta.get_field('description').get_default()
 
+        user = User.objects.get(email=email)
+        author = str(request.user)
+        if user.name != "":
+            author = user.name
+
         # Get if user wants post to be in specific section or all sections of catalog_number
         # Default: post to only this specific section
         if request.POST['post_type'] == 'section':
             newPost = Post(course=course,
-                           user=User.objects.get(email=email),
+                           user=user,
                            # right now if User.objects doesn't have a name it will be empty, so this will ensure we have name?
-                           author=str(request.user),
+                           author=author,
                            topic=topic,
                            startDate=start_date,
                            endDate=end_date,
@@ -63,9 +70,9 @@ def submitpost(request, dept, course_number):
             newPost.save()
         else:
             newPost = Post(course=course,
-                           user=User.objects.get(email=email),
+                           user=user,
                            # right now if User.objects doesn't have a name it will be empty, so this will ensure we have name?
-                           author=str(request.user),
+                           author=author,
                            topic=topic,
                            startDate=start_date,
                            endDate=end_date,
@@ -94,6 +101,8 @@ def viewposts(request):
     if request.POST.get('delete'):
         deletepost(request)
 
+    Post.objects.filter(endDate__lt=timezone.localtime()).delete()
+
     email = request.user.email
     template_name = 'post/viewposts.html'
     user_posts = Post.objects.filter(user=User.objects.get(email=email)).distinct()
@@ -115,16 +124,16 @@ def viewposts(request):
     context = {
         'user_posts': user_posts,
         'enrolled_courses': enrolled_courses,
-        'student': User.objects.get(email=request.user.email),
+        'student_name': User.objects.get(email=request.user.email).name,
     }
 
-    print(unenrolled_posts is None)
-    print(enrolled_courses.count()== 0)
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
 
-    if enrolled_courses.count()== 0 and unenrolled_posts is None:
+    if enrolled_courses.count() == 0 and unenrolled_posts is None:
         context['no_courses_and_post'] = True
 
     if unenrolled_posts is not None:
-        context ['unenrolled_posts'] = unenrolled_posts
+        context['unenrolled_posts'] = unenrolled_posts
 
     return render(request, template_name, context)
