@@ -136,4 +136,5 @@ def viewposts(request):
     if unenrolled_posts is not None:
         context['unenrolled_posts'] = unenrolled_posts
 
+    request.POST = None
     return render(request, template_name, context)

@@ -114,4 +114,5 @@ def view_friends(request):
         context['remove_friend'] = True
         context['removed_email'] = remove_email
 
+    request.POST = None
     return render(request, "friends/view_friends.html", context)
