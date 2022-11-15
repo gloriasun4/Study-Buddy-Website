@@ -72,5 +72,69 @@ Test 3: User is able to make a post with default values for only the section the
         Author: sofia
         Time Frame: 2022-11-12 to 2022-11-19"
         **Where author is the user's name and Time Frame has the day they created the post through one week later
+    10) User should also see a delete post option below the post
 
-Test 4) User is able to message another user to study together
+Test 4: User is able to delete a post they made
+    1) If user is not logged in, follow Test 1 to log in
+    2) If user does not see "CS 3240" on their homepage, follow Test 2 to add course
+    3) If user has not made a default post, follow Test 3
+    4) If not already seen on the screen, user should scroll down and see "Studybuddy posts for this course"
+    5) Look for the post made in Test 3 and click on the "Delete Post" button beneath the post the user made
+    6) User should stay on the same page and no longer see the post from step 9 of Test 3
+
+Test 5: User is able to message another user to study together
+    **Note: admin should check admin script for this test
+    1) If user is not logged in, follow Test 1 to log in
+    2) If user does not see "CS 3240" on their homepage, follow Test 2 to add course
+    3) If user is not on the course feed page for "CS 3240", follow steps 3 and 4 in Test 3
+    5) If not already seen on the screen, user should scroll down and see "Studybuddy posts for this course"
+       along with the following post:
+        "Beta Testing
+        Author: adminX
+        Time Frame: 11-21-2022 to 11-28-2022"
+    6) Have user hover over the button labelled "View Description" and "this post is made for beta testing script 1"
+       should be see is a pop up with a grey background
+    7) Have user click on the button labelled "Message Me!"
+    8) User should arrive on a screen saying:
+       "CS3240: Advanced Software Development Techniques
+       Topic: Beta Testing"
+    9) Have user enter "Hi! Let study together!" in the message bar with "Your message" as a placeholder. Then click
+       the button labelled "Send"
+    10) User should see "admin : Yes!" on the screen
+
+Test 6: User should be able to schedule a study session and see alerts when fields are not filled in properly
+    1) If the user is not in the "Beta Testing" chat room, follow Test 5
+    2) If not already seen on the screen, user should scroll down and see and click a button labelled
+       "Schedule Study Session"
+    3) User should arrive on a screen saying:
+       "Schedule a study session for:
+       CS3240: Advanced Software Development Techniques
+       Beta Testing"
+    4) Have user click the button labelled "Schedule"
+    5) User should receive an alert saying:
+       "All fields must be filled in, the following fields are not filled:
+       Date
+       Start Time
+       End Time"
+    6) Have user click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    7) Have user schedule a study session with the following fields:
+       Date: 11/23/2022
+       Start Time: 01:00 PM
+       End Time: 02:00 PM
+    8) User should click on the button labelled "Schedule"
+    9) User should arrive on a page saying: "My Upcoming Study Sessions"
+    10) Have user click on the dropdown labelled "Sent Study Session Requests"
+    11) User should see the following:
+        "Study session for: Beta Testing
+        Scheduled on: 11-23-2022
+        Time Frame: 13:00 to 14:00"
+        Along with a button labelled "Delete"
+    12) Have user reload the screen and click on the dropdown labelled "Scheduled Study Sessions"
+    13) User should see the following:
+        "Study session for: Beta Testing
+        Scheduled on: 11-23-2022
+        Time Frame: 13:00 to 14:00"
+        Along with a button labelled "Delete"
+
+Test 7: User is able to delete a study session
+    1) Have user go to this link: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/upcomingSessions
