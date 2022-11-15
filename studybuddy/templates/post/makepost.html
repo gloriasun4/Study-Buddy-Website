@@ -291,7 +291,7 @@
                     day = day - 31;
                 }
             }
-            else if(day > 30) {
+            if(day > 30) {
                 if(month == 4 || month == 6 || month == 9 || month == 11) {
                     month = month + 1;
                     day = day - 30;
@@ -305,7 +305,6 @@
 
             day = ('0' + day).slice(-2)
             month = ('0' + month).slice(-2)
-
             end.setAttribute('value', year + "-" + month + "-" + day)
             form.setAttribute('method', 'post');
             form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
