@@ -162,7 +162,7 @@ Test 7: User should be able to schedule a study session and see alerts when fiel
         Time Frame: 13:30 to 14:00"
         Along with a button labelled "Delete"
 
-Test 11: User is able to log and return to the login page
+Test 8: User is able to log and return to the login page
     1) If not already logged in, follow Test 1
     2) Click on "Logout adminX" where 'adminX' is the name of the logged in account that is located in the navigation
        bar at the top of the screen
