@@ -172,7 +172,7 @@ class StudySessionTest(TestCase):
         # given
         expected_str = "Study session for: " + self.test_name + '\n' \
                        + "Scheduled on: " + '01-01-2023' + '\n' \
-                       + "Time Frame: " + self.test_start + ' to ' + self.test_end
+                       + self.test_start + ' to ' + self.test_end
 
         # when
         actual_str = StudySession.objects.get(name=self.test_name).__str__()

@@ -205,7 +205,7 @@ Test 10: User is able to change their account profile
    3) On the right side of the screen, click on the button labeled "Edit Profile". If this button is not seen, please
       inform the admin of the missing button.
    4) Click on the text box with "About Me:" to the left of it
-   5) Type "Nice to meet everyone!"
+   5) Type "I am a good student"
    6) If "Save Profile" is not already seen on the screen, scroll down and click on the button labeled "Save Profile".
       If this button is not seen, please inform the admin of the missing button.
    7) "Nice to meet everyone!" should be seen on the screen in blue text above "Username".  If this information is not

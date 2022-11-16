@@ -234,14 +234,15 @@
 
                 .firstSpan .secondSpan {
                   visibility: hidden;
-                  width: 120px;
-                  background-color: gray;
-                  color: #fff;
+                  width: 200px;
+                  background-color: #6865AC;
+                  color: white;
                   text-align: center;
                   border-radius: 6px;
-                  padding: 5px 0;
+                  padding: 5px 8px;
                   position: absolute;
                   z-index: 1;
+                  opacity: 0.85;
                 }
 
                 .firstSpan:hover .secondSpan {
@@ -329,7 +330,7 @@
                 <br>
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        <span class="arrowdown">&#8964</span> Pending Study Session Requests
+                        <span class="arrowdown">&#8964</span> Incoming Study Session Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -360,7 +361,7 @@
 
                 <div class="dropdown">
                     <button type="button" class="collapsible">
-                        <span class="arrowdown">&#8964</span> Sent Study Session Requests
+                        <span class="arrowdown">&#8964</span> My Study Session Requests
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
@@ -371,6 +372,7 @@
                     </button>
                     <div class="content">
                         {% if sent_sessions %}
+                            <h3> Sent </h3>
                             {% for session in sent_sessions %}
                                 <li style="list-style-type: none">
                                     {{ session | linebreaksbr }}
@@ -382,25 +384,13 @@
                                 </form>
                             {% endfor %}
                         {% else %}
-                            <p class="msg">You currently do have any study sessions requests from other users</p>
+                            <p class="msg">You have not sent any study sessions requests to other users</p>
                         {% endif %}
-                    </div>
-                </div>
 
-                <br>
+                        <br>
 
-                <div class="dropdown">
-                    <button type="button" class="collapsible">
-                        <span class="arrowdown">&#8964</span> Declined Study Sessions
-                        <span class="firstSpan">
-                            (?)
-                            <span class="secondSpan">
-                                Study sessions that you sent invites for and have been declined
-                                (they will disappear 24 hours after your study buddy has declined)
-                            </span>
-                        </span>
-                    </button>
-                    <div class="content">
+                        <h3> Declined </h3>
+
                         {% if declined_sessions %}
                             {% for session in declined_sessions %}
                                 <li style="list-style-type: none">
