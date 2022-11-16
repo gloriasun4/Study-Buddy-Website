@@ -1,3 +1,6 @@
+Admin please take note of anything unexpected activites that occur during this process, so we can fix them!
+Also please ask users about any suggestions, thoughts and comments on the UX design and functionalities of the website.
+
 Please use the admin account at (https://cs-3240-my-study-buddy.herokuapp.com/admin/) to perform any needed actions:
 Admin username: adminX
 Admin password: projectb15
@@ -55,3 +58,11 @@ After Step 7 of Test 8
 2) Go to: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/friends
 3) Open the dropdown labelled "Pending Friend Requests" and you should see the user's logged in email
 4) Click on the button labelled "Accept"
+
+
+Notes from admin during beta testing:
+1)
+
+2)
+
+3)

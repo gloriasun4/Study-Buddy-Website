@@ -1,6 +1,11 @@
-Script 1
-Given link: https://cs-3240-my-study-buddy.herokuapp.com/
-The following tests should be done in order
+Script 2
+
+Thank you for joining our beta testing stage. Please complete the following tests in the order they have been provided.
+This script has actions that need to be performed by an admin, ensure that you have an admin with you to guide you in
+completing this process.
+If you encounter any errors throughout the process please inform the admin so we can continue to better our website.
+
+To start, go to this link: https://cs-3240-my-study-buddy.herokuapp.com/
 
 Test 1: Google login and on homepage
     1) Click on the button in the center of the screen labelled "Login With Google"
@@ -101,45 +106,69 @@ Test 5: User is able to message another user to study together
     ** Note: Admin should check admin script (Lines 33-38) for actions before proceeding
     12) The following message should be seen on the screen: "adminX : Yes!"
 
-Test 6: User should be able to schedule a study session and see alerts when fields are not filled in properly
-    1) If the following is not seen: "CS3240 - Beta Testing", follow Test 5
+Test 6: When user sends an empty message an alert is shown and the message is not sent and user is able to leave chat room
+    1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
+    2) Click on "Chat Rooms" in the navigation bar at the top of the screen
+    3) The screen should show the following: "CS3240 - Beta Testing" along with a button labelled "Enter the room to chat!"
+    4) Click on the button labelled "Enter the room to chat!"
+    5) The screen should show the following:
+       "CS3240 - Beta Testing"
+       Along with the user in this meeting room: adminX and the name from login, if there isn't a name, the logged in
+       email should be seen
+    6) Do not type anything in the message bar and click on the button labelled "Send"
+    7) An alert saying: "The message was empty!" should show up
+    ** Note: Admin should check admin script (Lines 41-43) for checks, user may continue to proceed
+    8) If not already seen, scroll up to find and click on the button labelled "Permanently leave this room"
+    9) The following message should be seen:
+        "You currently do not have any chat rooms.
+       Chat rooms are created if you have indicated interest in another user's post, which can be seen on course feed
+       pages or if other users have indicated interest for posts that you have made, which can be seen at the 'My Posts'
+       option in the navigation bar at the top of the screen"
+
+Test 7: User should be able to schedule a study session and see alerts when fields are not filled in properly
+    1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
     2) If not already seen on the screen, scroll down to see and click on a button labelled "Schedule Study Session"
     3) The screen should show the following:
        "Schedule a study session for:
        CS3240 - Beta Testing"
     4) Enter "11/01/2022" in the date box to the right of "Date"
     5) Click on the button labelled "Schedule"
-
-
-    3) Enter "11/23/2022" in the date box to the right of "Date"
-    4) Click on the button labelled "Schedule"
-    5) An alert saying should be seen:
+    6) An alert saying should be seen:
        "All fields must be filled in, the following fields are not filled:
         Start Time
         End Time "
-    6) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    7) Enter "01:30 PM" in the time box to the right of "Start Time:"
-    8) Click on the button labelled "Schedule"
-    9) An alert saying should be seen:
+    7) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    8) Enter "01:30 PM" in the time box to the right of "Start Time:"
+    9) Click on the button labelled "Schedule"
+    10) An alert saying should be seen:
        "All fields must be filled in, the following fields are not filled:
         End Time "
-    10) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    11) Enter "01:00 PM" in the time box to the right of "End Time:"
-    12) Click on the button labelled "Schedule"
-    13) An alert saying should be seen: "end time must be later than start time"
-
-    9) The screen should show the following: "My Upcoming Study Sessions"
+    11) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    12) Enter "01:00 PM" in the time box to the right of "End Time:"
+    13) Click on the button labelled "Schedule"
+    14) An alert saying should be seen: "The date of the study session can not happen in the past"
+    15) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    16) Change the date box to the right of "Date" to have "11/23/2022" instead of "11/01/2022"
+    17) Click on the button labelled "Schedule"
+    18) An alert saying should be seen: "end time must be later than start time"
+    19) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    20) Change the time box to the right of "End Time:" to have "02:00PM" instead of "01:00 PM"
+    21) Click on the button labelled "Schedule"
+    22) The screen should show the following: "My Upcoming Study Sessions"
     10) Click on the dropdown labelled "Sent Study Session Requests"
     11) The following should be seen:
         "Study session for: Beta Testing
         Scheduled on: 11-23-2022
-        Time Frame: 13:00 to 14:00"
+        Time Frame: 13:30 to 14:00"
         Along with a button labelled "Delete"
-    ** Note: Admin should check admin script (Lines 41-50) for actions before proceeding
-    12) Click "Study Sessions" in the navigation bar at the top of the screen then click on the dropdown
-        labelled "Scheduled Study Sessions"
-    13) The following should be seen:
-        "Study session for: Beta Testing
-        Scheduled on: 11-23-2022
-        Time Frame: 13:00 to 14:00"
-        Along with a button labelled "Delete"
+
+Test 11: User is able to log and return to the login page
+    1) If not already logged in, follow Test 1
+    2) Click on "Logout adminX" where 'adminX' is the name of the logged in account that is located in the navigation
+       bar at the top of the screen
+    3) "Login with Google" should be seen on the screen.
+    4) Click on the button labelled "CS 3240  - Section: 002", located beneath "Update Course Schedule" near the center
+       of the screen
+
+You have finished the beta testing scripts. Please inform admin about any other feedback you have about the UX or
+functionality of our website. Thank you so much for participating!

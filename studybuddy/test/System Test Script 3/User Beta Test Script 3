@@ -1,6 +1,9 @@
 Script 3
-Given link: https://cs-3240-my-study-buddy.herokuapp.com/
-The following tests should be done in order
+
+Thank you for joining our beta testing stage. Please complete the following tests in the order they have been provided.
+If you encounter any errors throughout the process please inform an admin member so we can continue to better our website.
+
+To start, go to this link: https://cs-3240-my-study-buddy.herokuapp.com/
 
 Test 1: Google login and on homepage
     1) Click on the button in the center of the screen labelled "Login With Google"
@@ -175,4 +178,5 @@ Test 11: User is able to log and return to the login page
     4) Click on the button labelled "CS 3240  - Section: 002", located beneath "Update Course Schedule" near the center
        of the screen
 
-You have finished the beta testing scripts. Thank you for participating!
+You have finished the beta testing scripts. Please inform an admin member about any other feedback you have about the UX
+or functionality of our website. Thank you so much for participating!
