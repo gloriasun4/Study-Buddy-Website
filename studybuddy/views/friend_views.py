@@ -25,17 +25,25 @@ def send_friend_request(request, requestee_email):
 
 
 def accept_friend_request(request, requester_email):
+    """
+    return 0: friend request doesn't exist/already accepted
+           1: friend request successfully accepted
+    """
     from_user = User.objects.get(email=requester_email)
     to_user = User.objects.get(email=request.user.email)
 
     friend_request_query_set = Friend_Request.objects.filter(from_user=from_user).filter(to_user=to_user)
     friend_request = friend_request_query_set.first()
 
-    friend_request.to_user.friends.add(friend_request.from_user)
-    print(friend_request.to_user.friends.all())
-    friend_request.from_user.friends.add(friend_request.to_user)
-    print(friend_request.from_user.friends.all())
-    friend_request.delete()
+    if friend_request:
+        friend_request.to_user.friends.add(friend_request.from_user)
+        print(friend_request.to_user.friends.all())
+        friend_request.from_user.friends.add(friend_request.to_user)
+        print(friend_request.from_user.friends.all())
+        friend_request.delete()
+        return 1
+    else:
+        return 0
 
 
 def remove_friend(request, email):
@@ -98,9 +106,10 @@ def view_friends(request):
     # user accepted a friend request
     if request.POST.get('accept'):
         ad_email = request.POST.get('ad_email')
-        accept_friend_request(request, ad_email)
-        context['accepted'] = True
-        context['accepted_email'] = ad_email
+        accepted = accept_friend_request(request, ad_email)
+        if accepted:
+            context['accepted'] = True
+            context['accepted_email'] = ad_email
 
     if request.POST.get('decline'):
         ad_email = request.POST.get('ad_email')

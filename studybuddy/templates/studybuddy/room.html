@@ -206,7 +206,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
@@ -222,6 +222,14 @@
                     <div class="wrapper">
                         <h1 class="title"> {{ room }} </h1>
                     </div>
+
+                    <div>
+                        <form method="post">
+                        <input type="hidden" name="room_pk" value="{{room.pk}}">
+                        <input class="btn btn-lg" name='leave' type="submit" value="Permanently leave this room">
+                    </form>
+                    </div> <br>
+
                     <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
                         <p>Users in this chat room</p>
                         {% for user in room.users.all %}

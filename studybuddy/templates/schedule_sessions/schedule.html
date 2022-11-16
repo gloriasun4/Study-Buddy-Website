@@ -244,7 +244,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
@@ -264,7 +264,7 @@
             <div class="sb-form">
                 <h1>Schedule a study session for: <br> {{ room }}</h1>
 
-                <form id="schedule-form" action="{% url 'studybuddy:upcomingSessions' %}">
+                <form id="schedule-form">
                     {% csrf_token %}
 <!--                        <p>-->
 <!--                            This study session is schedule with: {{ room.users }}-->
@@ -295,11 +295,11 @@
 <script>
     function alertWhenFormNotFilled() {
         const start = document.getElementById('start').value;
-        const end = document.getElementById('end').value;
-        const date = document.getElementById('date').value;
+        let end = document.getElementById('end').value;
+        const date = new Date(document.getElementById('date').value);
         const form = document.getElementById('schedule-form');
         const schedule = document.getElementById('schedule');
-        const today = new Date().toLocaleString()
+        let today = new Date()
 
         let noDate = false;
         let noStart = false;
@@ -324,23 +324,60 @@
             noEnd = true;
             alertMessage += "End Time \n ";
         }
-        console.log(today)
+
+        // date gets sets to the day before and prevent time from being compared. Can start on today
+        date.setDate(date.getDate() + 1)
+
+        console.log("Date entered by user in readable date: " + date)
+        console.log("Date entered by user: " + date.getTime())
+        console.log("Today's readable date: " + today)
+        console.log("Today's date in time: " + today.getTime())
+
+        console.log("End time: " + end)
+
+        console.log(new Date(date) <= today)
+
+        const hour_now = today.getHours();
+        const minute_now = today.getMinutes();
+
+        date.setHours(hour_now, minute_now, 0, 0)
+        today.setHours(hour_now, minute_now, 0, 0)
+
 
         if(noDate || noStart || noEnd) {
-            console.log("missing attributes")
-            form.setAttribute('action', "")
+            console.log("The user is missing attributes to schedule a study session, user is receiving the following " +
+                         "alert message: " + alertMessage);
             alert(alertMessage);
         }
-        else if(new Date(date).getTime() <= today) {
-            console.log(today.toISOString())
-            console.log("starts in the past")
-            form.setAttribute('action', "")
+        else if(date.getTime() < today.getTime()) {
+            today.setHours(0, 0, 0, 0)
             alert("The date of the study session can not happen in the past")
         }
         else if(start > end) {
             console.log("starts after end")
-            form.setAttribute('action', "")
             alert('end time must be later than start time');
+        }
+        else if(date.getTime() == today.getTime()) {
+            console.log('Same day checking for time');
+            console.log('end hour: ' + end.substring(0, 2))
+            console.log('end minute: ' + end.substring(3, 5))
+            if(hour_now == end.substring(0, 2)) {
+                if(minute_now >= end.substring(3, 5)) {
+                    alert('end time must be later than the current time')
+                }
+                else {
+                    console.log('all requirements met!')
+                    form.setAttribute('action', "{% url 'studybuddy:upcomingSessions' %}")
+                    form.setAttribute('method', 'post');
+                    schedule.setAttribute('type', 'submit');
+                }
+            }
+            else {
+                console.log('all requirements met!')
+                form.setAttribute('action', "{% url 'studybuddy:upcomingSessions' %}")
+                form.setAttribute('method', 'post');
+                schedule.setAttribute('type', 'submit');
+            }
         }
         else {
             console.log('all requirements met!')
