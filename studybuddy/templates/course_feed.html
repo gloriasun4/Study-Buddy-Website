@@ -211,7 +211,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
@@ -230,6 +230,7 @@
                     <div class="wrapper">
                         <h2 class="title">Find study buddy for: <br> {{ course | linebreaksbr }}</h2>
                       </div>
+                    {% if valid %}
                       <div class="form-group">
                         <a href="{% url 'studybuddy:department' dept%}" name="myBtn" class="btn">Choose another class in the same department</a>
 
@@ -243,7 +244,6 @@
                             </a>
                      {% endif %}
 
-                        {% if valid %}
                         <button class="btn" id="myBtn" name="myBtn" type="submit" formaction="makepost">
                         <a name="myBtn">Create a post!</a></button>
                         {% else %}

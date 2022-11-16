@@ -36,22 +36,3 @@ After Step 11 of Test 5
     where "syy6zn@virginia.edu" had the user's email or the user's name if it is already filled
 2) Enter "Yes!" in the message bar with "Your message" as a placeholder. Then click the button labelled "Send"
 3) Have user proceed with step 10
-
-
-After Step 11 of Test 6
-1) Make sure you are logged into the admin account
-2) Go to: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/upcomingSessions
-3) Open the dropdown labelled "Pending Study Session Requests" and you should see:
-    "Study session for: Beta Testing
-    Scheduled on: 11-23-2022
-    Time Frame: 13:00 to 14:00"
-    Along with buttons labelled "Accept" and "Decline"
-4) Click on the button labelled "Accept"
-5) Have user proceed with step 12
-
-
-After Step 7 of Test 8
-1) Make sure you are logged into the admin account
-2) Go to: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/friends
-3) Open the dropdown labelled "Pending Friend Requests" and you should see the user's logged in email
-4) Click on the button labelled "Accept"

@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from studybuddy.models import Room, Message, User, Post
 
-
+@csrf_exempt
 def rooms(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
@@ -13,6 +14,15 @@ def rooms(request):
 
     if User.objects.get(email=request.user.email).name == "":
         context['student_name'] = request.user
+
+    if request.GET.get('leave'):
+        room_pk = request.GET['room_pk']
+        if Room.objects.filter(pk=room_pk):
+            room = Room.objects.get(pk=room_pk)
+            if room.users.count() == 1:
+                room.delete()
+            else:
+                room.users.remove(User.objects.get(email=request.user.email))
 
     return render(request, 'studybuddy/rooms.html', context)
 

@@ -207,7 +207,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
@@ -231,7 +231,11 @@
                       <div class="w-full lg:w-1/4 px-3 py-3">
                           <div class="p-4 bg-white shadow rounded-xl text-center">
                               <h2 class="mb-5 text-2xl font-semibold">{{ room | linebreaksbr }}</h2>
-                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Join</a>
+                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Enter</a>
+                              <form method="post" action="/studybuddy">
+                                  <input type="hidden" name="room_pk" value="{{room.pk}}">
+                                  <input class="btn btn-lg" name='leave' type="submit" value="Leave">
+                              </form>
                           </div>
                       </div>
                       {% endfor %}

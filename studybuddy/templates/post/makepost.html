@@ -207,7 +207,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewposts' %}">My Posts</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Load </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:upcomingSessions' %}"> Study Sessions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:rooms' %}"> Chat Rooms </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'studybuddy:viewFriends' %}">Friends</a></li>
@@ -267,12 +267,23 @@
         const end = document.getElementById('end_date');
         const form = document.getElementById('make_post');
         const make = document.getElementById('make');
-        const today = Date.now()
+        const today = new Date()
 
-        console.log(start)
-        console.log(end.value)
+        // date gets sets to the day before and prevent time from being compared. Can start on today
+        start.setDate(start.getDate() + 1)
+        start.setHours(23, 59, 59, 59)
+        today.setHours(0, 0, 0, 0)
 
-        if(start != "" && new Date(start).getTime() < today) {
+        console.log("Start date entered by user in readable date: " + start)
+        console.log("Start date entered by user: " + start.getTime())
+        console.log("End date entered by user: " + end.value)
+        console.log("Today's readable date: " + today)
+        console.log("Today's date in time: " + today.getTime())
+
+        console.log("start date is less than today: " + start.getTime() < today.getTime())
+
+        if(start != "" && start.getTime() < today.getTime()) {
+            form.setAttribute('action', "")
             console.log("starts in the past")
             alert("The start date can not start in the past")
         }
@@ -310,12 +321,12 @@
             form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
         }
-        else if(new Date(start).getTime() > new Date(end.value).getTime()) {
+        else if(start > new Date(end.value).getTime()) {
             form.setAttribute('action', "")
             alert('end date must be later than start date');
         }
         else {
-            console.log("here")
+            console.log("all requirements have been met")
             form.setAttribute('method', 'post');
             form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
