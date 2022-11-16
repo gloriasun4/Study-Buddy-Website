@@ -152,9 +152,9 @@ class StudySession(models.Model):
 
     def __str__(self):
         if type(self.start) != str:
-            time_frame = "Time Frame: " + self.start.strftime("%H:%M") + " to " + self.end.strftime("%H:%M")
+            time_frame = self.start.strftime("%H:%M") + " to " + self.end.strftime("%H:%M")
         else:
-            time_frame = "Time Frame: " + self.start + " to " + self.start
+            time_frame = self.start + " to " + self.start
 
         if type(self.date) != str:
             date = "Scheduled on: " + self.date.strftime("%m-%d-%Y")

@@ -176,19 +176,20 @@
         }
 
         .firstSpan .secondSpan {
-          visibility: hidden;
-          width: 120px;
-          background-color: gray;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 5px 0;
-          position: absolute;
-          z-index: 1;
+            visibility: hidden;
+            width: 200px;
+            background-color: #6865AC;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 8px;
+            position: absolute;
+            z-index: 1;
+            opacity: 0.85;
         }
 
         .firstSpan:hover .secondSpan {
-          visibility: visible;
+            visibility: visible;
         }
     </style>
 </head>
@@ -228,7 +229,7 @@
                     <form id="make_post" action="{% url 'studybuddy:coursefeed' dept course_number%}">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
-                      <input type="text" id="topic" name="topic" placeholder="study for midterm 2" value={{topic}}><br><br>
+                      <input type="text" id="topic" name="topic" placeholder="Study for midterm 2" value={{topic}}><br><br>
 
                       <label>Post To: </label> &nbsp &nbsp
                       <input type="radio" id="section" name="post_type" value="section" checked>Only this section
@@ -239,10 +240,10 @@
                       <input type="date" id="start_date" name="start_date" value={{start_date}}> &nbsp &nbsp
                       <label for="end_date">End Date:</label>
                       <input type="date" id="end_date" name="end_date" value={{end_date}}>
-                      <span class="firstSpan"> (i) <span class="secondSpan">The default dates will keep the post open for a week from today</span></span><br><br>
+                      <span class="firstSpan"> (?) <span class="secondSpan">The default dates will keep the post open for a week from today</span></span><br><br>
 
                       <label for="description">Description:</label>
-                      <textarea type="text" id="description" name="description" placeholder = "message me if you would like to study together" value=description></textarea><br><br>
+                      <textarea type="text" id="description" name="description" placeholder = "Message me if you would like to study together" value=description></textarea><br><br>
                       <input onClick='alertWhenFormNotFilled()' id='make' name='submit' type="button" value="Submit Post">
                     </form>
                 {% else %}
@@ -263,6 +264,7 @@
 <!-- Source: https://stackoverflow.com/questions/563406/how-to-add-days-to-date -->
 <script>
     function alertWhenFormNotFilled() {
+        const topic = document.getElementById('topic');
         const start = new Date(document.getElementById('start_date').value);
         const end = document.getElementById('end_date');
         const form = document.getElementById('make_post');
@@ -282,7 +284,12 @@
 
         console.log("start date is less than today: " + start.getTime() < today.getTime())
 
-        if(start != "" && start.getTime() < today.getTime()) {
+        if(topic == "") {
+            form.setAttribute('action', "");
+            console.log("User did not enter a topic");
+            alert("The field for topic must be filled in");
+        }
+        else if(start != "" && start.getTime() < today.getTime()) {
             form.setAttribute('action', "")
             console.log("starts in the past")
             alert("The start date can not start in the past")

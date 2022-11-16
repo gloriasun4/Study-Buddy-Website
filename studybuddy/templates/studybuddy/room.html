@@ -270,6 +270,7 @@
                     <form method="post" action="{% url 'studybuddy:schedule' room.pk %}">
                         {% csrf_token %}
                         <button class="btn btn-sm" id="schedule">Schedule Study Session</button>
+                        <a class="btn btn-sm" href="{% url 'studybuddy:rooms' %}"> Exit this room </a>
                     </form>
                 </div>
             </div>
