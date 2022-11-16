@@ -8,48 +8,56 @@ If you encounter any errors throughout the process please inform the admin so we
 To start, go to this link: https://cs-3240-my-study-buddy.herokuapp.com/
 
 Test 1: Google login and on homepage
-    1) Click on the button in the center of the screen labelled "Login With Google"
-    2) Log in to the desired google account (should we expand this?)
-    3) Assuming there was no previous log in, a screen to edit profile should be seen
-    4) Make no edits and click the button labelled "Save Profile"
-    5) The account info page with loggin in email should be seen
-    6) Click on the words "Study Buddy" in the upper left hand corner
-    7) The homepage with "Welcome to the Study Buddy App" should be seen
+   1) Click on the button in the center of the screen labeled "Login With Google"
+   2) Try signing in with a Google account (that is a virginia.edu account). If this did not work please inform the
+      admin member.
+   3) Assuming there was no previous log in, a screen to edit profile should be seen
+   4) Make no edits and click the button labeled "Save Profile"
+   5) The account info page with the logged in email should be seen, if this information is not accurate, please inform
+      the admin of the missing/inaccurate information
+   6) Click on the words "Study Buddy" in the upper left hand corner
+   7) The homepage with "Welcome to the Study Buddy App" should be seen, if this information is not accurate, please
+      inform the admin of any missing/inaccurate information
+   8) Please inform the admin member about any comments on the login process.
 
 Test 2: User is able to add a course to their own course load
-    1) If not logged in on homepage, follow Test 1
-    2) Click on "Update Course Schedule" in the middle of the screen
-    3) Click on the search bar with placeholder text of "Search for departments.."
-    4) Type "cs"
-    5) Click on the button labelled "CS"
-    6) A screen with "Choose the class you would like to find a study buddy in" bolded should be seen on the screen
-    7) Click on the search bar with placeholder text of "Search for courses in CS.."
-    8) Type "3240"
-    9) Click on the button labelled
-        "CS3240: Advanced Software Development Techniques
-        Instructor: Mark Sherriff
-        (Section: 002)"
-    10) A screen asking "Would you like to enroll in this course?" along with "Yes, enroll in this course." already
-        preselected should be seen
-    11) Click on the button labelled "Continue"
-    12) The homepage with "CS 3240 - Section: 002" beneath "Update Course Schedule" should be seen
+   1) If not logged in on homepage, follow Test 1
+   2) Click on "Update Course Schedule" in the middle of the screen
+   3) Click on the search bar with placeholder text of "Search for departments.."
+   4) Type "cs"
+   5) Click on the button labeled "CS", if this button is not seen, please inform the admin of the missing button.
+   6) A screen with "Choose the class you would like to find a study buddy in" bolded should be seen on the screen
+   7) Click on the search bar with placeholder text of "Search for courses in CS.."
+   8) Type "3240"
+   9) Click on the button labeled
+       "CS3240: Advanced Software Development Techniques
+       Instructor: Mark Sherriff
+       (Section: 002)"
+       If this button is not seen, please inform the admin of the missing button.
+   10) A screen asking "Would you like to enroll in this course?" along with "Yes, enroll in this course." already
+       preselected should be seen. If this information is not accurate, please inform the admin of any
+       missing/inaccurate information
+   11) Click on the button labeled "Continue"
+   12) The homepage with "CS 3240 - Section: 002" beneath "Update Course Schedule" should be seen. If this information
+       is not accurate, please inform the admin of any missing/inaccurate information
+   13) Please inform the admin member about any comments on the process to a course to the course schedule.
 
 Test 3: User is able to make a post with default values for only the section they are enrolled in
     1) If not logged in on homepage, follow Test 1
     2) If "CS 3240 - Section: 002" is not seen on homepage, follow Test 2 to add course
-    3) Click on the button labelled "CS 3240 - Section: 002", located beneath "Update Course Schedule" near the center of the screen
+    3) Click on the button labeled "CS 3240 - Section: 002", located beneath "Update Course Schedule" near the center of the screen
     4) The screen should show the following:
         "Find study buddy for:
          CS3240: Advanced Software Development Techniques
          Instructor: Mark Sherriff
          (Section: 002)"
-    5) Click on the button labelled "Create a post!", located on the bottom right of the words from step 4
+    5) Click on the button labeled "Create a post!", located on the bottom right of the words from step 4
     6) The screen should show the following:
         "Make a study buddy post for:
          CS3240: Advanced Software Development Techniques
          Instructor: Mark Sherriff
          (Section: 002)"
-    7) Do not edit anything on the screen and click the button labelled "Submit Post"
+    7) Do not edit anything on the screen and click the button labeled "Submit Post"
     8) The same screen from step 4 should be seen
     9) If not already seen on the screen, scroll down to see "Studybuddy posts for this course" along with the new post
        made in step 7
@@ -63,19 +71,19 @@ Test 4: User is able to unenroll from a course, but their posts remain
     2) If "CS 3240 - Section: 002" is not seen on homepage, follow Test 2 to add course
     3) If a post has not been made, follow Test 3
     4) Follow steps 3 and 4 from Test 3
-    5) Click on the button labelled "Remove course from schedule", located near the center of the screen
+    5) Click on the button labeled "Remove course from schedule", located near the center of the screen
     6) The following message should be seen:
         "You are already enrolled in this course. Would you like to remove this course from your schedule?"
         Along with "Yes, remove this course from my schedule." preselected
-    7) Click on the button labelled "Continue"
+    7) Click on the button labeled "Continue"
     8) The home page screen with "Welcome to the Study Buddy App!" should be seen. And "CS 3240 - Section: 002" should
        no longer be listed beneath "Update Course Schedule"
     9) Click on "My Posts" in the navigation bar at the top of the screen
-    10) Click on the dropdown labelled "Courses you aren't enrolled in, but made posts for"
-    11) The post from step 9 of Test 3 should be seen along with 3 buttons labelled "View Course Feed", "Description",
+    10) Click on the dropdown labeled "Courses you aren't enrolled in, but made posts for"
+    11) The post from step 9 of Test 3 should be seen along with 3 buttons labeled "View Course Feed", "Description",
         and "Delete Post"
-    12) Click on the button labelled "View Course Feed"
-    13) The screen from step 4 of Test 3 should be seen along with a button labelled "Add course to schedule"
+    12) Click on the button labeled "View Course Feed"
+    13) The screen from step 4 of Test 3 should be seen along with a button labeled "Add course to schedule"
 
 Test 5: User is able to message another user to study together
     **Note: admin should check admin script (Lines 5-21) for actions to perform before testing with the user
@@ -92,9 +100,9 @@ Test 5: User is able to message another user to study together
         "Beta Testing
         Author: adminX
         Time Frame: 11-21-2022 to 11-28-2022"
-    6) Hover over the button labelled "View Description" and "this post is made for beta testing script 1" should be
+    6) Hover over the button labeled "View Description" and "this post is made for beta testing script 1" should be
        seen as a pop up with a grey background
-    7) Click on the button labelled "Message Me!"
+    7) Click on the button labeled "Message Me!"
     8) The screen should show the following:
        "CS3240 - Beta Testing"
        Along with the user in this meeting room: adminX and the name from login, if there isn't a name, the logged in
@@ -102,23 +110,23 @@ Test 5: User is able to message another user to study together
     ** Note: Admin should check admin script (Lines 24-31) for actions before proceeding
     9) Click on the message bar with "Your message" as a placeholder.
     10) Type "Hi! Let study together!".
-    11) Click the button labelled "Send"
+    11) Click the button labeled "Send"
     ** Note: Admin should check admin script (Lines 33-38) for actions before proceeding
     12) The following message should be seen on the screen: "adminX : Yes!"
 
 Test 6: When user sends an empty message an alert is shown and the message is not sent and user is able to leave chat room
     1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
     2) Click on "Chat Rooms" in the navigation bar at the top of the screen
-    3) The screen should show the following: "CS3240 - Beta Testing" along with a button labelled "Enter the room to chat!"
-    4) Click on the button labelled "Enter the room to chat!"
+    3) The screen should show the following: "CS3240 - Beta Testing" along with a button labeled "Enter the room to chat!"
+    4) Click on the button labeled "Enter the room to chat!"
     5) The screen should show the following:
        "CS3240 - Beta Testing"
        Along with the user in this meeting room: adminX and the name from login, if there isn't a name, the logged in
        email should be seen
-    6) Do not type anything in the message bar and click on the button labelled "Send"
+    6) Do not type anything in the message bar and click on the button labeled "Send"
     7) An alert saying: "The message was empty!" should show up
     ** Note: Admin should check admin script (Lines 41-43) for checks, user may continue to proceed
-    8) If not already seen, scroll up to find and click on the button labelled "Permanently leave this room"
+    8) If not already seen, scroll up to find and click on the button labeled "Permanently leave this room"
     9) The following message should be seen:
         "You currently do not have any chat rooms.
        Chat rooms are created if you have indicated interest in another user's post, which can be seen on course feed
@@ -127,47 +135,47 @@ Test 6: When user sends an empty message an alert is shown and the message is no
 
 Test 7: User should be able to schedule a study session and see alerts when fields are not filled in properly
     1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
-    2) If not already seen on the screen, scroll down to see and click on a button labelled "Schedule Study Session"
+    2) If not already seen on the screen, scroll down to see and click on a button labeled "Schedule Study Session"
     3) The screen should show the following:
        "Schedule a study session for:
        CS3240 - Beta Testing"
     4) Enter "11/01/2022" in the date box to the right of "Date"
-    5) Click on the button labelled "Schedule"
+    5) Click on the button labeled "Schedule"
     6) An alert saying should be seen:
        "All fields must be filled in, the following fields are not filled:
         Start Time
         End Time "
     7) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
     8) Enter "01:30 PM" in the time box to the right of "Start Time:"
-    9) Click on the button labelled "Schedule"
+    9) Click on the button labeled "Schedule"
     10) An alert saying should be seen:
        "All fields must be filled in, the following fields are not filled:
         End Time "
     11) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
     12) Enter "01:00 PM" in the time box to the right of "End Time:"
-    13) Click on the button labelled "Schedule"
+    13) Click on the button labeled "Schedule"
     14) An alert saying should be seen: "The date of the study session can not happen in the past"
     15) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
     16) Change the date box to the right of "Date" to have "11/23/2022" instead of "11/01/2022"
-    17) Click on the button labelled "Schedule"
+    17) Click on the button labeled "Schedule"
     18) An alert saying should be seen: "end time must be later than start time"
     19) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
     20) Change the time box to the right of "End Time:" to have "02:00PM" instead of "01:00 PM"
-    21) Click on the button labelled "Schedule"
+    21) Click on the button labeled "Schedule"
     22) The screen should show the following: "My Upcoming Study Sessions"
-    10) Click on the dropdown labelled "Sent Study Session Requests"
+    10) Click on the dropdown labeled "Sent Study Session Requests"
     11) The following should be seen:
         "Study session for: Beta Testing
         Scheduled on: 11-23-2022
         Time Frame: 13:30 to 14:00"
-        Along with a button labelled "Delete"
+        Along with a button labeled "Delete"
 
 Test 8: User is able to log and return to the login page
     1) If not already logged in, follow Test 1
     2) Click on "Logout adminX" where 'adminX' is the name of the logged in account that is located in the navigation
        bar at the top of the screen
     3) "Login with Google" should be seen on the screen.
-    4) Click on the button labelled "CS 3240  - Section: 002", located beneath "Update Course Schedule" near the center
+    4) Click on the button labeled "CS 3240  - Section: 002", located beneath "Update Course Schedule" near the center
        of the screen
 
 You have finished the beta testing scripts. Please inform admin about any other feedback you have about the UX or
