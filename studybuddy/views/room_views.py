@@ -1,8 +1,8 @@
+from django.urls import reverse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
 from studybuddy.models import Room, Message, User, Post
 
-@csrf_exempt
 def rooms(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
@@ -15,6 +15,13 @@ def rooms(request):
     if User.objects.get(email=request.user.email).name == "":
         context['student_name'] = request.user
 
+    return render(request, 'studybuddy/rooms.html', context)
+
+
+def room(request, roomNumber):
+    if request.user.is_anonymous:
+        return render(request, template_name="index.html")
+
     if request.GET.get('leave'):
         room_pk = request.GET['room_pk']
         if Room.objects.filter(pk=room_pk):
@@ -23,16 +30,10 @@ def rooms(request):
                 room.delete()
             else:
                 room.users.remove(User.objects.get(email=request.user.email))
-
-    return render(request, 'studybuddy/rooms.html', context)
-
-
-def room(request, roomNumber):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
+        return HttpResponseRedirect(reverse('studybuddy:rooms'))
 
     room = Room.objects.get(pk=roomNumber)
-    messages = Message.objects.filter(room=room)[0:25]
+    messages = Message.objects.filter(room=room)[:25]
 
     context = {
         'room': room,

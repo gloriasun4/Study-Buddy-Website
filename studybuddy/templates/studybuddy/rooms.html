@@ -231,11 +231,7 @@
                       <div class="w-full lg:w-1/4 px-3 py-3">
                           <div class="p-4 bg-white shadow rounded-xl text-center">
                               <h2 class="mb-5 text-2xl font-semibold">{{ room | linebreaksbr }}</h2>
-                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Enter</a>
-                              <form method="post" action="/studybuddy">
-                                  <input type="hidden" name="room_pk" value="{{room.pk}}">
-                                  <input class="btn btn-lg" name='leave' type="submit" value="Leave">
-                              </form>
+                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Enter the room to chat!</a>
                           </div>
                       </div>
                       {% endfor %}

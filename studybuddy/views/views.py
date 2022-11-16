@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from studybuddy.models import User, Departments, Course, Post, EnrolledClass
+from studybuddy.models import User, Departments, Course, Post, EnrolledClass, Room
 
 
 def index(request):
@@ -203,6 +203,16 @@ def coursefeed(request, dept, course_number):
 
     if request.POST.get('message'):
         return room_views.room(request, room_views.addRoom(request))
+
+    if request.GET.get('leave'):
+        room_pk = request.GET['room_pk']
+        if Room.objects.filter(pk=room_pk):
+            room = Room.objects.get(pk=room_pk)
+            if room.users.count() == 1:
+                room.delete()
+            else:
+                room.users.remove(User.objects.get(email=request.user.email))
+        return HttpResponseRedirect(reverse('studybuddy:rooms'))
 
     email = request.user.email
     context = {
