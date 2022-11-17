@@ -198,9 +198,6 @@ def coursefeed(request, dept, course_number):
     if request.POST.get('delete'):
         post_views.deletepost(request)
 
-    if request.POST.get('submit'):
-        post_views.submitpost(request, dept, course_number)
-
     if request.POST.get('message'):
         return room_views.room(request, room_views.addRoom(request))
 

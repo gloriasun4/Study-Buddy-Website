@@ -405,6 +405,8 @@
                                         {{ friend | linebreaksbr }} &nbsp &nbsp
                                         <input type="hidden" name="remove_email" value="{{friend.email}}">
                                         <input name='unfriend' type="submit" value="Unfriend" class="btn">
+                                        <input type="hidden" name="friend_email" value="{{friend.email}}">
+                                        <input name='view_friends' type="submit" value="View Profile" class="btn">
                                     </li>
                                 </form> <br>
                             {% endfor %}

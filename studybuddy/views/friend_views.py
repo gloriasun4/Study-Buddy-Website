@@ -123,5 +123,25 @@ def view_friends(request):
         context['remove_friend'] = True
         context['removed_email'] = remove_email
 
+    if request.POST.get('view_friends'):
+        friend_email = request.POST.get('friend_email')
+        friend = User.objects.get(email__exact=friend_email)
+        context = {
+            'Email': friend.email,
+            'UserName': friend.username,
+            'Name': friend.name,
+            'Major': friend.major,
+            'ZoomLink': friend.zoomLink,
+            'AboutMe': friend.blurb,
+            'student': User.objects.get(email=request.user.email),
+            'student_name': User.objects.get(email=request.user.email).name
+        }
+
+        if User.objects.get(email=request.user.email).name == "":
+            context['student_name'] = request.user
+
+        return render(request, "friends/friend_profile", context)
+
+
     request.POST = None
     return render(request, "friends/view_friends.html", context)

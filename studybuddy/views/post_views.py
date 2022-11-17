@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render
 from studybuddy.models import Post, Course, User, EnrolledClass
@@ -14,6 +16,10 @@ def makepost(request, dept, course_number):
         'course_number': course_number,
         'student_name': User.objects.get(email=request.user.email).name,
     }
+
+    if request.POST.get('submit'):
+        submitpost(request, dept, course_number)
+        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number)))
 
     if User.objects.get(email=request.user.email).name == "":
         context['student_name'] = request.user

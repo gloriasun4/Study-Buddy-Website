@@ -1,4 +1,7 @@
 import datetime
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render
 from studybuddy.models import Room, StudySession, User
@@ -35,10 +38,13 @@ def upcomingSessions(request):
     template_name = "schedule_sessions/upcomingSessions.html"
     if request.POST.get('accept'):
         acceptSession(request)
+        return HttpResponseRedirect(reverse('studybuddy:upcomingSessions'))
     elif request.POST.get('decline'):
         declineSession(request)
+        return HttpResponseRedirect(reverse('studybuddy:upcomingSessions'))
     elif request.POST.get('delete'):
         deleteSession(request)
+        return HttpResponseRedirect(reverse('studybuddy:upcomingSessions'))
     elif request.POST.get('schedule'):
         # all values mst exist for form to be submitted. No need to check validity
         date = request.POST.get('date')
@@ -57,6 +63,7 @@ def upcomingSessions(request):
                                               author=email)
         for user in room.users.all():
             session.users.add(user)
+        return HttpResponseRedirect(reverse('studybuddy:upcomingSessions'))
 
     context = {
         'student_name': User.objects.get(email=request.user.email).name
