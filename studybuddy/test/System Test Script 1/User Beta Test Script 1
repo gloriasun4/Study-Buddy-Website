@@ -62,15 +62,20 @@ Test 3: User is able to make a post with default values for only the section the
        If this information is not accurate, please inform the admin of any missing/inaccurate information
    7) Do not edit anything on the screen and click the button labeled "Submit Post", if this button is not seen, please
       inform the admin of the missing button
-   8) The same screen from step 4 should be seen
-   9) If not already seen on the screen, scroll down to see "Studybuddy posts for this course" along with the new post
+   8) An alert saying should be seen: "The topic may not be left blank". If thid infromation is not accurate, please
+      inform the admin of any missing/inaccurate information.
+   9) Click on the field with "Study for midterm 2" as the placeholder
+   10) Type "Beta tester post"
+   11) Click on the button labeled "Submit Post"
+   12) The same screen from step 4 should be seen
+   13) If not already seen on the screen, scroll down to see "Studybuddy posts for this course" along with the new post
       made in step 7
        "No topic was provided by the author of this post
        Author: sofia
        Time Frame: 2022-11-12 to 2022-11-19"
        **Where author is the name from login and Time Frame has today's date through one week later
        If this information is not accurate, please inform the admin of any missing/inaccurate information
-   10) Please inform the admin member about any comments on the process to make a post.
+   14) Please inform the admin member about any comments on the process to make a post.
 
 Test 4: User is able to delete a post they made
    1) If not logged in on homepage, follow Test 1

@@ -32,15 +32,18 @@ def room(request, roomNumber):
                 room.users.remove(User.objects.get(email=request.user.email))
         return HttpResponseRedirect(reverse('studybuddy:rooms'))
 
-    room = Room.objects.get(pk=roomNumber)
-    messages = Message.objects.filter(room=room)[:25]
-
     context = {
-        'room': room,
-        'messages': messages,
         'username': User.objects.get(email=request.user.email).username,
         'student_name': User.objects.get(email=request.user.email).name,
     }
+
+    if Room.objects.filter(pk=roomNumber):
+        room = Room.objects.get(pk=roomNumber)
+        context['room'] = room
+        messages = Message.objects.filter(room=room)[:25]
+        context['messages'] = messages
+    else:
+        context['noRoom'] = True
 
     if User.objects.get(email=request.user.email).name == "":
         context['student_name'] = request.user
