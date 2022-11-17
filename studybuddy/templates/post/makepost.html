@@ -243,8 +243,8 @@
                       <span class="firstSpan"> (?) <span class="secondSpan">The default dates will keep the post open for a week from today</span></span><br><br>
 
                       <label for="description">Description:</label>
-                      <textarea type="text" id="description" name="description" placeholder = "Message me if you would like to study together" value=description></textarea><br><br>
-                      <input onClick='alertWhenFormNotFilled()' id='make' name='submit' type="button" value="Submit Post">
+                      <textarea type="text" row="20" cols="45" id="description" name="description" placeholder = "Message me if you would like to study together" value=description></textarea><br><br>
+                      <input onClick='alertWhenFormNotFilled()' id='make' name='submit' type="button" class="btn btn-lg" value="Submit Post">
                     </form>
                 {% else %}
                     <h1>The course number {{ course_number }} in {{ dept }} is not available to make a post</h1>
@@ -264,7 +264,7 @@
 <!-- Source: https://stackoverflow.com/questions/563406/how-to-add-days-to-date -->
 <script>
     function alertWhenFormNotFilled() {
-        const topic = document.getElementById('topic');
+        const topic = document.getElementById('topic').value;
         const start = new Date(document.getElementById('start_date').value);
         const end = document.getElementById('end_date');
         const form = document.getElementById('make_post');
@@ -284,10 +284,12 @@
 
         console.log("start date is less than today: " + start.getTime() < today.getTime())
 
+        console.log("The topic the user entered: " + topic)
+
         if(topic == "") {
             form.setAttribute('action', "");
             console.log("User did not enter a topic");
-            alert("The field for topic must be filled in");
+            alert("The topic may not be left blank");
         }
         else if(start != "" && start.getTime() < today.getTime()) {
             form.setAttribute('action', "")

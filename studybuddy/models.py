@@ -93,10 +93,10 @@ class Post(models.Model):
     def __str__(self):
         author = "Author: " + self.author
         if type(self.startDate) != str:
-            time_frame = "Time Frame: " + self.startDate.strftime("%m-%d-%Y") + " to " + self.endDate.strftime(
+            time_frame = self.startDate.strftime("%m-%d-%Y") + " to " + self.endDate.strftime(
                 "%m-%d-%Y")
         else:
-            time_frame = "Time Frame: " + self.startDate + " to " + self.endDate
+            time_frame = self.startDate + " to " + self.endDate
 
         return self.topic + '\n' + author + '\n' + time_frame + '\n'
 
@@ -152,9 +152,9 @@ class StudySession(models.Model):
 
     def __str__(self):
         if type(self.start) != str:
-            time_frame = self.start.strftime("%H:%M") + " to " + self.end.strftime("%H:%M")
+            time_frame = "Time Frame: " + self.start.strftime("%H:%M") + " to " + self.end.strftime("%H:%M")
         else:
-            time_frame = self.start + " to " + self.start
+            time_frame = "Time Frame: " + self.start + " to " + self.start
 
         if type(self.date) != str:
             date = "Scheduled on: " + self.date.strftime("%m-%d-%Y")

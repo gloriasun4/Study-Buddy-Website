@@ -121,7 +121,7 @@ class PostTest(TestCase):
         # given
         expectedStr = self.test_topic + '\n' + \
                       'Author: ' + self.test_author + '\n' + \
-                      'Time Frame: ' + '01-01-2023' + ' to ' + '01-02-2023' + '\n'
+                      '01-01-2023' + ' to ' + '01-02-2023' + '\n'
 
         # when
         actualStr = Post.objects.get(author=self.test_author).__str__()
@@ -172,7 +172,7 @@ class StudySessionTest(TestCase):
         # given
         expected_str = "Study session for: " + self.test_name + '\n' \
                        + "Scheduled on: " + '01-01-2023' + '\n' \
-                       + self.test_start + ' to ' + self.test_end
+                       + 'Time Frame: ' + self.test_start + ' to ' + self.test_end
 
         # when
         actual_str = StudySession.objects.get(name=self.test_name).__str__()
