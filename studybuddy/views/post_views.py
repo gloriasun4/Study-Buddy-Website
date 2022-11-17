@@ -17,10 +17,6 @@ def makepost(request, dept, course_number):
         'student_name': User.objects.get(email=request.user.email).name,
     }
 
-    if request.POST.get('submit'):
-        submitpost(request, dept, course_number)
-        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number)))
-
     if User.objects.get(email=request.user.email).name == "":
         context['student_name'] = request.user
 
@@ -32,7 +28,7 @@ def makepost(request, dept, course_number):
 
 def submitpost(request, dept, course_number):
     email = request.user.email
-
+    print('here')
     # if the course exists
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         course = Course.objects.get(course_number=course_number)

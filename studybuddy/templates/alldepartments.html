@@ -38,6 +38,7 @@
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
             color: #636363;
+            bottom: 0px;
         }
 
         @media only screen and (max-width: 768px) {
@@ -105,10 +106,9 @@
             display: flex;
             flex-direction: column;
             max-width: 100%;
-            max-height: 100%;
+            max-height: max-content;
             background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
             background-size: cover;
-            background-repeat: repeat;
         }
 
         .sb-form {
@@ -160,7 +160,7 @@
         #myInput {
           background-image: url('/css/searchicon.png');
           background-position: 10px 12px;
-          background-repeat: no-repeat;
+          background-repeat: repeat;
           width: 100%;
           font-size: 16px;
           padding: 12px 20px 12px 40px;
@@ -231,7 +231,7 @@
                     {% for department in departments_list %}
                         <li><a href="{% url 'studybuddy:department' department.dept %}">{{ department.dept }}</a></li>
                     {% endfor %}
-                        <li hidden="true" id="noMatch">No department available</li>
+                        <p hidden="true" id="noMatch">No department available</p>
                     </ul>
                 {% else %}
                     <p>No departments are available.</p>
@@ -260,7 +260,8 @@
             }
         }
         if(match == false) {
-            noMatch.attr("hidden", false);
+            console.log('here')
+            noMatch.setAttribute("hidden", false);
         }
     }
     </script>

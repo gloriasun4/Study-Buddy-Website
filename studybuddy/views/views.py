@@ -201,6 +201,10 @@ def coursefeed(request, dept, course_number):
     if request.POST.get('message'):
         return room_views.room(request, room_views.addRoom(request))
 
+    if request.POST.get('submit'):
+        post_views.submitpost(request, dept, course_number)
+        return HttpResponseRedirect(reverse('studybuddy:coursefeed', args=(dept, course_number)))
+
     if request.GET.get('leave'):
         room_pk = request.GET['room_pk']
         if Room.objects.filter(pk=room_pk):

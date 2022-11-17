@@ -277,8 +277,8 @@
                         </button>
                         
                         <div class="content">
+                            {% for post in user_posts %}
                             <form action="" method = "post">
-                          {% for post in user_posts %}
                             {% if post.course.course_number == enrolled_course.course.course_number %}
                                 <li style="list-style-type: none">
                                     {{ post | linebreaksbr }}
