@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render
 from studybuddy.models import Post, Course, User, EnrolledClass
@@ -26,7 +28,7 @@ def makepost(request, dept, course_number):
 
 def submitpost(request, dept, course_number):
     email = request.user.email
-
+    print('here')
     # if the course exists
     if Course.objects.filter(course_number=course_number, subject=dept.upper()).exists():
         course = Course.objects.get(course_number=course_number)

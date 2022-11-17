@@ -22,8 +22,8 @@ def room(request, roomNumber):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
 
-    if request.GET.get('leave'):
-        room_pk = request.GET['room_pk']
+    if request.POST.get('leave'):
+        room_pk = request.POST['room_pk']
         if Room.objects.filter(pk=room_pk):
             room = Room.objects.get(pk=room_pk)
             if room.users.count() == 1:

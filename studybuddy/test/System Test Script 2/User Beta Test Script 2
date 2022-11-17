@@ -12,7 +12,8 @@ Test 1: Google login and on homepage
    2) Try signing in with a Google account (that is a virginia.edu account). If this did not work please inform the
       admin member.
    3) Assuming there was no previous log in, a screen to edit profile should be seen
-   4) Make no edits and click the button labeled "Save Profile"
+   4) Make no edits and click the button labeled "Save Profile". If this button is not seen, please inform the admin of
+      the missing button
    5) The account info page with the logged in email should be seen, if this information is not accurate, please inform
       the admin of the missing/inaccurate information
    6) Click on the words "Study Buddy" in the upper left hand corner
@@ -45,7 +46,8 @@ Test 2: User is able to add a course to their own course load
 Test 3: User is able to make a post with default values for only the section they are enrolled in
     1) If not logged in on homepage, follow Test 1
     2) If "CS 3240 - Section: 002" is not seen on homepage, follow Test 2 to add course
-    3) Click on the button labeled "CS 3240 - Section: 002", located beneath "Update Course Schedule" near the center of the screen
+    3) Click on the button labeled "CS 3240 - Section: 002", located beneath "Update Course Schedule" near the center of
+       the screen
     4) The screen should show the following:
         "Find study buddy for:
          CS3240: Advanced Software Development Techniques
@@ -99,8 +101,8 @@ Test 5: User is able to message another user to study together
        along with the following post:
         "Beta Testing
         Author: adminX
-        Time Frame: 11-21-2022 to 11-28-2022"
-    6) Hover over the button labeled "View Description" and "this post is made for beta testing script 1" should be
+        Time Frame: 11-21-2022 to 12-03-2022"
+    6) Hover over the button labeled "View Description" and "this post is made for beta testing script 2" should be
        seen as a pop up with a grey background
     7) Click on the button labeled "Message Me!"
     8) The screen should show the following:
@@ -112,9 +114,46 @@ Test 5: User is able to message another user to study together
     10) Type "Hi! Let study together!".
     11) Click the button labeled "Send"
     ** Note: Admin should check admin script (Lines 33-38) for actions before proceeding
-    12) The following message should be seen on the screen: "adminX : Yes!"
+    12) The following message should be seen on the screen: "adminX : Lets do it!"
 
-Test 6: When user sends an empty message an alert is shown and the message is not sent and user is able to leave chat room
+Test 6: User should be able to schedule a study session and see alerts when fields are not filled in properly
+    1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
+    2) If not already seen on the screen, scroll down to see and click on a button labeled "Schedule Study Session"
+    3) The screen should show the following:
+       "Schedule a study session for:
+       CS3240 - Beta Testing"
+    4) Enter "11/01/2022" in the date box to the right of "Date"
+    5) Click on the button labeled "Schedule"
+    6) An alert saying the following should be seen:
+       "All fields must be filled in, the following fields are not filled:
+        Start Time
+        End Time "
+    7) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    8) Enter "01:30 PM" in the time box to the right of "Start Time:"
+    9) Click on the button labeled "Schedule"
+    10) An alert saying should be seen:
+       "All fields must be filled in, the following fields are not filled:
+        End Time "
+    11) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    12) Enter "01:00 PM" in the time box to the right of "End Time:"
+    13) Click on the button labeled "Schedule"
+    14) An alert saying should be seen: "The date of the study session can not happen in the past"
+    15) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    16) Change the date box to the right of "Date" to have "12/03/2022" instead of "11/01/2022"
+    17) Click on the button labeled "Schedule"
+    18) An alert saying should be seen: "end time must be later than start time"
+    19) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
+    20) Change the time box to the right of "End Time:" to have "02:00PM" instead of "01:00 PM"
+    21) Click on the button labeled "Schedule"
+    22) The screen should show the following: "My Upcoming Study Sessions"
+    10) Click on the dropdown labeled "Sent Study Session Requests"
+    11) The following should be seen:
+        "Study session for: Beta Testing
+        Scheduled on: 12-03-2022
+        Time Frame: 13:30 to 14:00"
+        Along with a button labeled "Delete"
+
+Test 7: When user sends an empty message an alert is shown and the message is not sent and user is able to leave chat room
     1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
     2) Click on "Chat Rooms" in the navigation bar at the top of the screen
     3) The screen should show the following: "CS3240 - Beta Testing" along with a button labeled "Enter the room to chat!"
@@ -133,46 +172,9 @@ Test 6: When user sends an empty message an alert is shown and the message is no
        pages or if other users have indicated interest for posts that you have made, which can be seen at the 'My Posts'
        option in the navigation bar at the top of the screen"
 
-Test 7: User should be able to schedule a study session and see alerts when fields are not filled in properly
-    1) If the following is not seen in chat rooms: "CS3240 - Beta Testing", follow Test 5
-    2) If not already seen on the screen, scroll down to see and click on a button labeled "Schedule Study Session"
-    3) The screen should show the following:
-       "Schedule a study session for:
-       CS3240 - Beta Testing"
-    4) Enter "11/01/2022" in the date box to the right of "Date"
-    5) Click on the button labeled "Schedule"
-    6) An alert saying should be seen:
-       "All fields must be filled in, the following fields are not filled:
-        Start Time
-        End Time "
-    7) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    8) Enter "01:30 PM" in the time box to the right of "Start Time:"
-    9) Click on the button labeled "Schedule"
-    10) An alert saying should be seen:
-       "All fields must be filled in, the following fields are not filled:
-        End Time "
-    11) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    12) Enter "01:00 PM" in the time box to the right of "End Time:"
-    13) Click on the button labeled "Schedule"
-    14) An alert saying should be seen: "The date of the study session can not happen in the past"
-    15) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    16) Change the date box to the right of "Date" to have "11/23/2022" instead of "11/01/2022"
-    17) Click on the button labeled "Schedule"
-    18) An alert saying should be seen: "end time must be later than start time"
-    19) Click "Close" or "Ok" or any related button to close the alert (This is different depending on browser)
-    20) Change the time box to the right of "End Time:" to have "02:00PM" instead of "01:00 PM"
-    21) Click on the button labeled "Schedule"
-    22) The screen should show the following: "My Upcoming Study Sessions"
-    10) Click on the dropdown labeled "Sent Study Session Requests"
-    11) The following should be seen:
-        "Study session for: Beta Testing
-        Scheduled on: 11-23-2022
-        Time Frame: 13:30 to 14:00"
-        Along with a button labeled "Delete"
-
 Test 8: User is able to log and return to the login page
     1) If not already logged in, follow Test 1
-    2) Click on "Logout adminX" where 'adminX' is the name of the logged in account that is located in the navigation
+    2) Click on "Logout <name>" where name is the name of the logged in account that is located in the navigation
        bar at the top of the screen
     3) "Login with Google" should be seen on the screen.
     4) Click on the button labeled "CS 3240  - Section: 002", located beneath "Update Course Schedule" near the center

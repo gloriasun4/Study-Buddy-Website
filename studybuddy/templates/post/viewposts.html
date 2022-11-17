@@ -277,12 +277,11 @@
                         </button>
                         
                         <div class="content">
+                            {% for post in user_posts %}
                             <form action="" method = "post">
-                          {% for post in user_posts %}
                             {% if post.course.course_number == enrolled_course.course.course_number %}
                                 <li style="list-style-type: none">
                                     {{ post | linebreaksbr }}
-                                    {% comment %} <form action="" method = "post"> {% endcomment %}
                                     {% csrf_token %}
                                     <!-- link to maybe some pop up to show post + post.description -->
                                     <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->

@@ -142,7 +142,7 @@ class UpcomingSessionsViewTest(TestCase):
         response = upcomingSessions(test_view_accept_session_request)
 
         # then
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         mock_acceptSession.assert_called_once_with(test_view_accept_session_request)
 
     @mock.patch('studybuddy.views.study_session_views.declineSession')
@@ -160,7 +160,7 @@ class UpcomingSessionsViewTest(TestCase):
         response = upcomingSessions(test_view_decline_session_request)
 
         # then
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         mock_declineSession.assert_called_once_with(test_view_decline_session_request)
 
     @mock.patch('studybuddy.views.study_session_views.deleteSession')
@@ -178,7 +178,7 @@ class UpcomingSessionsViewTest(TestCase):
         response = upcomingSessions(test_view_delete_session_request)
 
         # then
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         mock_deleteSession.assert_called_once_with(test_view_delete_session_request)
 
     def test_schedule_creates_study_session(self):
@@ -212,5 +212,5 @@ class UpcomingSessionsViewTest(TestCase):
         response = upcomingSessions(test_view_schedule_session_request)
 
         # then
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(StudySession.objects.count(), 1)
