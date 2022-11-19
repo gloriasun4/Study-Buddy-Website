@@ -322,20 +322,34 @@
 
         if (data.message) {
             let html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                html+= '<p class="font-semibold">' + data.name + " : " + data.message + '</p></div>';
-            if(data.name == "") {
-                html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                html+= '<p class="font-semibold">' + data.email + " : " + data.message + '</p></div>';
+            html+= '<p class="myText">' + data.name + " : " + data.message + '</p></div>';
+            if(data.email == userEmail) {
+                if(data.name == "") {
+                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
+                    html+= '<p class="myText">' + data.email + " : " + data.message + '</p></div>';
+                }
+            else {
+                if(data.name == "") {
+                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
+                    html+= '<p class="otherText">' + data.email + " : " + data.message + '</p></div>';
+                }
+                else {
+                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
+                    html+= '<p class="otherText">' + data.name + " : " + data.message + '</p></div>';
+                }
+            }
             }
             document.querySelector('#chat-messages').innerHTML += html;
         } else {
-            alert('The message was empty!');
+            if(data.email == userEmail) {
+                alert('The message was empty!');
+            }
         }
     }
 
     chatSocket.onclose = function(e) {
         console.log('error', e)
-        console.log('onclose')
+        console.log('The socket has closed due to the error listed above')
     }
 
 
