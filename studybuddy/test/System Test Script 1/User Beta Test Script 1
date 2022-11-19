@@ -68,7 +68,7 @@ Test 3: User is able to make a post with default values for only the section the
        If this information is not accurate, please inform the admin of any missing/inaccurate information
    7) Do not edit anything on the screen and click the button labeled "Submit Post", if this button is not seen, please
       inform the admin of the missing button.
-      **Admin take a look at lines 69-75 in admin script for changes that have been made
+      **Admin take a look at lines 72-77 in admin script for changes that have been made
    8) The same screen from step 4 should be seen
    9) If not already seen on the screen, scroll down to see "Studybuddy posts for this course" along with the new post
       made in step 7
@@ -76,7 +76,7 @@ Test 3: User is able to make a post with default values for only the section the
       Author: <name of user from login>
       Time Frame: <today’s date> to <a week from today>"
       If this information is not accurate, please inform the admin of any missing/inaccurate information
-      **Admin take a look at lines 76-77 in admin script for some inaccurate information to expect
+      **Admin take a look at lines 79-80 in admin script for some inaccurate information to expect
    10) Please inform the admin member about any comments on the process to make a post.
 
 Test 4: User is able to delete a post they made
@@ -110,7 +110,7 @@ Test 5: User is able to message another user to study together
    6) Hover over the button labeled "View Description" and "this post is made for beta testing script 1" should be seen
       as a pop up with a gray background.  If this information is not accurate, please inform the admin of the
       missing/inaccurate information.
-      **Admin take a look at line 87 in admin script for an expected change
+      **Admin take a look at line 86 in admin script for an expected change
    7) Click on the button labeled "Message Me!". If this button is not seen, please inform the admin of the missing
       button.
    8) The screen should show the following: "CS3240 - Beta Testing"

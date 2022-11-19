@@ -73,7 +73,7 @@ Step 7: Beta tester should receive an alert saying "The topic may not be left bl
         alert and do the following:
         1) Click on the field labeled "Topic" with placeholder text of "Study for midterm 2"
         2) Type "Script 1".
-        3) Click on the button labeled "Submit"
+        3) Click on the button labeled "Submit Post"
         4) Proceed with step 8
 
 Step 9: Beta tester should look for a post titled "Script 1" instead of "No topic was provided by the user of this post"
