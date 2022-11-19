@@ -17,8 +17,8 @@ Before Test 5:
 Check 1:
 https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/
 At the above link check for a post titled "Beta Testing"
-With author of "adminX" and time frame of 11-22-2022 to 12-03-2022
-If this post exists, proceed with Test 5. If not follow the steps belows then proceed with Test 5
+With author of "adminX" and time frame of 11-22-2022 to 12-09-2022
+If this post exists, proceed with Test 5. If not, follow the steps below then proceed with Test 5
 
 If the above post doesn't exist
 Proceed to this link: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/makepost?myBtn=
@@ -26,7 +26,7 @@ Proceed to this link: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS
    Keep "post to" as: "Only this section"
    Start Date of: 11/22/2022
    End Date of: 12/09/2022
-   Description of: "this post is made for beta testing script 1"
+   Description of: "this post is made for beta testing script 2"
 Click on the "Submit Post" button
 Now make sure Check 1 is fulfilled
 
