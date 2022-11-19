@@ -190,13 +190,14 @@
         .firstSpan .secondSpan {
           visibility: hidden;
           width: 200px;
-          background-color: gray;
+          background-color: #6865AC;
           color: #fff;
           text-align: center;
           border-radius: 6px;
           padding: 5px 0;
           position: absolute;
           z-index: 1;
+          opacity: 0.85
         }
 
         .firstSpan:hover .secondSpan {
@@ -286,7 +287,7 @@
                                     <!-- link to maybe some pop up to show post + post.description -->
                                     <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                     <span class="firstSpan">
-                                        <button class="btn btn-sm">View Description</button>
+                                        <input type="button" class="btn btn-lg" value="View Description">
                                     <span class="secondSpan">{{ post.description }}</span></span>
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">
@@ -324,7 +325,7 @@
                                         View Course Feed
                                     </button>
                                     <span class="firstSpan">
-                                        <button class="btn btn-lg">View Description</button>
+                                        <input type="button" class="btn btn-lg" value="View Description">
                                     <span class="secondSpan">{{ post.description }}</span></span>
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">

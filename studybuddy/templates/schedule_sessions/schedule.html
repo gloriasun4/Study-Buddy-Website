@@ -359,18 +359,18 @@
         }
         else if(start > end) {
             console.log("starts after end")
-            alert('end time must be later than start time');
+            alert('The end time of the study session must be later than start time of the study session');
         }
         else if(date.getTime() == today.getTime()) {
             console.log('Same day checking for time');
             console.log('end hour: ' + end.substring(0, 2))
             console.log('end minute: ' + end.substring(3, 5))
             if(hour_now > end.substring(0, 2)) {
-                alert('end time must be later than the current time');
+                alert('The end time of the study session must be later than the current time');
             }
             else if(hour_now == end.substring(0, 2)) {
                 if(minute_now >= end.substring(3, 5)) {
-                    alert('end time must be later than the current time');
+                    alert('The end time of the study session must be later than the current time');
                 }
                 else {
                     console.log('all requirements met!')
