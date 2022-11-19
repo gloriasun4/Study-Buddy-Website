@@ -18,7 +18,7 @@ Check 1:
 https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/
 At the above link check for a post titled "Beta Testing"
 With author of "adminX" and time frame of 11-22-2022 to 12-03-2022
-If this post exists, proceed with Test 5. If not follow the steps belows then proceed with Test 5
+If this post exists, proceed with Test 5. If not follow the steps below then proceed with Test 5
 
 If the above post doesn't exist
 Proceed to this link: https://cs-3240-my-study-buddy.herokuapp.com/studybuddy/CS/19660/makepost?myBtn=
