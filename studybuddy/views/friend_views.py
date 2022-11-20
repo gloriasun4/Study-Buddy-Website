@@ -125,23 +125,25 @@ def view_friends(request):
 
     if request.POST.get('view_friends'):
         friend_email = request.POST.get('friend_email')
-        friend = User.objects.get(email__exact=friend_email)
-        context = {
-            'Email': friend.email,
-            'UserName': friend.username,
-            'Name': friend.name,
-            'Major': friend.major,
-            'ZoomLink': friend.zoomLink,
-            'AboutMe': friend.blurb,
-            'student': User.objects.get(email=request.user.email),
-            'student_name': User.objects.get(email=request.user.email).name
-        }
+        request.POST = None
+        return view_friend_profile(request, friend_email)
 
-        if User.objects.get(email=request.user.email).name == "":
-            context['student_name'] = request.user
-
-        return render(request, "friends/friend_profile", context)
-
-
+    print(request.POST)
     request.POST = None
+    print(request.POST)
     return render(request, "friends/view_friends.html", context)
+
+
+def view_friend_profile(request, friend_email):
+    friend = User.objects.get(email__exact=friend_email)
+
+    context = {
+        'student': User.objects.get(email=request.user.email),
+        'student_name': User.objects.get(email=request.user.email).name,
+        'friend': friend
+    }
+
+    if User.objects.get(email=request.user.email).name == "":
+        context['student_name'] = request.user
+
+    return render(request, "friends/friend_profile.html", context)

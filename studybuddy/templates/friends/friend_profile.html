@@ -246,26 +246,17 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="profile-head">
-                            <h2>
-                                {{Name}}
-                            </h2>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="myForm">
-                    {% comment %} <a href="{% url 'studybuddy:editAccount' %}" name="myBtn" class="btn">Edit Profile</a> {% endcomment %}
-                    <form method="get">
-                      <button class="btn" type="submit" formaction="{% url 'studybuddy:editAccount' %}">
-                        <a>Edit Profile</a></button>
-                    </form>
+                    <h2>
+                        {{friend.name}}'s profile
+                    </h2>
                 </div>
             </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
-                    <p><h4>My Schedule</h4></p>
-                    {% if student.enrolledclass_set.all %}
-                        {% for class in student.enrolledclass_set.all %}
+                    <p><h4>Schedule</h4></p>
+                    {% if friend.enrolledclass_set.all %}
+                        {% for class in friend.enrolledclass_set.all %}
                             <li>
                                 <a href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
                                     {{ class.course.subject }} {{ class.course.catalog_number }} - Section: {{ class.course.section }}
@@ -283,7 +274,7 @@
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-11">
-                                <p>{{AboutMe}}</p>
+                                <p>{{friend.blurb}}</p>
                             </div>
                         </div>
                                 <div class="row">
@@ -291,7 +282,7 @@
                                         <label>Username</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{UserName}}</p>
+                                        <p>{{friend.username}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -299,7 +290,7 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{Name}}</p>
+                                        <p>{{friend.name}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -307,7 +298,7 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{Email}}</p>
+                                        <p>{{friend.email}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -315,14 +306,14 @@
                                         <label>Major</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{Major}}</p>
+                                        <p>{{friend.major}}</p>
                                     </div>
                                 </div>
                     </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Zoom Link</label><br/>
-                                <p><a href="{{ZoomLink}}">{{ZoomLink}}</a></p>
+                                <p><a href="{{ZoomLink}}">{{friend.zoomLink}}</a></p>
                             </div>
                         </div>
                     </div>
