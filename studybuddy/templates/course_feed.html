@@ -263,7 +263,7 @@
                 </form>
             </div>
         </div>
-
+        
         <div class="d-flex justify-content-center">
             <div class="sb-form">
                     <h1>Studybuddy posts for this course</h1>
@@ -278,7 +278,7 @@
                                 <!-- link to maybe some pop up to show post + post.description -->
                                 <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                 <span class="firstSpan">
-                                 <button class="btn btn-sm" name="descripton" id="description" formaction="">View Description</button>
+                                 <input type="button" class="btn btn-sm" name="descripton" id="description" value="View Description">
                                 <span class="secondSpan">{{ post.description }}</span></span>
 
                                 {% if user.email == post.user.email %}
