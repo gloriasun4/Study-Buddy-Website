@@ -260,20 +260,6 @@
             </div>
         </div>
 
-{% comment %} 
-        <form action="{% url 'studybuddy:ucl' course.subject course.course_number%}" method="post" >
-            {% csrf_token %}
-            <div class="wrapper">
-                <h2>Would you like to enroll in this course?</h2>
-                <fieldset align="center">
-                    <input type="radio" name="choice" id="YesE" value="YesE" checked>
-                    <label for="YesE">Yes, enroll in this course.</label><br>
-                    <input type="radio" name="choice" id="NoE" value="NoE" >
-                    <label for="NoE">No, go back to home page.</label><br>
-                </fieldset>
-                    <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn">Back to Departments</a>
-                    <input class="btn" type="submit" value="Continue">
-            </form> {% endcomment %}
 
         <div class="d-flex justify-content-center">
             <div class="sb-form">
@@ -289,7 +275,7 @@
                                 <!-- link to maybe some pop up to show post + post.description -->
                                 <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                 <span class="firstSpan">
-                                 <button class="btn btn-sm" name="descripton" id="description" formaction="">View Description</button>
+                                 <input type="button" class="btn btn-sm" name="descripton" id="description" value="View Description">
                                 <span class="secondSpan">{{ post.description }}</span></span>
 
                                 {% if user.email == post.user.email %}
