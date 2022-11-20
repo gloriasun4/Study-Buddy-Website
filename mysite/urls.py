@@ -23,7 +23,7 @@ from django.contrib.auth.views import LogoutView
 # handler500 = 'my_app.views.handler500'
 
 urlpatterns = [
-    path('studybuddy/1234/35/', include('studybuddy.urls')),
+    path('studybuddy/', include('studybuddy.urls')),
     path('admin/', admin.site.urls),
     # implement Google login
     path('', views.index, name = "index"),
