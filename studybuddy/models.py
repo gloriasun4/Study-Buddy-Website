@@ -8,9 +8,9 @@ class User(models.Model):
     email = models.CharField(primary_key=True, max_length=30, default="")
     # firstName = models.CharField(max_length=30, default="")
     # lastName = models.CharField(max_length=30, default="")
-    username = models.CharField(max_length=20, default="")
+    username = models.CharField(max_length=30, default="")
     name = models.CharField(max_length=50, default="")
-    major = models.CharField(max_length=30, default="")
+    major = models.CharField(max_length=50, default="")
     zoomLink = models.URLField(max_length=300, default="")
     blurb = models.TextField(default="")
 
@@ -42,7 +42,7 @@ class Departments(models.Model):
 class Course(models.Model):
     subject = models.CharField(max_length=4)
     catalog_number = models.CharField(max_length=4)
-    instructor = models.CharField(max_length=30)
+    instructor = models.CharField(max_length=100)
     section = models.CharField(max_length=4)
     course_number = models.CharField(max_length=10)
     description = models.TextField(default="")

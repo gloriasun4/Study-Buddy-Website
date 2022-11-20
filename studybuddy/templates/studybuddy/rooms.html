@@ -16,7 +16,7 @@
             padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
-            color: #636363;
+            color: #464646;
         }
 
         .navbar-brand {
@@ -26,19 +26,23 @@
         }
 
         .navbar-toggler {
-            color: #636363;
+            color: #464646;
         }
 
         .nav-link {
             text-align: right;
-            color: #636363;
+            color: #464646;
         }
 
         footer {
             padding: 15px;
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
-            color: #636363;
+            color: #464646;
+            left:0;
+            right: 0;
+            bottom:0;
+            position: fixed;
         }
 
         @media only screen and (max-width: 768px) {
@@ -107,25 +111,25 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            {% comment %} background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            background: url("https://images.unsplash.com/photo-1582659770841-cbf093685dd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80") no-repeat center; {% endcomment %}
+            background: url("https://images.unsplash.com/photo-1499796683658-b659bc751db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80") no-repeat center center;
             background-size: cover;
+            background-attachment: fixed;
         }
 
         .wrapper {
-            width: 640px;
+            {% comment %} width: 640px; {% endcomment %}
             margin: auto;
             overflow-x: hidden;
             margin-bottom: 30px;
             position: relative;
             text-align: center;
-            /* {% comment %} background: #65c5c0; {% endcomment %}
-            {% comment %} background: #e2a6c0; {% endcomment %} */
             background: #aaa6e2;
             border-radius: 12px;
         }
           
         .title {
-            /* {% comment %} color: #fbfbfb; {% endcomment %} */
             color: white;
         }
 
@@ -190,6 +194,49 @@
         .text-center {
             color: #636363;
         }
+
+
+
+
+
+
+        .container {
+            font-size: 20px;
+            max-width: 900px;
+            padding-top: 2%;
+            padding-left: 2%;
+            padding-right: 2%;
+            padding-bottom: 0.5%;
+            margin-top: 3%;
+            margin-bottom: 2.5%;
+            border-radius: 25px;
+            background: #fff;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .container .row {
+            word-wrap: break-word;
+        }
+
+        .container .myForm .btn:hover {
+            font-size: 20px;
+              min-width: 250px;
+              outline: none !important;
+              background: #a6e2c8;
+              color: white;
+              border-radius: 12px;
+          }
+
+        .container .myForm .btn{
+            font-size: 20px;
+              min-width: 250px;
+              outline: none !important;
+              background: #aaa6e2;
+              color: white;
+              border-radius: 12px;
+          }
+
     </style>
 </head>
 
@@ -217,16 +264,41 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex justify-content-center">
+
+        <div class="col-md-12">
+            <div class="container">
+                <form class = "myForm">
+                    <div class="wrapper">
+                        <h1 class="title">Chat Rooms</h1>
+                      </div>
+                      {% for room in rooms %}
+                      <div class="container">
+                          <div class="p-3 text-center">
+                              <h3 class="mb-3 text-2xl font-semibold">{{ room | linebreaksbr }}</h3>
+                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-md">Enter the room to chat!</a>
+                          </div>
+                      </div>
+                      {% endfor %}
+                      {% if rooms %}
+                      {% else %}
+                        <p>
+                            You currently do not have any chat rooms. <br><br>
+                            Chat rooms are created if you have indicated interest in another user's post, which can be
+                            seen on course feed pages or if other users have indicated interest for posts that you have
+                            made, which can be seen at the 'My Posts' option in the navigation bar at the top of the screen
+                        </p>
+                      {% endif %}
+    
+                </form>
+            </div>
+        </div>
+
+        {% comment %} <div class="d-flex justify-content-center">
             <div class="sb-form">
                 <form>
                     <div class="wrapper">
                         <h1 class="title">Chat Rooms</h1>
                       </div>
-                      <!-- <div class="form-group">
-                        <button class="btn btn-lg" type="submit" formaction="alldepartments">
-                        <a name="myBtn">Find a study buddy</a></button>
-                      </div> -->
                       {% for room in rooms %}
                       <div class="w-full lg:w-1/4 px-3 py-3">
                           <div class="p-4 bg-white shadow rounded-xl text-center">
@@ -246,11 +318,10 @@
                       {% endif %}
                 </form>
             </div>
-        </div>
+        </div> {% endcomment %}
 
-    </div>
     <footer class="footer-container">
-        <div class="container">
+        <div class="myFooter">
             <div class="row">
             </div>
         </div>

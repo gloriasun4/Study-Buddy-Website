@@ -17,7 +17,7 @@
                 padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
-                color: #636363;
+                color: #464646;
             }
 
             .navbar-brand {
@@ -27,19 +27,19 @@
             }
 
             .navbar-toggler {
-                color: #636363;
+                color: #464646;
             }
 
             .nav-link {
                 text-align: right;
-                color: #636363;
+                color: #464646;
             }
 
             footer {
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
-                color: #636363;
+                color: #464646;
             }
 
             @media only screen and (max-width: 768px) {
@@ -108,38 +108,18 @@
                 flex-direction: column;
                 max-width: 100%;
                 max-height: 100%;
-                background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+                background: #654ea3;
+                background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+                background: linear-gradient(to right, #654ea3, #eaafc8);
+                {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
                 background-size: cover;
+                background-position: 30%;
+                background-attachment: fixed;
             }
 
-            .sb-form {
-                width: 700px;
-                float: right;
-                margin-top: 80px;
-                padding: 30px 0;
-                font-size: 15px;
-                position: relative;
-                text-align: center;
-            }
-
-            .sb-form form {
+            .myForm .btn{
                 font-size: 22px;
-                border-radius: 3px;
-                background-color: rgba(255, 255, 255, 0.5);
-                padding-top: 30px;
-                padding-left: 30px;
-                padding-right: 30px;
-                padding-bottom: 12px;
-                border-radius: 25px;
-            }
-
-            .sb-form .form-group {
-                margin-bottom: 20px;
-            }
-
-            .sb-form .btn{
-                font-size: 22px;
-                  min-width: 140px;
+                  min-width: 160px;
                   outline: none !important;
                   background: #aaa6e2;
                   color: white;
@@ -147,9 +127,9 @@
                   margin-bottom: 20px;
               }
 
-              .sb-form .btn:hover {
+              .myForm .btn:hover {
                 font-size: 22px;
-                  min-width: 140px;
+                  min-width: 160px;
                   outline: none !important;
                   background: #a6e2c8;
                   color: white;
@@ -157,21 +137,36 @@
                   margin-bottom: 20px;
               }
 
-            .sb-form .row div:first-child {
-                padding-right: 10px;
+            .container {
+                font-size: 22px;
+                max-width: 900px;
+                padding-top: 3%;
+                padding-left: 3%;
+                padding-right: 3%;
+                padding-bottom: 1%;
+                margin-top: 3%;
+                margin-bottom: 3%;
+                border-radius: 15px;
+                background: #fff;
+                text-align: center;
+                background-color: rgba(255, 255, 255, 0.8);
             }
 
-            .sb-form .row div:last-child {
-                padding-left: 10px;
+            .container .userBox{
+                width: 210px;
+                word-wrap: break-word;
             }
 
-            .text-center {
-                color: #636363;
+            .container .inputBox{
+                width: 250px;
+                word-wrap: break-word;
             }
 
-            .sb-form input {
-                white-space: pre;
+            .container .myForm .textBox{
+                width: 450px;
+                word-wrap: break-word;
             }
+
         </style>
     </head>
 <body>
@@ -199,29 +194,31 @@
             </div>
         </nav>
     </div>
-    <div class="d-flex justify-content-center">
 
-        <div class="sb-form">
-            <form action="{% url 'studybuddy:updateAccount' %}" method="post">
+    <div class="col-md-12">
+        <div class="container">
+    {% comment %} <div class="d-flex justify-content-center">
+        <div class="sb-form"> {% endcomment %}
+            <form class = "myForm" action="{% url 'studybuddy:updateAccount' %}" method="post">
               {% csrf_token %}
               <p>Email: {{Email}}</p>
               <label for="name">Username:</label>
-              <input type="text" id="username" name="username" value="{{UserName}}"><br><br>
+              <input class="userBox" type="text" id="username" name="username" value="{{UserName}}"><br><br>
               <label for="name">Name:</label>
-              <input type="text" id="name" name="name" value="{{Name}}"><br><br>
+              <input class="inputBox" type="text" id="name" name="name" value="{{Name}}"><br><br>
               <label for="major">Major:</label>
-              <input type="text" id="major" name="major" value="{{Major}}"><br><br>
+              <input class="inputBox" type="text" id="major" name="major" value="{{Major}}"><br><br>
               <label for="zlink">Zoom Link:</label>
-              <input type="url" id="zlink" name="zlink" value={{ZoomLink}}><br><br>
-              <label for="blurb">About Me:</label>
-              <textarea type="text" id="blurb" name="blurb" >{{AboutMe}} </textarea><br><br>
+              <input class="textBox" type="url" id="zlink" name="zlink" value={{ZoomLink}}><br><br>
+              <label for="blurb">Introduction:</label>
+              <textarea class="textBox" type="text" id="blurb" name="blurb" >{{Introduction}} </textarea><br><br>
               <input class="btn" type="submit" value="Save Profile">
             </form>
-        </div>
     </div>
+</div>
     
 <footer class="footer-container">
-  <div class="container">
+  <div class="myFooter">
       <div class="row">
       </div>
   </div>
