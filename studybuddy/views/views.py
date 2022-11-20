@@ -58,7 +58,7 @@ def account(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb,
+        'Introduction': user.blurb,
         'student': user,
         'student_name': user.name
     }
@@ -81,7 +81,7 @@ def EditAccount(request):
         'Name': user.name,
         'Major': user.major,
         'ZoomLink': user.zoomLink,
-        'AboutMe': user.blurb,
+        'Introduction': user.blurb,
         'student_name': User.objects.get(email=email).name,
     }
 

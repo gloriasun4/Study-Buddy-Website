@@ -17,7 +17,7 @@
                 padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
-                color: #636363;
+                color: #464646;
             }
 
             .navbar-brand {
@@ -27,19 +27,23 @@
             }
 
             .navbar-toggler {
-                color: #636363;
+                color: #464646;
             }
 
             .nav-link {
                 text-align: right;
-                color: #636363;
+                color: #464646;
             }
 
             footer {
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
-                color: #636363;
+                color: #464646;
+                left:0;
+                right: 0;
+                bottom:0; 
+                position: fixed; 
             }
 
             @media only screen and (max-width: 768px) {
@@ -108,14 +112,19 @@
                 flex-direction: column;
                 max-width: 100%;
                 max-height: 100%;
-                background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+                background: #654ea3;
+                background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+                background: linear-gradient(to right, #654ea3, #eaafc8);
+                {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
                 background-size: cover;
+                background-position: 30%;
+                background-attachment: fixed;
             }
 
             .sb-form {
-                width: 700px;
-                float: right;
-                margin-top: 50px;
+                {% comment %} min-width: 800px; {% endcomment %}
+                width: 800px;
+                margin-top: 20px;
                 padding: 30px 0;
                 font-size: 15px;
                 position: relative;
@@ -125,11 +134,11 @@
             .sb-form form {
                 border-radius: 3px;
                 background-color: rgba(255, 255, 255, 0.5);
-                padding-top: 30px;
-                padding-left: 30px;
-                padding-right: 30px;
-                padding-bottom: 12px;
-                border-radius: 25px;
+                padding-top: 20px;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-bottom: 20px;
+                border-radius: 20px;
             }
 
             .sb-form .form-group {
@@ -147,51 +156,6 @@
             .text-center {
                 color: #636363;
             }
-
-            .sb-form .btn{
-                font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.5); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-                  margin-bottom: 10px;
-              }
-
-              .sb-form .btn:hover {
-                font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.5); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-                  margin-bottom: 10px;
-              }
-              .myForm .btn{
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
-              .myForm .btn:hover {
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
 
                #myInput {
                   background-image: url('/css/searchicon.png');
@@ -231,7 +195,8 @@
 
                 /* Style the button that is used to open and close the collapsible content */
                 .collapsible {
-                  background-color: #aaa6e2;
+                  {% comment %} background-color: #aaa6e2; {% endcomment %}
+                  background-color: white;
                   color: #444;
                   cursor: pointer;
                   padding: 18px;
@@ -239,18 +204,19 @@
                   border: none;
                   text-align: left;
                   outline: none;
-                  font-size: 15px;
+                  font-size: 20px;
+                  opacity: 0.85;
                 }
 
                 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
                 .active, .collapsible:hover {
-                  background-color: #aaa6e2;
+                    background-color: #a6e2c8;
                 }
 
                 /* Style the collapsible content. Note: hidden by default */
                 .content {
                   padding: 0 18px;
-                  background-color: rgba(255, 255, 255, 0.5);
+                  background-color: rgba(255, 255, 255, 1);
                   max-height: 0;
                   overflow: hidden;
                   transition: max-height 0.2s ease-out;
@@ -274,12 +240,12 @@
                 }
 
                 .sb-form .btn:hover {   
-                    font-size: 13px;
-                      min-width: 140px;
+                    font-size: 18px;
+                      min-width: 160px;
                       outline: none !important;
                       background: #aaa6e2;
                       color: #444;
-                      border-radius: 3px;
+                      border-radius: 5px;
                       margin-top: 10px;
                       margin-bottom: 10px;
                       margin-left: 10px;
@@ -287,12 +253,12 @@
                   }
             
                   .sb-form .btn {
-                    font-size: 13px;
-                      min-width: 140px;
+                    font-size: 18px;
+                      min-width: 160px;
                       outline: none !important;
                       background: #a6e2c8;
                       color: #444;
-                      border-radius: 3px;
+                      border-radius: 5px;
                       margin-top: 10px;
                       margin-bottom: 10px;
                       margin-left: 10px;
@@ -307,6 +273,15 @@
                   .dropdown .arrowdown {
                   font-size: 15px;
                   }
+
+                .sb-form .email {
+                    min-width: 300px;
+                    min-height: 38px;
+                }
+        .container {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0);
+        }
             </style>
         </head>
 
@@ -335,6 +310,8 @@
             </div>
         </nav>
     </div>
+    <div class="col-md-12">
+        <div class="container">
     <div class="d-flex justify-content-center">
         <div class="sb-form">
             <h1>Friends</h1>
@@ -386,11 +363,10 @@
                 {% endif %}
                 <form action="" method="post">
                     {% csrf_token %}
-                    <input type="email" id="email" name="email" placeholder="example@email.com">
+                    <input class="email" type="email" id="email" name="email" placeholder="example@email.com">
                     <input class="btn btn-sm" id='request' name='request' type="submit" value="Send a friend request">
                 </form>
             </div>
-
             <br>
 
             <div class="wrapper">
@@ -404,9 +380,9 @@
                                     <li style="list-style-type: none" class="msg">
                                         {{ friend | linebreaksbr }} &nbsp &nbsp
                                         <input type="hidden" name="remove_email" value="{{friend.email}}">
-                                        <input name='unfriend' type="submit" value="Unfriend" class="btn">
+                                        <input name='unfriend' type="submit" value="Unfriend" class="btn btn-sm">
                                         <input type="hidden" name="friend_email" value="{{friend.email}}">
-                                        <input name='view_friends' type="submit" value="View Profile" class="btn">
+                                        <input name='view_friends' type="submit" value="View Profile" class="btn btn-sm">
                                     </li>
                                 </form> <br>
                             {% endfor %}
@@ -502,9 +478,11 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 
     <footer class="footer-container">
-        <div class="container">
+        <div class="myFooter">
             <div class="row"></div>
         </div>
         <div class="text-center">&copy; Team B-15</div>
