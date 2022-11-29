@@ -16,7 +16,7 @@
             padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
-            color: #636363;
+            color: #464646;
         }
 
         .navbar-brand {
@@ -26,21 +26,23 @@
         }
 
         .navbar-toggler {
-            color: #636363;
+            color: #464646;
         }
 
         .nav-link {
             text-align: right;
-            color: #636363;
+            color: #464646;
         }
 
         footer {
-<!--            position: fixed;-->
-            bottom: 0;
             padding: 15px;
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
-            color: #636363;
+            color: #464646;
+            left:0;
+            right: 0;
+            bottom:0; 
+            position: fixed; 
         }
 
         @media only screen and (max-width: 768px) {
@@ -109,9 +111,13 @@
             flex-direction: column;
             max-width: 100%;
             max-height: max-content;
-            background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
-            {% comment %} background: url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80") no-repeat center; {% endcomment %}
+            background: #654ea3;
+            background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+            background: linear-gradient(to right, #654ea3, #eaafc8);
+            {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
             background-size: cover;
+            background-position: 30%;
+            background-attachment: fixed;
         }
 
         .wrapper {

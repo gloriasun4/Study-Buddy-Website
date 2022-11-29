@@ -16,7 +16,6 @@
             padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
-            color: #636363;
         }
 
         .navbar-brand {
@@ -26,19 +25,23 @@
         }
 
         .navbar-toggler {
-            color: #636363;
+            color: #464646;
         }
 
         .nav-link {
             text-align: right;
-            color: #636363;
+            color: #464646;
         }
 
         footer {
             padding: 15px;
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
-            color: #636363;
+            color: #464646;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: fixed;
         }
 
         @media only screen and (max-width: 768px) {
@@ -106,12 +109,17 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            background: #654ea3;
+            background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+            background: linear-gradient(to right, #654ea3, #eaafc8);
+            {% comment %} background: url("https://images.unsplash.com/photo-1558813324-d1787a82ac0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center center; {% endcomment %}
+            {% comment %} background: url("https://images.unsplash.com/photo-1499796683658-b659bc751db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80") no-repeat center; {% endcomment %}
             background-size: cover;
+            background-position: 30%;
+            background-attachment: fixed;
         }
 
         .wrapper {
-            width: 640px;
             margin: auto;
             overflow-x: hidden;
             margin-bottom: 30px;
@@ -125,63 +133,53 @@
             color: white;
         }
 
-        .wrapper:hover {
-            width: 640px;
-            margin: auto;
-            overflow-x: hidden;
-            margin-bottom: 30px;
-            position: relative;
-            text-align: center;
-            background: #a6e2c8;
-            border-radius: 12px;
-        }
-
-        .title:hover {
-            color: #636363;
-        }
-
-        .sb-form {
-            width: 700px;
-            float: right;
-            margin-top: 30px;
-            padding: 30px 0;
-            font-size: 15px;
-            position: relative;
-            text-align: center;
-        }
-
-        .sb-form form {
-            border-radius: 3px;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding-top: 30px;
-            padding-left: 30px;
-            padding-right: 30px;
-            padding-bottom: 12px;
+        .container {
+            font-size: 30px;
+            max-width: 1000px;
+            padding-top: 2%;
+            padding-left: 2%;
+            padding-right: 2%;
+            padding-bottom: 0.1%;
+            margin-top: 3%;
+            margin-bottom: 3%;
             border-radius: 25px;
+            background: #fff;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
-        .sb-form .form-group {
-            margin-bottom: 20px;
+        .container .row {
+            word-wrap: break-word;
         }
 
-        .sb-form .btn {
-            min-width: 140px;
-            outline: none !important;
-            background: #a6e2c8;
-            color: white;
-            border-radius: 12px;
-        }
+        .container .myForm .btn {
+            font-size: 25px;
+              min-width: 400px;
+              outline: none !important;
+              background: #a6e2c8;
+              color: white;
+              margin-bottom: 2%;
+              border-radius: 10px;
+          }
 
-        .sb-form .row div:first-child {
-            padding-right: 10px;
-        }
+          .container .myForm .form-group .btn{
+            font-size: 18px;
+              min-width: 250px;
+              outline: none !important;
+              background-color: #65c5c0;
+              color: white;
+              border-radius: 10px;
+          }
 
-        .sb-form .row div:last-child {
-            padding-left: 10px;
-        }
-
-        .text-center {
+        .container .myForm .form-group .courseInfo {
+            text-decoration: none;
             color: #636363;
+            font-size: 22px;
+        }
+
+        .container .myForm .form-group .text-center {
+            color: #464646;
+            font-size: 30px;
         }
     </style>
 </head>
@@ -212,40 +210,32 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex justify-content-center">
-            <div class="sb-form">
-                <form method="get">
-                    <div class="wrapper">
-                        <h1 class="title">Welcome to the Study Buddy App!</h1>
-                      </div>
-                      <li><a href="{% url 'studybuddy:alldepartments' %}"> Update Course Schedule</a></li>
-                      <div class="form-group">
-                          {% if student.enrolledclass_set.all %}
-                          {% for class in student.enrolledclass_set.all %}
-                            <li>
-                                <a href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
-                                    {{ class.course.subject }} {{ class.course.catalog_number }} - Section: {{ class.course.section }}
-                                </a>
-                            </li>
-<!--                            <a href ="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number% }">-->
-<!--                                <a name="myBtn">{{ class}}</a></button>-->
-
-
-                          {% endfor %}
-                          {% else %}
-                          <p class="text-center">You are currently not enrolled in any classes </p>
-                          {% endif %}
-
-<!--                        <button class="btn btn-lg" type="submit" formaction="alldepartments">-->
-<!--                        <a name="myBtn">Find a study b buddyx</a></button>-->
-                      </div>
-                </form> 
-            </div>
+        <div class="col-md-12">
+        <div class="container">
+            <form class = "myForm">
+                        <div class="wrapper">
+                            <h1 class="title">Welcome to the Study Buddy App!</h1>
+                          </div>
+                          <a class="btn" href="{% url 'studybuddy:alldepartments' %}">Update Course Schedule</a>
+                          <div class="form-group">
+                              {% if student.enrolledclass_set.all %}
+                              {% for class in student.enrolledclass_set.all %}
+                                <li style="list-style-type: none">
+                                    <a class="btn btn-sm" href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
+                                        {{ class.course.subject }} {{ class.course.catalog_number }} - Section: {{ class.course.section }}
+                                    </a>
+                                </li>
+                              {% endfor %}
+                              {% else %}
+                              <p class="text-center">You are currently not enrolled in any classes</p>
+                              {% endif %}
+                          </div>
+            </form>
         </div>
-
+        </div>
     </div>
     <footer class="footer-container">
-        <div class="container">
+        <div class="myFooter">
             <div class="row">
             </div>
         </div>

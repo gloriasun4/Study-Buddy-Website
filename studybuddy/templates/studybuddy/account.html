@@ -10,12 +10,13 @@
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <title>Study Buddy</title>
         <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
+        {% comment %} <link href='https://fonts.googleapis.com/css?family=Besley' rel='stylesheet'> {% endcomment %}
         <style>
             .navbar {
                 padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
-                color: #636363;
+                color: #464646;
             }
 
             .navbar-brand {
@@ -25,19 +26,19 @@
             }
 
             .navbar-toggler {
-                color: #636363;
+                color: #464646;
             }
 
             .nav-link {
                 text-align: right;
-                color: #636363;
+                color: #464646;
             }
 
             footer {
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
-                color: #636363;
+                color: #464646;
             }
 
             @media only screen and (max-width: 768px) {
@@ -98,121 +99,121 @@
                 }
             }
 
+            .container .myForm .nav-tabs{
+                margin-bottom: 3%;
+            }
+            .container .myForm .nav-tabs .nav-link{
+                font-weight:600;
+                border: none;
+            }
+            .container .myForm .nav-tabs .nav-link.active{
+                font-size: 20px;
+                border: none;
+                border-bottom:2px solid #0062cc;
+            }
+
             body {
                 font-family: 'Orelega One';
+                {% comment %} font-family: 'Besley'; {% endcomment %}
                 font-size: 18px;
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
                 max-width: 100%;
                 max-height: 100%;
-                background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center;
+                background: #654ea3;
+                background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+                background: linear-gradient(to right, #654ea3, #eaafc8);
+                {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
                 background-size: cover;
-                {% comment %} background: -webkit-linear-gradient(left, #3931af, #00c6ff); {% endcomment %}
+                background-position: 30%;
+                background-attachment: fixed;
             }
 
-            .emp-profile{
+            .container {
+                max-width: 1140px;
                 padding: 3%;
                 margin-top: 3%;
                 margin-bottom: 3%;
-                border-radius: 0.5rem;
+                border-radius: 20px;
                 background: #fff;
             }
 
-            .profile-img{
-                text-align: center;
-            }
-
-            .profile-img img{
-                width: 70%;
-                height: 45%;
-            }
-
-            .profile-img .file {
-                position: relative;
-                overflow: hidden;
-                margin-top: -20%;
-                width: 70%;
-                border: none;
-                border-radius: 0;
-                font-size: 15px;
-                background: #212529b8;
-            }
-
-            .profile-img .file input {
-                position: absolute;
-                opacity: 0;
-                right: 0;
-                top: 0;
-            }
-
-            .profile-head h5{
-                color: #333;
-            }
-
-            .profile-head h6{
-                color: #0062cc;
-            }
-
-            .profile-head .nav-tabs{
-                margin-bottom:5%;
-            }
-            .profile-head .nav-tabs .nav-link{
-                font-weight:600;
-                border: none;
-            }
-            .profile-head .nav-tabs .nav-link.active{
-                border: none;
-                border-bottom:2px solid #0062cc;
-            }
             .profile-work{
-                padding: 14%;
+                padding: 15%;
                 margin-top: -15%;
+                margin-bottom: -15%;
             }
             .profile-work p{
                 font-size: 12px;
                 color: #818182;
-                font-weight: 600;
-                margin-top: 10%;
             }
 
             .profile-work a{
                 text-decoration: none;
                 color: #495057;
-                font-weight: 600;
-                font-size: 14px;
+                font-size: 20px;
             }
+
             .profile-work ul{
                 list-style: none;
             }
             .profile-tab label{
-                font-weight: 600;
             }
+
             .profile-tab p{
-                font-weight: 600;
+                font-size: 22px;
                 color: #0062cc;
+            }
+
+            .profile-tab label{
+                font-size: 22px;
             }
 
             .myForm .btn{
                 font-size: 22px;
-                  margin-top: 10px;
                   min-width: 140px;
                   outline: none !important;
                   background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
                   color: white;
                   border-radius: 12px;
               }
 
               .myForm .btn:hover {
                 font-size: 22px;
-                  margin-top: 10px;
                   min-width: 140px;
                   outline: none !important;
                   background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
                   color: white;
                   border-radius: 12px;
+              }
+
+              .profile-work .btn {
+                margin-top: 15px;
+                font-size: 18px;
+                  min-width: 140px;
+                  outline: none !important;
+                  background: #aaa6e2;
+                  color: white;
+                  border-radius: 12px;
+              }
+
+              .profile-work .btn:hover {
+                margin-top: 15px;
+                font-size: 18px;
+                  min-width: 140px;
+                  outline: none !important;
+                  background: #a6e2c8;
+                  color: white;
+                  border-radius: 12px;
+              }
+
+              .container .row {
+                word-wrap: break-word;
+              }
+
+              .container .profile-work .text{
+                color: #949494;
               }
         </style>
     </head>
@@ -241,115 +242,98 @@
         </div>
     </nav>
 </div>
-<div class="container emp-profile">
-    <form>
-        <div class="row">
-<!--            <div class="col-md-4">-->
-<!--                <div class="profile-img">-->
-<!--                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1743&q=80" alt=""/>-->
-<!--                    <div class="file btn btn-lg btn-primary">-->
-<!--                        Change Photo-->
-<!--                        <input type="file" name="file"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div class="col-md-10">
-                <div class="profile-head">
-                            <h2>
+    <div class="container">
+        <div class="col-md-12">
+        <form class = "myForm">
+
+                <div>
+                            <h1>
                                 {{Name}}
-                            </h2>
+                                <a href="{% url 'studybuddy:editAccount' %}" name="myBtn" class="btn btn-sm">Edit Profile</a>
+                            </h1>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            {% comment %} <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a> {% endcomment %}
                             <a class="nav-link active">About me</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="myForm">
-                    {% comment %} <a href="{% url 'studybuddy:editAccount' %}" name="myBtn" class="btn">Edit Profile</a> {% endcomment %}
-                    <form method="get">
-                      <button class="btn" type="submit" formaction="{% url 'studybuddy:editAccount' %}">
-                        <a>Edit Profile</a></button>
-                    </form>
-                </div>
-            </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    <p><h4>My Schedule</h4></p>
-                    {% if student.enrolledclass_set.all %}
-                        {% for class in student.enrolledclass_set.all %}
-                            <li>
-                                <a href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
-                                    {{ class.course.subject }} {{ class.course.catalog_number }} - Section: {{ class.course.section }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                        <p class="text-center">You are currently not enrolled in any classes </p>
-                    {% endif %}
-                    <a href="{% url 'studybuddy:alldepartments'%}"> Edit Schedule</a>
-
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-11">
-                                <p>{{AboutMe}}</p>
-                            </div>
-                        </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Username</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{UserName}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{Name}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{Email}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Major</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{Major}}</p>
-                                    </div>
-                                </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="profile-work">
+                        <p><h3>My Schedule</h3></p>
+                        {% if student.enrolledclass_set.all %}
+                            {% for class in student.enrolledclass_set.all %}
+                                <li>
+                                    <a href="{% url 'studybuddy:coursefeed' class.course.subject class.course.course_number%}">
+                                        {{ class.course.subject }} {{ class.course.catalog_number }} - Section: {{ class.course.section }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <h5 class="text">You are currently not enrolled in any classes</h5>
+                        {% endif %}
+                        <a name="myBtn" class="btn btn-sm" href="{% url 'studybuddy:alldepartments'%}">Edit Schedule</a>
                     </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Zoom Link</label><br/>
-                                <p><a href="{{ZoomLink}}">{{ZoomLink}}</a></p>
+                </div>
+                <div class="col-md-6">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Username</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{UserName}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{Name}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{Email}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Major</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{Major}}</p>
+                                        </div>
+                                    </div>
+                                    
+                        </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Zoom Link</label><br/>
+                                    <p><a href="{{ZoomLink}}">{{ZoomLink}}</a></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Introduction</label><br/>
+                                    <p>{{Introduction}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
-        </div>
-    </form>
-</div>
+    </div>
 
       <footer class="footer-container">
-        <div class="container">
+        <div class="myFooter">
             <div class="row">
             </div>
         </div>

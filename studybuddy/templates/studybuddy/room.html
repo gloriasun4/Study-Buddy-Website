@@ -17,7 +17,7 @@
             padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
-            color: #636363;
+            color: #464646;
         }
 
         .navbar-brand {
@@ -27,19 +27,23 @@
         }
 
         .navbar-toggler {
-            color: #636363;
+            color: #464646;
         }
 
         .nav-link {
             text-align: right;
-            color: #636363;
+            color: #464646;
         }
 
         footer {
             padding: 15px;
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
-            color: #636363;
+            color: #464646;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: fixed;
         }
 
         @media only screen and (max-width: 768px) {
@@ -108,12 +112,14 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center;
+            background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center center;
+            background: url("https://images.unsplash.com/photo-1499796683658-b659bc751db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80") no-repeat center center;
             background-size: cover;
+            background-position: 30%;
+            background-attachment: fixed;
         }
 
         .wrapper {
-            width: 640px;
             margin: auto;
             overflow-x: hidden;
             margin-bottom: 30px;
@@ -128,50 +134,57 @@
         }
 
         .sb-form {
-            width: 700px;
-            float: right;
-            margin-top: 30px;
-            padding: 30px 0;
-            font-size: 15px;
+            {% comment %} float: right; {% endcomment %}
+            margin: 10px;
+            {% comment %} padding: 30px 0; {% endcomment %}
+            font-size: 20px;
             position: relative;
             text-align: center;
         }
 
         .sb-form form {
             border-radius: 3px;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding-top: 30px;
+            background-color: rgba(255, 255, 255, 0);
+            {% comment %} padding-top: 30px;
             padding-left: 30px;
-            padding-right: 30px;
+            padding-right: 30px; {% endcomment %}
             padding-bottom: 12px;
-            border-radius: 25px;
+            {% comment %} border-radius: 25px; {% endcomment %}
         }
 
-        .sb-form .form-group {
+        {% comment %} .sb-form .form-group {
             margin-bottom: 20px;
-        }
+        } {% endcomment %}
 
         .sb-form .btn{
             font-size: 18px;
-              min-width: 140px;
+              min-width: 160px;
               outline: none !important;
               background-color: #65c5c0;
               color: white;
-              border-radius: 12px;
+              border-radius: 10px;
               margin-top: 10px;
               margin-bottom: 10px;
               margin-left: 10px;
               margin-right: 10px;
           }
+
+          .sb-form .myText {
+            text-align: right;
+          }
+
+          .sb-form .otherText {
+            text-align: left;
+          }
     
           .sb-form .btn:hover {
             font-size: 18px;
-              min-width: 140px;
+              min-width: 160px;
               outline: none !important;
               {% comment %} background: #a6e2c8; {% endcomment %}
               background: #aaa6e2;
               color: white;
-              border-radius: 12px;
+              border-radius: 10px;
               margin-top: 10px;
               margin-bottom: 10px;
               margin-left: 10px;
@@ -189,6 +202,27 @@
         .text-center {
             color: #636363;
         }
+
+        .sb-form .textBox {
+            width: 550px;
+        }
+
+        .container {
+            max-width: 1000px;
+            padding: 2%;
+            margin-top: 2%;
+            margin-bottom: 2%;
+            border-radius: 20px;
+            background: #fff;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .container .sb-form .hline {
+           color: black;
+           margin-top: 3%;
+           margin-bottom: 3%;
+        }
+
     </style>
 </head>
 
@@ -216,55 +250,53 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex justify-content-center">
+        
+        <div class="col-md-12">
+            <div class="container">
             <div class="sb-form">
                 <form method="get">
                     <div class="wrapper">
-                        <h1 class="title"> {{ room }} </h1>
+                        <h2 class="title"> {{ room }} </h2>
+                    </div>
+                    <div>
+                        <h3>Users in this chat room</h3>
+                        {% for user in room.users.all %}
+                            {% if user.name == "" %}
+                                <h4>{{ user }}</h4>
+                            {% else %}
+                                <h4>{{ user.name }}</h4>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr class="hline"></hr>
+                    <div>
+                        <div class="chat-messages space-y-3" id="chat-messages">
+                            {% for message in messages %}
+                            <div class="p-2 bg-gray-200 rounded-xl">
+                                {% if message.user.email == user.email%}
+                                {% if message.user.name == "" %}
+                                    <p class="myText"> {{ message.user.email }} : {{ message.content }} </p>
+                                {% else %}
+                                    <p class="myText"> {{ message.user.name }} : {{ message.content }} </p>
+                                {% endif %}
+                            {% else %}   
+                                {% if message.user.name == "" %}
+                                <p class="otherText"> {{ message.user.email }} : {{ message.content }} </p>
+                            {% else %}
+                                <p class="otherText"> {{ message.user.name }} : {{ message.content }} </p>
+                            {% endif %}
+                            {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </form>
 
-                <br>
-
-                    <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-                        <p>Users in this chat room</p>
-                        {% for user in room.users.all %}
-                            {% if user.name == "" %}
-                                <p>{{ user }}</p>
-                            {% else %}
-                                <p>{{ user.name }}</p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <br>
-
-                <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-                    <div class="chat-messages space-y-3" id="chat-messages">
-                        {% for message in messages %}
-                        <div class="p-4 bg-gray-200 rounded-xl">
-                            {% if message.user.email == request.user.email %}
-                                {% if message.user.name == "" %}
-                                    <p text-align="right" class="font-semibold"> {{ message.user.email }} r: {{ message.content }} </p>
-                                {% else %}
-                                    <p text-align="right" class="font-semibold"> {{ message.user.name }} r: {{ message.content }} </p>
-                                {% endif %}
-                            {% else %}
-                                {% if message.user.name == "" %}
-                                    <p text-align="right" class="font-semibold"> {{ message.user.email }} l: {{ message.content }} </p>
-                                {% else %}
-                                    <p text-align="right" class="font-semibold"> {{ message.user.name }} l: {{ message.content }} </p>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
                 <!-- user box to write and submit message -->
-                <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+                <div>
                     <form id="chat-message-form" method="post" action="." class="flex">
                         {% csrf_token %}
-                        <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message" id="chat-message-input">
+                        <input type="text" name="content" class="textBox" placeholder="Your message.." id="chat-message-input">
                         <button class="btn btn-sm" id="chat-message-submit">Send</button>
                     </form>
                     <form method="post" action="{% url 'studybuddy:schedule' room.pk %}">
@@ -273,22 +305,20 @@
                         <a class="btn btn-sm" href="{% url 'studybuddy:rooms' %}"> Exit this room </a>
                     </form>
                 </div>
-
-                <br>
-
-                <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+                <div>
                     <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="room_pk" value="{{room.pk}}">
-                        <input class="btn btn-lg" name='leave' type="submit" value="Permanently leave this room">
+                        <input class="btn btn-sm" name='leave' type="submit" value="Permanently leave this room">
                     </form>
-                </div> <br>
+                </div>
             </div>
         </div>
+    </div>
 
     </div>
     <footer class="footer-container">
-        <div class="container">
+        <div class="myFooter">
             <div class="row">
             </div>
         </div>
@@ -329,24 +359,24 @@
         console.log("here: " + e.data)
 
         if (data.message) {
-            let html = '<div class="p-4 bg-gray-200 rounded-xl">';
-            html+= '<p class="myText">' + data.name + " r: " + data.message + '</p></div>';
+            let html = '<div class="p-2 bg-gray-200 rounded-xl">';
+            html+= '<p class="myText">' + data.name + " : " + data.message + '</p></div>';
             if(data.email == userEmail) {
                 console.log("sending user: " + data.email + " userEmail : " + userEmail);
                 if(data.name == "") {
-                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="myText">' + data.email + " r: " + data.message + '</p></div>';
+                    html = '<div class="p-2 bg-gray-200 rounded-xl">';
+                    html+= '<p class="myText">' + data.email + " : " + data.message + '</p></div>';
                 }
             }
             else {
                 console.log("receiving user: " + data.email + " userEmail : " + userEmail);
                 if(data.name == "") {
-                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="otherText">' + data.email + " l: " + data.message + '</p></div>';
+                    html = '<div class="p-2 bg-gray-200 rounded-xl">';
+                    html+= '<p class="otherText">' + data.email + " : " + data.message + '</p></div>';
                 }
                 else {
-                    html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="otherText">' + data.name + " l: " + data.message + '</p></div>';
+                    html = '<div class="p-2 bg-gray-200 rounded-xl">';
+                    html+= '<p class="otherText">' + data.name + " : " + data.message + '</p></div>';
                 }
             }
 
@@ -380,6 +410,7 @@
         return false;
     }
 </script>
+
 {% endblock %}
 
 </html>
