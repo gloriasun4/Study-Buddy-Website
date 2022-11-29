@@ -201,3 +201,5 @@ NOSE_ARGS = [
     # '--cover-html', # maybe add this?
     '--cover-min-percentage=50', # not sure what our values are yet, still trying to mock models
 ]
+
+SESSION_COOKIE_SECURE = True
