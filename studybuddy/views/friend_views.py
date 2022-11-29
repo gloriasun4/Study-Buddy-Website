@@ -14,7 +14,6 @@ def send_friend_request(request, requestee_email):
     to_user = User.objects.get(email__exact=requestee_email)
 
     if from_user.friends.all().filter(email=requestee_email):
-        print('2')
         return 2
 
     friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
@@ -51,6 +50,10 @@ def remove_friend(request, email):
 
 
 def decline_request(request, email):
+    """
+    this method is called with the request.user is trying to delete a friend request
+    parameters: email - the email of the user that sent the friend request
+    """
     from_user = User.objects.get(email=email)
     to_user = User.objects.get(email=request.user.email)
 
@@ -128,9 +131,7 @@ def view_friends(request):
         request.POST = None
         return view_friend_profile(request, friend_email)
 
-    print(request.POST)
     request.POST = None
-    print(request.POST)
     return render(request, "friends/view_friends.html", context)
 
 

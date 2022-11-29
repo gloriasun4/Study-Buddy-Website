@@ -1,0 +1,13 @@
+TEST_DEPT = 'testDept'
+TEST_SUBJECT = 'testDept'
+TEST_CATALOG_NUMBER = '1234'
+TEST_INSTRUCTOR = 'testInstructor'
+TEST_SECTION = '000'
+TEST_COURSE_NUMBER = '12345'
+TEST_DESCRIPTION = 'testCourseDescription'
+TEST_ROOM_NAME = 'testRoom'
+TEST_PK = 1
+TEST_EMAIL = 'test@email.com'
+TEST_USERNAME = 'testName'
+TEST_PASSWORD = 'testPassword'
+TEST_FRIEND_EMAIL = 'testFriend@email.com'

@@ -242,10 +242,18 @@
                     <div class="chat-messages space-y-3" id="chat-messages">
                         {% for message in messages %}
                         <div class="p-4 bg-gray-200 rounded-xl">
-                            {% if message.user.name == "" %}
-                                <p text-align="right" class="font-semibold"> {{ message.user.email }} : {{ message.content }} </p>
+                            {% if message.user.email == request.user.email %}
+                                {% if message.user.name == "" %}
+                                    <p text-align="right" class="font-semibold"> {{ message.user.email }} r: {{ message.content }} </p>
+                                {% else %}
+                                    <p text-align="right" class="font-semibold"> {{ message.user.name }} r: {{ message.content }} </p>
+                                {% endif %}
                             {% else %}
-                                <p text-align="right" class="font-semibold"> {{ message.user.name }} : {{ message.content }} </p>
+                                {% if message.user.name == "" %}
+                                    <p text-align="right" class="font-semibold"> {{ message.user.email }} l: {{ message.content }} </p>
+                                {% else %}
+                                    <p text-align="right" class="font-semibold"> {{ message.user.name }} l: {{ message.content }} </p>
+                                {% endif %}
                             {% endif %}
                         </div>
                         {% endfor %}
@@ -322,25 +330,29 @@
 
         if (data.message) {
             let html = '<div class="p-4 bg-gray-200 rounded-xl">';
-            html+= '<p class="myText">' + data.name + " : " + data.message + '</p></div>';
+            html+= '<p class="myText">' + data.name + " r: " + data.message + '</p></div>';
             if(data.email == userEmail) {
+                console.log("sending user: " + data.email + " userEmail : " + userEmail);
                 if(data.name == "") {
                     html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="myText">' + data.email + " : " + data.message + '</p></div>';
+                    html+= '<p class="myText">' + data.email + " r: " + data.message + '</p></div>';
                 }
+            }
             else {
+                console.log("receiving user: " + data.email + " userEmail : " + userEmail);
                 if(data.name == "") {
                     html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="otherText">' + data.email + " : " + data.message + '</p></div>';
+                    html+= '<p class="otherText">' + data.email + " l: " + data.message + '</p></div>';
                 }
                 else {
                     html = '<div class="p-4 bg-gray-200 rounded-xl">';
-                    html+= '<p class="otherText">' + data.name + " : " + data.message + '</p></div>';
+                    html+= '<p class="otherText">' + data.name + " l: " + data.message + '</p></div>';
                 }
             }
-            }
+
             document.querySelector('#chat-messages').innerHTML += html;
-        } else {
+        }
+        else {
             if(data.email == userEmail) {
                 alert('The message was empty!');
             }
