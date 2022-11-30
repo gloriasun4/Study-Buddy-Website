@@ -146,10 +146,12 @@ class FriendViewTest(TestCase):
         # when
         response = view_friends(self.test_view_send_friend_request)
 
+        print(response.content)
+
         # then
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'You have successfully sent a friend request to ' + TEST_FRIEND_EMAIL +
-                            ', they will show up on your friend')
+                            '. Their email will show up on your')
 
     def test_send_friend_request_to_self_displays_message(self):
         """
