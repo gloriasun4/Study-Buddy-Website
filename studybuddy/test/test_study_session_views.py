@@ -1,12 +1,13 @@
 from unittest import mock
 from django.urls import reverse
 from django.test import TestCase
-from studybuddy.test import test_utils
+from studybuddy.test import test_constants
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
 from studybuddy.models import Room, User, StudySession, Post, Course
 from studybuddy.views.study_session_views import upcomingSessions
 
+TC = test_constants
 
 class ScheduleViewTest(TestCase):
     def setUp(self):
@@ -16,15 +17,15 @@ class ScheduleViewTest(TestCase):
         self.test_room_number = 1
 
         self.test_User = User.objects.create(email=self.test_email)
-        test_course = Course.objects.create(subject=test_utils.TEST_SUBJECT.upper(),
-                                            catalog_number=test_utils.TEST_CATALOG_NUMBER,
-                                            instructor=test_utils.TEST_INSTRUCTOR,
-                                            section=test_utils.TEST_SECTION,
-                                            course_number=test_utils.TEST_COURSE_NUMBER,
-                                            description=test_utils.TEST_DESCRIPTION)
+        test_course = Course.objects.create(subject=TC.TEST_SUBJECT.upper(),
+                                            catalog_number=TC.TEST_CATALOG_NUMBER,
+                                            instructor=TC.TEST_INSTRUCTOR,
+                                            section=TC.TEST_SECTION,
+                                            course_number=TC.TEST_COURSE_NUMBER,
+                                            description=TC.TEST_DESCRIPTION)
 
         test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_User)
-        Room.objects.create(name=test_utils.TEST_ROOM_NAME, post=test_post)
+        Room.objects.create(name=TC.TEST_ROOM_NAME, post=test_post)
 
         # mock user login
         self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
@@ -61,7 +62,7 @@ class ScheduleViewTest(TestCase):
         response = self.client.get(reverse('studybuddy:schedule', args=(self.test_room_number,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Schedule a study session for: ')
-        self.assertContains(response, test_utils.TEST_ROOM_NAME)
+        self.assertContains(response, TC.TEST_ROOM_NAME)
 
     def test_displays_message_when_room_is_not_valid(self):
         """
@@ -188,12 +189,12 @@ class UpcomingSessionsViewTest(TestCase):
         # given
         StudySession.objects.all().delete()
 
-        test_course = Course.objects.create(subject=test_utils.TEST_SUBJECT.upper(),
-                                            catalog_number=test_utils.TEST_CATALOG_NUMBER,
-                                            instructor=test_utils.TEST_INSTRUCTOR,
-                                            section=test_utils.TEST_SECTION,
-                                            course_number=test_utils.TEST_COURSE_NUMBER,
-                                            description=test_utils.TEST_DESCRIPTION)
+        test_course = Course.objects.create(subject=TC.TEST_SUBJECT.upper(),
+                                            catalog_number=TC.TEST_CATALOG_NUMBER,
+                                            instructor=TC.TEST_INSTRUCTOR,
+                                            section=TC.TEST_SECTION,
+                                            course_number=TC.TEST_COURSE_NUMBER,
+                                            description=TC.TEST_DESCRIPTION)
 
         test_post = Post.objects.create(topic='testPost', course=test_course, user=self.test_User)
         Room.objects.create(name=self.test_room, post=test_post)
@@ -203,7 +204,7 @@ class UpcomingSessionsViewTest(TestCase):
                                              'date': self.test_date,
                                              'start': self.start,
                                              'end': self.end,
-                                             'room_pk': test_utils.TEST_PK})
+                                             'room_pk': TC.TEST_PK})
         test_view_schedule_session_request.user = self.test_user
 
         self.assertEqual(StudySession.objects.count(), 0)

@@ -272,19 +272,26 @@
     function alertWhenFormNotFilled() {
         const topic = document.getElementById('topic').value;
         const start = new Date(document.getElementById('start_date').value);
-        const end = document.getElementById('end_date');
+        let end = document.getElementById('end_date');
         const form = document.getElementById('make_post');
         const make = document.getElementById('make');
         const today = new Date()
 
         // date gets sets to the day before and prevent time from being compared. Can start on today
-        start.setDate(start.getDate() + 1)
-        start.setHours(23, 59, 59, 59)
-        today.setHours(0, 0, 0, 0)
+        start.setDate(start.getDate() + 1);
+        start.setHours(23, 59, 59, 59);
+
+        end = new Date(end.value)
+
+        end.setDate(end.getDate() + 1);
+        end.setHours(23, 59, 59, 59);
+
+        today.setHours(0, 0, 0, 0);
 
         console.log("Start date entered by user in readable date: " + start)
         console.log("Start date entered by user: " + start.getTime())
-        console.log("End date entered by user: " + end.value)
+        console.log("End date entered by user: " + end.getTime())
+        console.log("End date entered by user in readable date: " + end);
         console.log("Today's readable date: " + today)
         console.log("Today's date in time: " + today.getTime())
 
@@ -302,7 +309,7 @@
             console.log("starts in the past")
             alert("The start date can not start in the past")
         }
-        else if(end.value == "" && start != "") {
+        else if(end == "" && start != "") {
             let year = start.getYear() + 1900;
             let month = start.getMonth() + 1;
             let day = start.getDate() + 8;
@@ -336,9 +343,9 @@
             form.setAttribute('action', '{% url 'studybuddy:coursefeed' dept course_number%}')
             make.setAttribute('type', 'submit');
         }
-        else if(start > new Date(end.value).getTime()) {
+        else if(start > end) {
             form.setAttribute('action', "")
-            alert('end date must be later than start date');
+            alert('End date must be later than start date');
         }
         else {
             console.log("all requirements have been met")

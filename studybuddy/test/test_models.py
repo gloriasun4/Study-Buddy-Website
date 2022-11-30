@@ -1,31 +1,31 @@
 from django.test import TestCase
 from studybuddy.models import User, Course, Post, StudySession, EnrolledClass
+from studybuddy.test.test_constants import \
+    TEST_SUBJECT, \
+    TEST_CATALOG_NUMBER, \
+    TEST_INSTRUCTOR, \
+    TEST_SECTION, \
+    TEST_COURSE_NUMBER, \
+    TEST_DESCRIPTION
 
 
 class CourseTest(TestCase):
     def setUp(self):
-        self.test_subject = 'testDept'
-        self.test_catalog_number = '1234'
-        self.test_instructor = 'testInstructor'
-        self.test_section = '000'
-        self.test_course_number = '12345'
-        self.test_description = 'testDescription'
-
-        self.test_course = Course.objects.create(subject=self.test_subject,
-                                                 catalog_number=self.test_catalog_number,
-                                                 instructor=self.test_instructor,
-                                                 section=self.test_section,
-                                                 course_number=self.test_course_number,
-                                                 description=self.test_description)
+        self.test_course = Course.objects.create(subject=TEST_SUBJECT,
+                                                 catalog_number=TEST_CATALOG_NUMBER,
+                                                 instructor=TEST_INSTRUCTOR,
+                                                 section=TEST_SECTION,
+                                                 course_number=TEST_COURSE_NUMBER,
+                                                 description=TEST_DESCRIPTION)
 
     def test_course_str(self):
         """
         Check the _str_ methods displays correctly when a course has all valid value
         """
         # given
-        expectedStr = self.test_subject + self.test_catalog_number + ": " + self.test_description + ' \n ' + \
-                      'Instructor: ' + self.test_instructor + ' \n ' + \
-                      '(Section: ' + self.test_section + ')'
+        expectedStr = TEST_SUBJECT + str(TEST_CATALOG_NUMBER) + ": " + TEST_DESCRIPTION + ' \n ' + \
+                      'Instructor: ' + TEST_INSTRUCTOR + ' \n ' + \
+                      '(Section: ' + str(TEST_SECTION) + ')'
 
         # then
         self.assertEqual(self.test_course.__str__(), expectedStr)
@@ -35,17 +35,17 @@ class CourseTest(TestCase):
         Check the _str_ methods displays correctly with instructor is '-'
         """
         # given
-        test_course = Course(subject=self.test_subject,
-                             catalog_number=self.test_catalog_number,
+        test_course = Course(subject=TEST_SUBJECT,
+                             catalog_number=TEST_CATALOG_NUMBER,
                              instructor='-',
-                             section=self.test_section,
-                             course_number=self.test_course_number,
-                             description=self.test_description)
+                             section=TEST_SECTION,
+                             course_number=TEST_COURSE_NUMBER,
+                             description=TEST_DESCRIPTION)
 
         # then
-        expectedStr = self.test_subject + self.test_catalog_number + ": " + self.test_description + ' \n ' + \
+        expectedStr = TEST_SUBJECT + str(TEST_CATALOG_NUMBER) + ": " + TEST_DESCRIPTION + ' \n ' + \
                       'Instructor: Not available' + ' \n ' + \
-                      '(Section: ' + self.test_section + ')'
+                      '(Section: ' + str(TEST_SECTION) + ')'
         self.assertEqual(test_course.__str__(), expectedStr)
 
     def test_subject_label(self):
@@ -84,19 +84,12 @@ class EnrollTest(TestCase):
 
 class PostTest(TestCase):
     def setUp(self):
-        self.test_subject = 'testDept'
-        self.test_catalog_number = '1234'
-        self.test_instructor = 'testInstructor'
-        self.test_section = '000'
-        self.test_course_number = '12345'
-        self.test_description = 'testDescription'
-
-        self.test_course = Course.objects.create(subject=self.test_subject,
-                                                 catalog_number=self.test_catalog_number,
-                                                 instructor=self.test_instructor,
-                                                 section=self.test_section,
-                                                 course_number=self.test_course_number,
-                                                 description=self.test_description)
+        self.test_course = Course.objects.create(subject=TEST_SUBJECT,
+                                                 catalog_number=TEST_CATALOG_NUMBER,
+                                                 instructor=TEST_INSTRUCTOR,
+                                                 section=TEST_SECTION,
+                                                 course_number=TEST_COURSE_NUMBER,
+                                                 description=TEST_DESCRIPTION)
 
         self.test_email = 'test@email.com'
 
@@ -146,7 +139,7 @@ class PostTest(TestCase):
         """
         # given
         self.assertEqual(Post.objects.filter(course=self.test_course).count(), 1)
-        Course.objects.filter(course_number=self.test_course_number).delete()
+        Course.objects.filter(course_number=TEST_COURSE_NUMBER).delete()
 
         # then
         self.assertEqual(Post.objects.filter(course=self.test_course).count(), 0)
