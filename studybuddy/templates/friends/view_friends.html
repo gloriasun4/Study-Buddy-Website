@@ -318,7 +318,7 @@
             <div>
                 {% if self %}
                     <p>
-                        The email {{ toEmail }} you entered belongs to you
+                        The email {{ toEmail }} you entered belongs to you.
                     </p>
                 {% endif %}
                 {% if notValid %}
@@ -329,8 +329,8 @@
                 {% endif %}
                 {% if sent %}
                     <p>
-                        You have successfully sent a friend request to {{ toEmail }}, they will show up on your friend
-                        list once they have accepted your request.
+                        You have successfully sent a friend request to {{ toEmail }}. Their email will show up on your
+                        friend list once they have accepted your request.
                     </p>
                 {% endif %}
                 {% if already_friends %}
@@ -341,7 +341,7 @@
                 {% endif %}
                 {% if alreadySent %}
                     <p>
-                        You have already sent a friend request to {{ toEmail }}, its pending acceptance from the user
+                        You have already sent a friend request to {{ toEmail }}. It is pending acceptance from the user.
                     </p>
                 {% endif %}
                 {% if accepted %}

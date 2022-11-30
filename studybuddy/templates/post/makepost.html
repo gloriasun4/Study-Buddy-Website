@@ -235,7 +235,7 @@
                     <form id="make_post" action="{% url 'studybuddy:coursefeed' dept course_number%}">
                       {% csrf_token %}
                       <label for="topic">Topic:</label>
-                      <input type="text" id="topic" name="topic" placeholder="Study for midterm 2" value={{topic}}><br><br>
+                      <input size="27" type="text" id="topic" name="topic" placeholder="Study for midterm 2 (required)" value={{topic}}><br><br>
 
                       <label>Post To: </label> &nbsp &nbsp
                       <input type="radio" id="section" name="post_type" value="section" checked>Only this section
