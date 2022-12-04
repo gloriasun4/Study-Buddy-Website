@@ -25,13 +25,6 @@ def index(request):
         return render(request, template_name, context)
 
 
-def chat(request):
-    if request.user.is_anonymous:
-        return render(request, template_name="index.html")
-
-    return render(request, 'studybuddy/chat.html')
-
-
 def addAccount(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
@@ -287,4 +280,3 @@ def updatecourseload(request, dept, course_number):
         enrolled.save()
 
     return HttpResponseRedirect(reverse('studybuddy:index'))
-

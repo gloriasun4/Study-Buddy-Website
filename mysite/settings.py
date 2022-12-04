@@ -195,11 +195,11 @@ LOGOUT_REDIRECT_URL = "/"
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
-    '--cover-erase', #erase previously ran coverages
-    '--with-coverage', # show coverage report
+    '--cover-erase', #erases previously ran coverages
+    '--with-coverage', # shows coverage report
     '--cover-package=studybuddy', # check coverage for only files in studybuddy folder
-    # '--cover-html', # maybe add this?
-    '--cover-min-percentage=50', # not sure what our values are yet, still trying to mock models
+    '--cover-html',
+    '--cover-min-percentage=70',
 ]
 
 SESSION_COOKIE_SECURE = True

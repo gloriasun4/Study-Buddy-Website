@@ -254,6 +254,14 @@
         <div class="col-md-12">
             <div class="container">
             <div class="sb-form">
+                {% if noRoom %}
+                <h1>The room you are trying to look for does not exist</h1>
+                {% elif notMember %}
+                <h1>
+                    You are not a user of this room, because you did not indicated interest in the post associated
+                    to this room
+                </h1>
+                {% else %}
                 <form method="get">
                     <div class="wrapper">
                         <h2 class="title"> {{ room }} </h2>
@@ -309,9 +317,10 @@
                     <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="room_pk" value="{{room.pk}}">
-                        <input class="btn btn-sm" name='leave' type="submit" value="Permanently leave this room">
+                        <input onClick="confirmFunction()" id="leave" class="btn btn-sm" name='leave' type="button" value="Permanently leave this room">
                     </form>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -324,6 +333,20 @@
         </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
+
+    <script>
+    function confirmFunction() {
+        const leave_button = document.getElementById("leave");
+        if(confirm("Are you sure you want to permenantly leave this chat room? \n You will be able to rejoin by indicating interest in this post again") == true) {
+            console.log("The user confirmed to permanently leave the chat room");
+            leave_button.setAttribute('type', 'submit');
+        }
+        else {
+            console.log("The user cancelled to permanently leave the chat room");
+        }
+    }
+</script>
+
 </body>
 
 {% block scripts %}
