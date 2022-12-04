@@ -13,9 +13,8 @@ urlpatterns = [
     path('account/update/', views.UpdateAccount, name='updateAccount'),
 
     path('alldepartments/', views.alldepartments.as_view(), name='alldepartments'),
-    path('chat/', views.chat, name='chat'),
-    path('chat/rooms/', room_views.rooms, name='rooms'),
-    path('chat/rooms/<int:roomNumber>/', room_views.room, name='room'),
+    path('rooms/', room_views.rooms, name='rooms'),
+    path('rooms/<int:roomNumber>/', room_views.room, name='room'),
     path('<str:dept>/', views.department, name='department'),
     path('<str:dept>/<int:course_number>/', views.coursefeed, name ='coursefeed'),
 

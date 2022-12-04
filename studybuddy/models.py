@@ -51,17 +51,17 @@ class Course(models.Model):
         unique_together = ["subject", "catalog_number", "instructor", "section", "course_number", "description"]
 
     def class_str(self):
-        course_level = self.subject + self.catalog_number
+        course_level = self.subject + str(self.catalog_number)
         return course_level + ": " + self.description
 
     def __str__(self):
-        course_level = self.subject + self.catalog_number
+        course_level = self.subject + str(self.catalog_number)
         if self.instructor == '-':
             inst = "Not available"
         else:
             inst = self.instructor
         instructor = "Instructor: " + inst
-        section = "(Section: " + self.section + ")"
+        section = "(Section: " + str(self.section) + ")"
         return course_level + ": " + self.description + " \n " + instructor + " \n " + section
 
 
@@ -115,7 +115,7 @@ class Room(models.Model):
     users = models.ManyToManyField(User)
 
     def __str__(self):
-        course_name = self.post.course.subject + self.post.course.catalog_number
+        course_name = self.post.course.subject + str(self.post.course.catalog_number)
         course_description = self.post.course.description
         topic = 'Topic: ' + self.name
         # return course_name + ': ' + course_description + '\n' + topic

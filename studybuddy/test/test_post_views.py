@@ -7,23 +7,20 @@ from studybuddy.models import Course, User
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
 from studybuddy.views.post_views import viewposts
+from studybuddy.test.test_constants import TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD, TEST_SUBJECT
 
 
 class MakePostViewTest(TestCase):
     def setUp(self):
-        self.test_email = 'test@email.com'
-        self.test_username = 'testName'
-        self.test_password = 'testPassword'
-        self.test_subject = 'testDept'
         self.test_catalog_number = 1234
         self.test_instructor = 'testInstructor'
         self.test_section = 000
         self.test_course_number = 12345
         self.test_description = 'testCourseDescription'
 
-        User.objects.create(email=self.test_email)
+        User.objects.create(email=TEST_EMAIL)
 
-        Course.objects.create(subject=self.test_subject.upper(),
+        Course.objects.create(subject=TEST_SUBJECT.upper(),
                               catalog_number=self.test_catalog_number,
                               instructor=self.test_instructor,
                               section=self.test_section,
@@ -31,8 +28,8 @@ class MakePostViewTest(TestCase):
                               description=self.test_description)
 
         # mock user login
-        self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
-        self.client.login(username=self.test_username, password=self.test_password)
+        self.test_user = get_user_model().objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
 
     def test_view_url_exists_at_desired_location(self):
         """
@@ -40,7 +37,7 @@ class MakePostViewTest(TestCase):
 
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
-        response = self.client.get('/studybuddy/' + self.test_subject + '/' + str(self.test_course_number) + '/makepost',
+        response = self.client.get('/studybuddy/' + TEST_SUBJECT + '/' + str(self.test_course_number) + '/makepost',
             follow=True)
         self.assertEqual(response.status_code, 200)
 
@@ -48,7 +45,7 @@ class MakePostViewTest(TestCase):
         """
         makepost view is accessible through its name
         """
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
+        response = self.client.get(reverse('studybuddy:makepost', args=(TEST_SUBJECT,
                                                                         self.test_course_number)))
         self.assertEqual(response.status_code, 200)
 
@@ -56,7 +53,7 @@ class MakePostViewTest(TestCase):
         """
         makepost view uses the correct template
         """
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
+        response = self.client.get(reverse('studybuddy:makepost', args=(TEST_SUBJECT,
                                                                         self.test_course_number)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post/makepost.html')
@@ -66,13 +63,13 @@ class MakePostViewTest(TestCase):
         when given an invalid course number/department, the template renders the correct information
         """
         # given
-        expected_response = 'The course number ' + str(self.test_course_number) + ' in ' + self.test_subject.upper() + \
+        expected_response = 'The course number ' + str(self.test_course_number) + ' in ' + TEST_SUBJECT.upper() + \
                             ' is not available to make a post'
 
         Course.objects.all().delete()
 
         # when
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
+        response = self.client.get(reverse('studybuddy:makepost', args=(TEST_SUBJECT,
                                                                         self.test_course_number)))
 
         # then
@@ -84,26 +81,22 @@ class MakePostViewTest(TestCase):
         when given a valid course number/department, the template render the form to make a post
         """
         # when
-        response = self.client.get(reverse('studybuddy:makepost', args=(self.test_subject,
+        response = self.client.get(reverse('studybuddy:makepost', args=(TEST_SUBJECT,
                                                                         self.test_course_number)))
 
         # then
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Make a study buddy post for: ')
-        self.assertContains(response, self.test_subject.upper() + str(self.test_catalog_number))
+        self.assertContains(response, TEST_SUBJECT.upper() + str(self.test_catalog_number))
 
 
 class ViewPostViewTest(TestCase):
     def setUp(self):
-        self.test_email = 'test@email.com'
-        self.test_username = 'testName'
-        self.test_password = 'testPassword'
-
         self.test_request_factory = RequestFactory()
 
         # mock user login
-        self.test_user = get_user_model().objects.create_user(self.test_username, self.test_email, self.test_password)
-        self.client.login(username=self.test_username, password=self.test_password)
+        self.test_user = get_user_model().objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
 
     def test_view_url_exists_at_desired_location(self):
         """
@@ -112,7 +105,7 @@ class ViewPostViewTest(TestCase):
         Source for "follow=True" - https://stackoverflow.com/questions/21215035/django-test-always-returning-301
         """
         # given
-        User.objects.create(email=self.test_email)
+        User.objects.create(email=TEST_EMAIL)
 
         # when
         response = self.client.get('/studybuddy/viewposts', follow=True)
@@ -155,7 +148,7 @@ class ViewPostViewTest(TestCase):
         when user deletes a post, the delete method is called
         """
         # given
-        User.objects.create(email=self.test_email)
+        User.objects.create(email=TEST_EMAIL)
 
         test_view_delete_request = self.test_request_factory.post(
             '/studybuddy/viewposts', {'delete' : 'Delete Post', })

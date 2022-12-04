@@ -283,45 +283,17 @@
                       {% else %}
                         <p>
                             You currently do not have any chat rooms. <br><br>
-                            Chat rooms are created if you have indicated interest in another user's post, which can be
-                            seen on course feed pages or if other users have indicated interest for posts that you have
-                            made, which can be seen at the 'My Posts' option in the navigation bar at the top of the screen
+                            To have chat rooms: <br>
+                            - Indicated interest in another user's post (Home -> Choose a class -> Scroll down
+                            and view posts -> Click 'Message me' on desired post) <br>
+                            - Another user indicates interests in your post (Your posts can be seen see in 'My Posts' in
+                            the navigation bar)
                         </p>
                       {% endif %}
     
                 </form>
             </div>
         </div>
-
-        {% comment %} <div class="d-flex justify-content-center">
-            <div class="sb-form">
-                <form>
-                    <div class="wrapper">
-                        <h1 class="title">Chat Rooms</h1>
-                      </div>
-                      {% for room in rooms %}
-                      <div class="w-full lg:w-1/4 px-3 py-3">
-                          <div class="p-4 bg-white shadow rounded-xl text-center">
-                              <h2 class="mb-5 text-2xl font-semibold">{{ room | linebreaksbr }}</h2>
-                              <a href="{% url 'studybuddy:room' room.pk %}" name="myBtn" class="btn btn-lg">Enter the room to chat!</a>
-                          </div>
-                      </div>
-                      {% endfor %}
-                      {% if rooms %}
-                      {% else %}
-                        <p>
-                            You currently do not have any chat rooms. <br><br>
-                            To have chat rooms the following needs to happen: <br>
-                            - Indicated interest in another user's post
-
-                            Chat rooms are created if you have indicated interest in another user's post, which can be
-                            seen on course feed pages or if other users have indicated interest for posts that you have
-                            made, which can be seen at the 'My Posts' option in the navigation bar at the top of the screen
-                        </p>
-                      {% endif %}
-                </form>
-            </div>
-        </div> {% endcomment %}
 
     <footer class="footer-container">
         <div class="myFooter">

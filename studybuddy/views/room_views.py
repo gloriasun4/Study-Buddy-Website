@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from studybuddy.models import Room, Message, User, Post
 
+
 def rooms(request):
     if request.user.is_anonymous:
         return render(request, template_name="index.html")
@@ -38,10 +39,13 @@ def room(request, roomNumber):
     }
 
     if Room.objects.filter(pk=roomNumber):
-        room = Room.objects.get(pk=roomNumber)
-        context['room'] = room
-        messages = Message.objects.filter(room=room)[:25]
-        context['messages'] = messages
+        if Room.objects.get(pk=roomNumber).users.all().filter(email=request.user.email):
+            room = Room.objects.get(pk=roomNumber)
+            context['room'] = room
+            messages = Message.objects.filter(room=room)[:25]
+            context['messages'] = messages
+        else:
+            context['notMember'] = True
     else:
         context['noRoom'] = True
 
