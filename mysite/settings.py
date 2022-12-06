@@ -26,7 +26,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-j-v(da7l2q6be23jrem)acxn(yxadzu!n&p%gxbf&m1i2^!+wy"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "cs-3240-my-study-buddy.herokuapp.com"]
 
@@ -37,6 +36,9 @@ if gethostname() not in DEV_HOSTS and not re.match('^fv-az..', gethostname()):
     # Source: https://stackoverflow.com/questions/49753687/redirect-http-to-https-safely-for-heroku-app
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    DEBUG = False
+else:
+    DEBUG = True
 
 # Application definition
 
