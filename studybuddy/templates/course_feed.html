@@ -13,7 +13,6 @@
     <title>{{ course }}</title>
     <style>
         .navbar {
-            padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
             color: #464646;
@@ -155,6 +154,14 @@
             margin-bottom: 20px;
         }
 
+        .sb-form .btn {
+            min-width: 140px;
+            outline: none !important;
+            background: #a6e2c8;
+            color: #464646;
+            border-radius: 10px;
+        }
+
         .sb-form .btn:hover{
               min-width: 140px;
               outline: none !important;
@@ -163,14 +170,6 @@
               border-radius: 10px;
           }
     
-          .sb-form .btn {
-              min-width: 140px;
-              outline: none !important;
-              background: #a6e2c8;
-              color: #464646;
-              border-radius: 10px;
-          }
-
         .sb-form .row div:first-child {
             padding-right: 10px;
         }
@@ -237,6 +236,8 @@
                       </div>
                     {% if valid %}
                       <div class="form-group">
+                        <button class="btn" id="myBtn" name="myBtn" type="submit" formaction="makepost">
+                            <a name="myBtn">Create a post!</a></button>
                         {% if enrolled %}
                             <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">
                                 Remove course from schedule
@@ -247,8 +248,6 @@
                             </a>
                      {% endif %}
 
-                        <button class="btn" id="myBtn" name="myBtn" type="submit" formaction="makepost">
-                        <a name="myBtn">Create a post!</a></button>
                         {% else %}
                             <p>The department {{ dept }} you are looking does not exist or course number {{ course_number }} in {{ dept }} is not valid.</p>
                             <p>
@@ -301,10 +300,8 @@
     </div>
 
     <footer class="footer-container">
-        <div class="container">
             <div class="row">
             </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 

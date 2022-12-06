@@ -13,7 +13,6 @@
     <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
     <style>
         .navbar {
-            padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
             color: #464646;
@@ -114,7 +113,6 @@
             background: #654ea3;
             background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
             background: linear-gradient(to right, #654ea3, #eaafc8);
-            {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
             background-size: cover;
             background-position: 30%;
             background-attachment: fixed;
@@ -135,7 +133,7 @@
             background-color: rgba(255, 255, 255, 0.8);
             width: 800px;
             float: right;
-            margin: 30px;
+            margin: 50px;
             padding: 30px 0;
             position: relative;
             text-align: center;
@@ -149,6 +147,7 @@
             padding-left: 30px;
             padding-right: 30px;
             border-radius: 25px;
+            text-align: center;
         }
 
         .sb-form .btn:hover{
@@ -297,12 +296,6 @@
                               {% endif %}
                             <br>
                         {% endfor %}
-                            {% comment %}
-                                Showing them they don't have a course in specified class???
-                                {% if has_post == False %}
-                                    <p>You have not made any posts for this class</p>
-                                {% endif %}
-                            {% endcomment %}
                           </div>
                         </div>
                     <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}" name="myBtn" class="btn btn-sm">View Course Feed</a>
@@ -321,15 +314,15 @@
                                 {{ post | linebreaksbr }}
                                 <form action="" method = "post">
                                     {% csrf_token %}
-                                    <button class="btn btn-lg" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.course_number%}">
+                                    <button class="btn btn-sm" formaction="{% url 'studybuddy:coursefeed' post.course.subject post.course.course_number%}">
                                         View Course Feed
                                     </button>
                                     <span class="firstSpan">
-                                        <input type="button" class="btn btn-lg" value="View Description">
+                                        <input type="button" class="btn btn-sm" value="View Description">
                                     <span class="secondSpan">{{ post.description }}</span></span>
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                        <input id='delete_post2' onClick='confirmFunction2()' name="delete" type="button" value="Delete Post" class="btn btn-lg">
+                                        <input id='delete_post2' onClick='confirmFunction2()' name="delete" type="button" value="Delete Post" class="btn btn-sm">
                                 </form>
                             </li>
                         {% endfor %}
@@ -383,10 +376,6 @@
         </script>
 
     <footer class="footer-container">
-        <div class="container">
-            <div class="row">
-            </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
     </div>

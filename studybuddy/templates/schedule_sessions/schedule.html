@@ -13,22 +13,20 @@
         <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
         <style>
             .navbar {
-                padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
-                color: #464646;
             }
-
+    
             .navbar-brand {
                 margin-left: 16px;
                 font-size: 26px;
                 color: #464646;
             }
-
+    
             .navbar-toggler {
                 color: #464646;
             }
-
+    
             .nav-link {
                 text-align: right;
                 color: #464646;
@@ -39,6 +37,10 @@
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
                 color: #464646;
+                left:0;
+                right: 0;
+                bottom:0;
+                position: fixed;
             }
 
             @media only screen and (max-width: 768px) {
@@ -110,7 +112,6 @@
                 background: #654ea3;
                 background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
                 background: linear-gradient(to right, #654ea3, #eaafc8);
-                {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
                 background-size: cover;
                 background-position: 30%;
                 background-attachment: fixed;
@@ -128,12 +129,24 @@
 
             .sb-form form {
                 border-radius: 3px;
-                background-color: rgba(255, 255, 255, 0.8);
+                background-color: rgba(255, 255, 255, 0.9);
                 padding-top: 30px;
                 padding-left: 30px;
                 padding-right: 30px;
                 padding-bottom: 12px;
                 border-radius: 25px;
+            }
+
+            .sb-form .wrapper {
+                margin: auto;
+                overflow-x: hidden;
+                margin-top: 0%;
+                margin-bottom: 1%;
+                position: relative;
+                text-align: center;
+                background: #aaa6e2;
+                border-radius: 12px;
+                color: white;
             }
 
             .sb-form .form-group {
@@ -154,47 +167,22 @@
 
             .sb-form .btn{
                 font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
                   min-width: 140px;
                   outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.5); {% endcomment %}
-                  color: white;
+                  background: #a6e2c8;
+                  color: #464646;
                   border-radius: 12px;
-                  margin-bottom: 10px;
+                  margin-bottom: 15px;
               }
 
               .sb-form .btn:hover {
                 font-size: 22px;
-                  {% comment %} margin-top: 10px; {% endcomment %}
                   min-width: 140px;
                   outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.5); {% endcomment %}
+                  background-color: #65c5c0;
                   color: white;
                   border-radius: 12px;
-                  margin-bottom: 10px;
-              }
-              .myForm .btn{
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
-              .myForm .btn:hover {
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
+                  margin-bottom: 15px;
               }
 
                #myInput {
@@ -221,7 +209,6 @@
                   padding: 12px;
                   text-decoration: none;
                   font-size: 16px;
-                  font-weight: bold;
                   color: white;
                   display: block;
                   border-radius: 12px;
@@ -267,16 +254,12 @@
             </div>
         {% else %}
             <div class="sb-form">
-                <h1>Schedule a study session for: <br> {{ room }}</h1>
-
                 <form id="schedule-form">
+                <div class="wrapper">
+                <h1>Schedule a study session for: <br> {{ room }}</h1></div><br>
                     {% csrf_token %}
-<!--                        <p>-->
-<!--                            This study session is schedule with: {{ room.users }}-->
-<!--                        </p>-->
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" value={{date}}><br><br>
-
                         <label for="start"> Start Time: </label>
                         <input type="time" id="start" name="start" value={{start}}> &nbsp &nbsp
                         <label for="end"> End Time: </label>
@@ -284,16 +267,13 @@
 
                         <input type="hidden" name="room_pk" value="{{ room.pk }}">
 
-                        <input class="btn btn-sm" onClick='alertWhenFormNotFilled()' name="schedule" id="schedule" type="button" value="Schedule">
+                        <input class="btn btn-md" onClick='alertWhenFormNotFilled()' name="schedule" id="schedule" type="button" value="Schedule">
                 </form>
             </div>
         {% endif %}
     </div>
-
     <footer class="footer-container">
-        <div class="container">
             <div class="row"></div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
       </footer>
 

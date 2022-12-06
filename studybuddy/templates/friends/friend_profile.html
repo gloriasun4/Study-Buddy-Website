@@ -12,7 +12,6 @@
         <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
         <style>
             .navbar {
-                padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
                 color: #464646;
@@ -102,9 +101,68 @@
                 }
             }
 
+            .container .myForm .nav-tabs{
+                margin-bottom: 3%;
+            }
+            .container .myForm .nav-tabs .nav-link{
+                font-weight:600;
+                border: none;
+            }
+            .container .myForm .nav-tabs .nav-link.active{
+                font-size: 20px;
+                border: none;
+                border-bottom:2px solid #0062cc;
+            }
+
+            .container {
+                position:relative;
+                max-width: 1140px;
+                padding: 3%;
+                margin-top: 3%;
+                margin-bottom: 3%;
+                border-radius: 20px;
+                background: #fff;
+            }
+
+            .profile-work{
+                padding: 15%;
+                margin-top: -15%;
+                margin-bottom: -15%;
+            }
+            .profile-work p{
+                font-size: 12px;
+                color: #818182;
+            }
+
+            .profile-work a{
+                text-decoration: none;
+                color: #495057;
+                font-size: 20px;
+            }
+
+            .profile-work ul{
+                list-style: none;
+            }
+
+            .profile-tab p{
+                font-size: 22px;
+                color: #0062cc;
+            }
+
+            .profile-tab label{
+                font-size: 22px;
+            }
+
+            .container .row {
+                word-wrap: break-word;
+              }
+
+              .container .profile-work .text{
+                color: #949494;
+              }
+
             body {
                 font-family: 'Orelega One';
-                {% comment %} font-family: 'Besley'; {% endcomment %}
                 font-size: 18px;
                 min-height: 100vh;
                 display: flex;
@@ -120,41 +178,6 @@
                 background-attachment: fixed;
             }
 
-            .emp-profile{
-                padding: 3%;
-                margin-top: 3%;
-                margin-bottom: 3%;
-                border-radius: 0.5rem;
-                background: #fff;
-            }
-
-            .profile-img{
-                text-align: center;
-            }
-
-            .profile-img img{
-                width: 70%;
-                height: 45%;
-            }
-
-            .profile-img .file {
-                position: relative;
-                overflow: hidden;
-                margin-top: -20%;
-                width: 70%;
-                border: none;
-                border-radius: 0;
-                font-size: 15px;
-                background: #212529b8;
-            }
-
-            .profile-img .file input {
-                position: absolute;
-                opacity: 0;
-                right: 0;
-                top: 0;
-            }
-
             .profile-head h5{
                 color: #333;
             }
@@ -163,17 +186,6 @@
                 color: #0062cc;
             }
 
-            .profile-head .nav-tabs{
-                margin-bottom:5%;
-            }
-            .profile-head .nav-tabs .nav-link{
-                font-weight:600;
-                border: none;
-            }
-            .profile-head .nav-tabs .nav-link.active{
-                border: none;
-                border-bottom:2px solid #0062cc;
-            }
             .profile-work{
                 padding: 14%;
                 margin-top: -15%;
@@ -182,14 +194,13 @@
                 font-size: 12px;
                 color: #818182;
                 font-weight: 600;
-                margin-top: 10%;
             }
 
             .profile-work a{
                 text-decoration: none;
                 color: #495057;
                 font-weight: 600;
-                font-size: 14px;
+                font-size: 20px;
             }
             .profile-work ul{
                 list-style: none;
@@ -202,27 +213,6 @@
                 color: #0062cc;
             }
 
-            .myForm .btn{
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #aaa6e2;
-                  {% comment %} background: rgba(222, 154, 255, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
-
-              .myForm .btn:hover {
-                font-size: 22px;
-                  margin-top: 10px;
-                  min-width: 140px;
-                  outline: none !important;
-                  background: #a6e2c8;
-                  {% comment %} background: rgba(156, 255, 168, 0.7); {% endcomment %}
-                  color: white;
-                  border-radius: 12px;
-              }
         </style>
     </head>
 <body>
@@ -250,20 +240,21 @@
         </div>
     </nav>
 </div>
-<div class="container emp-profile">
+
+<div class="container">
     <form>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="profile-head">
-                    <h2>
+            <div class="col-md-12">
+                <div class="myForm">
+                    <h1>
                         {{friend.name}}'s profile
-                    </h2>
+                    </h1>
                 </div>
             </div>
+            <hr class="hline"></hr>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="profile-work">
-                    <p><h4>Schedule</h4></p>
+                    <p><h3>Schedule</h3></p>
                     {% if friend.enrolledclass_set.all %}
                         {% for class in friend.enrolledclass_set.all %}
                             <li>
@@ -273,19 +264,12 @@
                             </li>
                         {% endfor %}
                     {% else %}
-                        <p class="text-center">{{ student.name }} is currently not enrolled in any classes </p>
+                        <h5 class="text-center">{{ student.name }} is currently not enrolled in any classes </h5>
                     {% endif %}
-
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-11">
-                                <p>{{friend.blurb}}</p>
-                            </div>
-                        </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Username</label>
@@ -318,19 +302,18 @@
                                         <p>{{friend.major}}</p>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Introduction</label><br/>
+                                        <p>{{friend.blurb}}</p>
+                                    </div>
+                                </div>
                     </div>
-                    </div>
-                </div>
             </div>
-        </div>
     </form>
 </div>
 
       <footer class="footer-container">
-        <div class="container">
-            <div class="row">
-            </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
       </footer>
 </body>

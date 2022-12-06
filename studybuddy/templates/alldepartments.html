@@ -12,7 +12,6 @@
     <title>All Departments</title>
     <style>
         .navbar {
-            padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
             color: #464646;
@@ -38,7 +37,11 @@
             background-color: rgba(255, 255, 255, 0.3);
             margin-top: auto;
             color: #464646;
+            left: 0;
+            right: 0;
             bottom: 0px;
+            min-width: 100%;
+            position: relative;
         }
 
         @media only screen and (max-width: 768px) {
@@ -110,8 +113,6 @@
             background: #654ea3;
             background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
             background: linear-gradient(to right, #654ea3, #eaafc8);
-            {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
-            background-size: cover;
             background-position: 30%;
             background-attachment: fixed;
         }
@@ -128,7 +129,7 @@
 
         .sb-form form {
             border-radius: 3px;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.6);
             padding-top: 30px;
             padding-left: 30px;
             padding-right: 30px;
@@ -267,15 +268,10 @@
         }
     }
     </script>
-
-    </div>
     <footer class="footer-container">
-        <div class="container">
-            <div class="row">
-            </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
+        </div>
 </body>
 </html>
 

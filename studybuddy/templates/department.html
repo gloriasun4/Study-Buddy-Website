@@ -13,7 +13,6 @@
         <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
         <style>
             .navbar {
-                padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
                 color: #464646;
@@ -35,10 +34,15 @@
             }
 
             footer {
+                bottom: 0;
+                position: relative;
                 padding: 15px;
                 background-color: rgba(255, 255, 255, 0.3);
                 margin-top: auto;
                 color: #464646;
+                left:0;
+                right: 0;
+                width: 100%;
             }
 
             @media only screen and (max-width: 768px) {
@@ -234,15 +238,12 @@
             </form>
         </div>
     </div>
-
+    
     <footer class="footer-container">
-        <div class="container">
-            <div class="row">
-            </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
       </footer>
-
+    </div>
+</div>
 <script>
     function myFunction() {
         var input, filter, ul, li, a, i, txtValue;
