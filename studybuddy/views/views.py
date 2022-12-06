@@ -32,8 +32,8 @@ def addAccount(request):
     email = request.user.email
     exist = User.objects.filter(email=email).exists()
     if not exist:
-        newAcc = User(email=email, name=request.user.username)
-        newAcc.save()
+        newAcc = User.objects.create(email=email, name=request.user.username)
+        # newAcc.save()
         return HttpResponseRedirect(reverse('studybuddy:editAccount'))
     else:
         return HttpResponseRedirect(reverse('studybuddy:index'))
