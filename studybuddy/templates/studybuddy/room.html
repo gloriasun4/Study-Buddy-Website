@@ -14,7 +14,6 @@
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <style>
         .navbar {
-            padding-right: 1em;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.3);
             color: #464646;
@@ -43,7 +42,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            position: fixed;
+            width: 100%;
+            position: flexible;
         }
 
         @media only screen and (max-width: 768px) {
@@ -112,8 +112,11 @@
             flex-direction: column;
             max-width: 100%;
             max-height: 100%;
-            background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center center;
-            background: url("https://images.unsplash.com/photo-1499796683658-b659bc751db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80") no-repeat center center;
+            background: #654ea3;
+            background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
+            background: linear-gradient(to right, #654ea3, #eaafc8);
+            {% comment %} background: url("https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80") no-repeat center center;
+            background: url("https://images.unsplash.com/photo-1499796683658-b659bc751db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80") no-repeat center center; {% endcomment %}
             background-size: cover;
             background-position: 30%;
             background-attachment: fixed;
@@ -134,9 +137,7 @@
         }
 
         .sb-form {
-            {% comment %} float: right; {% endcomment %}
             margin: 10px;
-            {% comment %} padding: 30px 0; {% endcomment %}
             font-size: 20px;
             position: relative;
             text-align: center;
@@ -145,16 +146,8 @@
         .sb-form form {
             border-radius: 3px;
             background-color: rgba(255, 255, 255, 0);
-            {% comment %} padding-top: 30px;
-            padding-left: 30px;
-            padding-right: 30px; {% endcomment %}
             padding-bottom: 12px;
-            {% comment %} border-radius: 25px; {% endcomment %}
         }
-
-        {% comment %} .sb-form .form-group {
-            margin-bottom: 20px;
-        } {% endcomment %}
 
         .sb-form .btn{
             font-size: 18px;
@@ -176,20 +169,11 @@
           .sb-form .otherText {
             text-align: left;
           }
-    
-          .sb-form .btn:hover {
-            font-size: 18px;
-              min-width: 160px;
-              outline: none !important;
-              {% comment %} background: #a6e2c8; {% endcomment %}
-              background: #aaa6e2;
-              color: white;
-              border-radius: 10px;
-              margin-top: 10px;
-              margin-bottom: 10px;
-              margin-left: 10px;
-              margin-right: 10px;
-          }
+
+          .sb-form .leaveForm .btn {
+            background: #aaa6e2;
+            margin-bottom: -10px;
+        }
 
         .sb-form .row div:first-child {
             padding-right: 10px;
@@ -214,7 +198,7 @@
             margin-bottom: 2%;
             border-radius: 20px;
             background: #fff;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.8);
         }
         
         .container .sb-form .hline {
@@ -264,7 +248,7 @@
                 {% else %}
                 <form method="get">
                     <div class="wrapper">
-                        <h2 class="title"> {{ room }} </h2>
+                        <h1 class="title"> {{ room }} </h1>
                     </div>
                     <div>
                         <h3>Users in this chat room</h3>
@@ -309,12 +293,12 @@
                     </form>
                     <form method="post" action="{% url 'studybuddy:schedule' room.pk %}">
                         {% csrf_token %}
-                        <button class="btn btn-sm" id="schedule">Schedule Study Session</button>
-                        <a class="btn btn-sm" href="{% url 'studybuddy:rooms' %}"> Exit this room </a>
+                        <a class="btn btn-sm" href="{% url 'studybuddy:rooms' %}"> &#8592 Back to all chat rooms</a>
+                        <button class="btn btn-sm" id="schedule">Schedule study session</button>
                     </form>
                 </div>
                 <div>
-                    <form method="post">
+                    <form class="leaveForm" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="room_pk" value="{{room.pk}}">
                         <input onClick="confirmFunction()" id="leave" class="btn btn-sm" name='leave' type="button" value="Permanently leave this room">
@@ -327,10 +311,6 @@
 
     </div>
     <footer class="footer-container">
-        <div class="myFooter">
-            <div class="row">
-            </div>
-        </div>
         <div class="text-center">&copy; Team B-15</div>
     </footer>
 

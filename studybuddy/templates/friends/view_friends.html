@@ -14,7 +14,6 @@
         <link href='https://fonts.googleapis.com/css?family=Orelega One' rel='stylesheet'>
         <style>
             .navbar {
-                padding-right: 1em;
                 text-align: right;
                 background-color: rgba(255, 255, 255, 0.3);
                 color: #464646;
@@ -42,8 +41,9 @@
                 color: #464646;
                 left:0;
                 right: 0;
-                bottom:0; 
-                position: fixed; 
+                bottom:0;
+                width: 100%;
+                position: relative;
             }
 
             @media only screen and (max-width: 768px) {
@@ -115,30 +115,39 @@
                 background: #654ea3;
                 background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
                 background: linear-gradient(to right, #654ea3, #eaafc8);
-                {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
                 background-size: cover;
                 background-position: 30%;
                 background-attachment: fixed;
             }
 
             .sb-form {
-                {% comment %} min-width: 800px; {% endcomment %}
                 width: 800px;
                 margin-top: 20px;
                 padding: 30px 0;
-                font-size: 15px;
+                font-size: 20px;
                 position: relative;
                 text-align: center;
             }
 
             .sb-form form {
                 border-radius: 3px;
-                background-color: rgba(255, 255, 255, 0.5);
+                background-color: rgba(255, 255, 255, 0.9);
                 padding-top: 20px;
                 padding-left: 20px;
                 padding-right: 20px;
                 padding-bottom: 20px;
                 border-radius: 20px;
+            }
+
+            .sb-form .wrapper {
+                margin: 1%;
+                overflow-x: hidden;
+                margin-bottom: 2%;
+                position: relative;
+                text-align: center;
+                background: #aaa6e2;
+                border-radius: 12px;
+                color: white;
             }
 
             .sb-form .form-group {
@@ -181,7 +190,6 @@
                   padding: 12px;
                   text-decoration: none;
                   font-size: 16px;
-                  font-weight: bold;
                   color: white;
                   display: block;
                   border-radius: 12px;
@@ -195,7 +203,6 @@
 
                 /* Style the button that is used to open and close the collapsible content */
                 .collapsible {
-                  {% comment %} background-color: #aaa6e2; {% endcomment %}
                   background-color: white;
                   color: #444;
                   cursor: pointer;
@@ -239,20 +246,7 @@
                   visibility: visible;
                 }
 
-                .sb-form .btn:hover {   
-                    font-size: 18px;
-                      min-width: 160px;
-                      outline: none !important;
-                      background: #aaa6e2;
-                      color: #444;
-                      border-radius: 5px;
-                      margin-top: 10px;
-                      margin-bottom: 10px;
-                      margin-left: 10px;
-                      margin-right: 10px;
-                  }
-            
-                  .sb-form .btn {
+                .sb-form .btn {
                     font-size: 18px;
                       min-width: 160px;
                       outline: none !important;
@@ -265,6 +259,19 @@
                       margin-right: 10px;
                   }
 
+                .sb-form .btn:hover {   
+                    font-size: 18px;
+                      min-width: 160px;
+                      outline: none !important;
+                      background-color: #65c5c0;
+                      color: white;
+                      border-radius: 5px;
+                      margin-top: 10px;
+                      margin-bottom: 10px;
+                      margin-left: 10px;
+                      margin-right: 10px;
+                  }
+            
                   .content .msg {
                     margin-top: 15px;
                     font-size: 18px;
@@ -314,7 +321,7 @@
         <div class="container">
     <div class="d-flex justify-content-center">
         <div class="sb-form">
-            <h1>Friends</h1>
+
             <div>
                 {% if self %}
                     <p>
@@ -362,14 +369,14 @@
                     </p>
                 {% endif %}
                 <form action="" method="post">
+                    <div class="wrapper">
+                        <h1>Friends</h1></div>
                     {% csrf_token %}
                     <input class="email" type="email" id="email" name="email" placeholder="example@email.com">
                     <input class="btn btn-sm" id='request' name='request' type="submit" value="Send a friend request">
                 </form>
             </div>
             <br>
-
-            <div class="wrapper">
                 <div class="dropdown">
                     <button type="button" class="collapsible"> <span class="arrowdown">&#8964</span> My Friends</button>
                     <div class="content">
@@ -452,14 +459,11 @@
         </div>
     </div>
 </div>
-</div>
 
-    <footer class="footer-container">
-        <div class="myFooter">
-            <div class="row"></div>
-        </div>
-        <div class="text-center">&copy; Team B-15</div>
-      </footer>
+<footer class="footer-container">
+    <div class="text-center">&copy; Team B-15</div>
+</footer>
+</div>
 
         <script>
             var coll = document.getElementsByClassName("collapsible");

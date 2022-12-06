@@ -17,7 +17,6 @@
     {% endif %}
 <style>
     .navbar {
-        padding-right: 1em;
         text-align: right;
         background-color: rgba(255, 255, 255, 0.3);
         color: #464646;
@@ -77,12 +76,24 @@
 
     .sb-form form {
         border-radius: 3px;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.9);
         padding-top: 30px;
         padding-left: 30px;
         padding-right: 30px;
         padding-bottom: 12px;
         border-radius: 25px;
+    }
+
+    .sb-form .wrapper {
+        margin: auto;
+        overflow-x: hidden;
+        margin-top: 0%;
+        margin-bottom: 1%;
+        position: relative;
+        text-align: center;
+        background: #aaa6e2;
+        border-radius: 12px;
+        color: white;
     }
 
     .sb-form .form-group {
@@ -105,8 +116,8 @@
         font-size: 22px;
           min-width: 140px;
           outline: none !important;
-          background: #aaa6e2;
-          color: white;
+          background: #a6e2c8;
+          color: #464646;
           border-radius: 12px;
           margin-top: 10px;
           margin-bottom: 10px;
@@ -118,7 +129,7 @@
         font-size: 22px;
           min-width: 140px;
           outline: none !important;
-          background: #a6e2c8;
+          background-color: #65c5c0;
           color: white;
           border-radius: 12px;
           margin-top: 10px;
@@ -227,7 +238,7 @@
                 <form action="{% url 'studybuddy:ucl' course.subject course.course_number%}" method="post" >
                     {% csrf_token %}
                     <div class="wrapper">
-                        <h2>You are already have this course in your schedule. Would you like to remove this course from your schedule?</h2>
+                        <h1>You are already have this course in your schedule. Would you like to remove this course from your schedule?</h1></div>
                         <fieldset align="center">
 
                             <input type="radio" name="choice" id="YesD" value="YesD" checked>
@@ -237,9 +248,8 @@
                             <label for="NoD">No, go back to home page.</label><br>
                 
                         </fieldset>
-<!--                        <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn">Go to all Departments</a>-->
-                        <input class="btn" type="submit" value="Continue">
-                    </div>
+                        <input class="btn btn-sm" type="submit" value="Continue">
+                    {% comment %} </div> {% endcomment %}
                     </form>
                     </div>
             </div>
@@ -258,24 +268,19 @@
             <form action="{% url 'studybuddy:ucl' course.subject course.course_number%}" method="post" >
                 {% csrf_token %}
                 <div class="wrapper">
-                    <h2>Would you like to add this course to your schedule?</h2>
+                    <h1>Would you like to add this course to your schedule?</h1></div>
                     <fieldset align="center">
                         <input type="radio" name="choice" id="YesE" value="YesE" checked>
                         <label for="YesE">Yes, add this course to my schedule.</label><br>
                         <input type="radio" name="choice" id="NoE" value="NoE" >
                         <label for="NoE">No, go back to home page.</label><br>
                     </fieldset>
-                        <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn">Go to all Departments</a>
-                        <input class="btn" type="submit" value="Continue">
+                        <a href="{% url 'studybuddy:alldepartments' %}" name="myBtn" class="btn btn-sm">Go to all Departments</a>
+                        <input class="btn btn-sm" type="submit" value="Continue">
                 </form>
-                </div>
         </div>
     </div>
         <footer class="footer-container">
-            <div class="container">
-                <div class="row">
-                </div>
-            </div>
             <div class="text-center">&copy; Team B-15</div>
         </footer>
     {% endif %}
