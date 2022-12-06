@@ -202,4 +202,4 @@ NOSE_ARGS = [
     '--cover-min-percentage=70',
 ]
 
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
