@@ -281,7 +281,7 @@
                                 {% if user.email == post.user.email %}
                                     <input type="hidden" name="delete_source" value="course_feed">
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input onclick="confirmFunction()" id="delete_button" name='delete' type="button" value="Delete Post" class="btn btn-sm">
+                                    <input onclick="confirmFunction(this)" id="delete_button" name='delete' type="button" value="Delete Post" class="btn btn-sm">
                                 {% else %}
                                     <!-- this will link to chat room -->
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
@@ -306,11 +306,13 @@
     </footer>
 
 <script>
-    function confirmFunction() {
-        const delete_button = document.getElementById("delete_button");
+    // Source: https://stackoverflow.com/questions/40234130/get-element-from-which-onclick-function-is-called
+    function confirmFunction(clickedElement) {
+        // const delete_button = document.getElementById("delete_button");
+        console.log(clickedElement);
         if(confirm("Are you sure you want to delete this post?") == true) {
             console.log("The user confirmed to delete the post");
-            delete_button.setAttribute('type', 'submit');
+            clickedElement.setAttribute('type', 'submit');
         }
         else {
             console.log("The user cancelled deleting a post");
