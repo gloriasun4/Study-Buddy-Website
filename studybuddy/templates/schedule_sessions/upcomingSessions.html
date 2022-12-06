@@ -235,7 +235,7 @@
 
                 .firstSpan .secondSpan {
                   visibility: hidden;
-                  width: 200px;
+                  width: 500px;
                   background-color: #6865AC;
                   color: white;
                   text-align: center;
@@ -257,6 +257,14 @@
 
                 .dropdown .arrowdown {
                   font-size: 15px;
+                }
+
+                .dot {
+                  height: 25px;
+                  width: 25px;
+                  background-color: #bbb;
+                  border-radius: 50%;
+                  display: inline-block;
                 }
             </style>
         </head>
@@ -307,6 +315,7 @@
                 <div class="dropdown">
                     <button type="button" class="collapsible">
                         <span class="arrowdown">&#8964</span> Scheduled Study Sessions
+<!--                        - {% if study_sessions %} {{ study_sessions.count }} session(s) {% else %} 0 session {% endif %}-->
                         <span class="firstSpan">
                             (?)
                             <span class="secondSpan">
