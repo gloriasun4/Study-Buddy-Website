@@ -278,17 +278,15 @@
                 {% for enrolled_course in enrolled_courses %}
                     <div class="dropdown">
                         
-                        <button type="button" class="collapsible"> <span class="arrowdown">&#8964</span>
+                        <button onClick="collapse(this)" type="button" class="collapsible"> <span class="arrowdown">&#8964</span>
                             {{ enrolled_course.course.subject }}{{ enrolled_course.course.catalog_number }}
                             - Section: {{ enrolled_course.course.section }}
                         </button>
-                        
-                        <div class="content">
-                            {% for post in user_posts %}
 
+                        {% for post in user_posts %}
                             {% if post.course.course_number == enrolled_course.course.course_number %}
-                                 <form action="" method = "post">
-                                <li style="list-style-type: none">
+                            <div class="content">
+                                <form action="" method = "post">
                                     {{ post | linebreaksbr }}
                                     {% csrf_token %}
                                     <!-- link to maybe some pop up to show post + post.description -->
@@ -299,15 +297,13 @@
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">
                                         <input id='delete_post' onClick='confirmFunction(this)' name="delete" type="button" value="Delete Post" class="btn btn-sm btn-danger">
-                                    </form>
-                                </li>
-                                     </form>
+                                 </form>
+                            </div>
                               {% endif %}
-                            <br>
                         {% endfor %}
-                          </div>
-                        </div>
                     <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}" name="myBtn" class="btn btn-sm">View Course Feed</a>
+                    <br>
+                    </div>
                 {% endfor %}
                 {% endif %}
                 {% if unenrolled_posts %}
@@ -343,19 +339,29 @@
         </div>
 
         <script>
-            var coll = document.getElementsByClassName("collapsible");
-            var i;
-
-            for (i = 0; i < coll.length; i++) {
-              coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.maxHeight){
-                  content.style.maxHeight = null;
-                } else {
-                  content.style.maxHeight = content.scrollHeight + "px";
+            function collapse(clickedElement) {
+                console.log(clickedElement.parentNode);
+                console.log("this: " + clickedElement.nextElementSibling.innerHtml);
+                var content = clickedElement.nextElementSibling;
+                if(content.nodeName == "A") {
+                    console.log('here');
+                    var tagContent = document.createElement("div");
+                    tagContent.className = "content";
+                    var tag = document.createElement("p");
+                    var text = document.createTextNode("You have not made any posts for this course");
+                    tag.appendChild(text);
+                    tagContent.appendChild(tag);
+                    clickedElement.parentNode.insertBefore(tagContent, clickedElement.nextSibling);
+                    collapse(clickedElement);
                 }
-              });
+                else {
+                    clickedElement.classList.toggle("active");
+                    if (content.style.maxHeight){
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                }
             }
 
             function confirmFunction(clickedElement) {
