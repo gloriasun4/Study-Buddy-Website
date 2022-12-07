@@ -386,10 +386,11 @@
                                     {% csrf_token %}
                                     <li style="list-style-type: none" class="msg">
                                         {{ friend | linebreaksbr }} &nbsp &nbsp
-                                        <input type="hidden" name="remove_email" value="{{friend.email}}">
-                                        <input name='unfriend' type="submit" value="Unfriend" class="btn btn-sm">
                                         <input type="hidden" name="friend_email" value="{{friend.email}}">
-                                        <input name='view_friends' type="submit" value="View Profile" class="btn btn-sm">
+                                        <input name='view_friends' type="submit" value="View Profile" class="btn btn-sm btn-primary">
+                                        <input type="hidden" name="remove_email" value="{{friend.email}}">
+                                        <input name='unfriend' type="submit" value="Unfriend" class="btn btn-sm btn-danger">
+
                                     </li>
                                 </form> <br>
                             {% endfor %}
@@ -419,8 +420,8 @@
                                     <li style="list-style-type: none" class="msg">
                                         {{ friend_request | linebreaksbr }} &nbsp &nbsp
                                     <input type="hidden" name="ad_email" value="{{friend_request.from_user.email}}">
-                                    <input name='accept' type="submit" value="Accept" class="btn"> &nbsp &nbsp
-                                    <input name='decline' type="submit" value="Decline" class="btn">
+                                    <input name='accept' type="submit" value="Accept" class="btn btn-sm btn-primary"> &nbsp &nbsp
+                                    <input name='decline' type="submit" value="Decline" class="btn btn-sm btn-danger">
                                     </li>
                                 </form> <br>
                             {% endfor %}

@@ -160,6 +160,8 @@
             background: #a6e2c8;
             color: #464646;
             border-radius: 10px;
+            margin-left: 1%;
+            margin-right: 1%
         }
 
         .sb-form .btn:hover{
@@ -236,14 +238,14 @@
                       </div>
                     {% if valid %}
                       <div class="form-group">
-                        <button class="btn" id="myBtn" name="myBtn" type="submit" formaction="makepost">
+                        <button class="btn btn-primary" id="myBtn" name="myBtn" type="submit" formaction="makepost">
                             <a name="myBtn">Create a post!</a></button>
                         {% if enrolled %}
-                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">
+                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn btn-danger">
                                 Remove course from schedule
                             </a>
                         {% else %}
-                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn">
+                            <a href="{% url 'studybuddy:enroll' course.subject course.course_number%}" name="myBtn" class="btn btn-info">
                                 Add course to schedule
                             </a>
                      {% endif %}
@@ -275,17 +277,17 @@
                                 <!-- link to maybe some pop up to show post + post.description -->
                                 <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                 <span class="firstSpan">
-                                 <input type="button" class="btn btn-sm" name="descripton" id="description" value="View Description">
+                                 <input type="button" class="btn btn-sm btn-primary" name="descripton" id="description" value="View Description">
                                 <span class="secondSpan">{{ post.description }}</span></span>
 
                                 {% if user.email == post.user.email %}
                                     <input type="hidden" name="delete_source" value="course_feed">
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input onclick="confirmFunction(this)" id="delete_button" name='delete' type="button" value="Delete Post" class="btn btn-sm">
+                                    <input onclick="confirmFunction(this)" id="delete_button" name='delete' type="button" value="Delete Post" class="btn btn-sm btn-danger">
                                 {% else %}
                                     <!-- this will link to chat room -->
                                     <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                    <input type="submit" name="message" value="Message Me!" class="btn btn-sm">
+                                    <input type="submit" name="message" value="Join Chat Room" class="btn btn-sm btn-info">
                                 {% endif %}
                             </form>
                             </li>
