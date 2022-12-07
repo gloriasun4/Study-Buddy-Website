@@ -233,6 +233,11 @@
         .dropdown .arrowdown {
             font-size: 15px;
         }
+
+        .dropdown {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
     </style>
 </head>
 
@@ -265,10 +270,11 @@
 
         <div class="d-flex justify-content-center">
             <div class="sb-form">
+                <div class="wrapper">
                     <h1>My Posts</h1>
+                </div>
                 {% if enrolled_courses %}
                 {% for enrolled_course in enrolled_courses %}
-                <div class="wrapper">
                     <div class="dropdown">
                         
                         <button type="button" class="collapsible"> <span class="arrowdown">&#8964</span>
@@ -278,8 +284,9 @@
                         
                         <div class="content">
                             {% for post in user_posts %}
-                            <form action="" method = "post">
+
                             {% if post.course.course_number == enrolled_course.course.course_number %}
+                                 <form action="" method = "post">
                                 <li style="list-style-type: none">
                                     {{ post | linebreaksbr }}
                                     {% csrf_token %}
@@ -291,19 +298,17 @@
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">
                                         <input id='delete_post' onClick='confirmFunction(this)' name="delete" type="button" value="Delete Post" class="btn btn-sm">
-                                    </form>
                                 </li>
+                                     </form>
                               {% endif %}
                             <br>
                         {% endfor %}
                           </div>
                         </div>
                     <a href="{% url 'studybuddy:coursefeed' enrolled_course.course.subject enrolled_course.course.course_number%}" name="myBtn" class="btn btn-sm">View Course Feed</a>
-                </div>
                 {% endfor %}
                 {% endif %}
                 {% if unenrolled_posts %}
-                <div class="wrapper">
                     <div class="dropdown">
                         <button type="button" class="collapsible">
                             <span class="arrowdown">&#8964</span> Courses not added to your schedule, but made posts for
@@ -328,7 +333,6 @@
                         {% endfor %}
                         </div>
                     </div>
-                </div>
                 {% endif %}
                 {% if no_courses_and_post %}
                     <p>You have not made any posts to find a study buddy and have not enrolled in any classes</p>
