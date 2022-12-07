@@ -266,6 +266,12 @@
                   border-radius: 50%;
                   display: inline-block;
                 }
+
+                .myFont {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    font-size: 20px;
+                }
             </style>
         </head>
 
@@ -301,10 +307,9 @@
             <div class="wrapper">
             <h1>My Upcoming Study Sessions</h1></div>
             {% if no_sessions %}
-                <p>
-                    Note: You currently do not have any study sessions. <br> <br>
-
-                    To schedule a study session: <br>
+            <p class="myFont">
+                    Note: You currently do not have any study sessions. </p>
+                  <p>  To schedule a study session: <br>
                     Go to 'Chat rooms' in navigation bar-> 'Enter the room to chat!' -> Scroll down and choose 'Schedule study session'
                 </p>
             {% endif %}
@@ -330,7 +335,7 @@
                                 <form action="" method = "post">
                                     {% csrf_token %}
                                     <input type="hidden" name="session_pk" value="{{session.pk}}">
-                                    <input onClick="confirmFunction2(this)" name='delete' type="button" value="Delete" class="btn btn-sm">
+                                    <input onClick="confirmFunction2(this)" name='delete' type="button" value="Delete" class="btn btn-sm btn-danger">
                                 </form>
                             {% endfor %}
                         {% else %}
@@ -358,8 +363,8 @@
                                 <form action="" method = "post">
                                     {% csrf_token %}
                                     <input type="hidden" name="session_pk" value="{{session.pk}}">
-                                    <input name='accept' type="submit" value="Accept" class="btn btn-sm"> &nbsp &nbsp
-                                    <input onClick="confirmFunction3(this)" name='decline' type="button" value="Decline" class="btn btn-sm">
+                                    <input name='accept' type="submit" value="Accept" class="btn btn-sm btn-primary"> &nbsp &nbsp
+                                    <input onClick="confirmFunction3(this)" name='decline' type="button" value="Decline" class="btn btn-sm btn-danger">
                                 </form>
                             {% endfor %}
                         {% else %}
@@ -367,9 +372,7 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <br>
-
                 <div class="dropdown">
                     <button type="button" class="collapsible">
                         <span class="arrowdown">&#8964</span> My Study Session Requests
@@ -391,7 +394,7 @@
                                 <form action="" method = "post">
                                     {% csrf_token %}
                                     <input type="hidden" name="session_pk" value="{{session.pk}}">
-                                    <input onClick="confirmFunction(this)" id="delete_request" name='delete' type="button" value="Delete" class="btn">
+                                    <input onClick="confirmFunction(this)" id="delete_request" name='delete' type="button" value="Delete" class="btn btn-sm btn-danger">
                                 </form>
                             {% endfor %}
                         {% else %}

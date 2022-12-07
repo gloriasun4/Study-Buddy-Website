@@ -41,7 +41,8 @@
             left:0;
             right: 0;
             bottom:0;
-            position: fixed;
+            width: 100%;
+            position: positive relative;
         }
 
         @media only screen and (max-width: 768px) {
@@ -286,11 +287,11 @@
                                     <!-- link to maybe some pop up to show post + post.description -->
                                     <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
                                     <span class="firstSpan">
-                                        <input type="button" class="btn btn-sm" value="View Description">
+                                        <input type="button" class="btn btn-sm btn-primary" value="View Description">
                                     <span class="secondSpan">{{ post.description }}</span></span>
                                         <input type="hidden" name="delete_source" value="get_posts">
                                         <input type="hidden" name="post_pk" value="{{post.pk}}">
-                                        <input id='delete_post' onClick='confirmFunction(this)' name="delete" type="button" value="Delete Post" class="btn btn-sm">
+                                        <input id='delete_post' onClick='confirmFunction(this)' name="delete" type="button" value="Delete Post" class="btn btn-sm btn-danger">
                                     </form>
                                 </li>
                               {% endif %}
@@ -372,7 +373,7 @@
                 }
             }
         </script>
-
+    </div>
     <footer class="footer-container">
         <div class="text-center">&copy; Team B-15</div>
     </footer>

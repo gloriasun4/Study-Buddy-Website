@@ -40,7 +40,8 @@
             left:0;
             right: 0;
             bottom:0;
-            position: fixed;
+            width: 100%;
+            position: positive relative;
         }
 
         @media only screen and (max-width: 768px) {
@@ -111,7 +112,6 @@
             background: #654ea3;
             background: -webkit-linear-gradient(to right, #654ea3, #eaafc8);
             background: linear-gradient(to right, #654ea3, #eaafc8);
-            {% comment %} background: url("https://images.unsplash.com/photo-1528459584353-5297db1a9c01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2998&q=80") no-repeat center center; {% endcomment %}
             background-size: cover;
             background-position: 30%;
             background-attachment: fixed;
@@ -233,6 +233,7 @@
             </form>
         </div>
         </div>
+    </div>
     <footer class="footer-container">
         <div class="text-center">&copy; Team B-15</div>
     </footer>
@@ -242,5 +243,4 @@
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
-
 </html>

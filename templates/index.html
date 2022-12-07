@@ -21,6 +21,7 @@
         overflow: hidden;
         border-right: 2px solid hsl(0, 0%, 80%);
         white-space: nowrap;
+        -webkit-text-stroke: 1px #464646;
         animation: typewriter 4s steps(44) 1s 1 normal both,
           blinkTextCursor 500ms infinite;
       }
@@ -50,7 +51,6 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-
         font-family: 'Orelega One';
         font-size: 22px;
         min-height: 100vh;
@@ -135,7 +135,6 @@
         margin-top: 10px;
         min-width: 140px;
         outline: none !important;
-        {% comment %} background: #aaa6e2; {% endcomment %}
         background: rgba(222, 154, 255, 0.5);
         color: white;
         border-radius: 12px;
@@ -146,16 +145,22 @@
         margin-top: 10px;
         min-width: 140px;
         outline: none !important;
-        {% comment %} background: #a6e2c8; {% endcomment %}
         background: rgba(156, 255, 168, 0.5);
         color: white;
         border-radius: 12px;
+    }
+
+    h2 {
+      color: white;
+      font-family: 'Orelega One';
+      -webkit-text-stroke: 1px #464646;
     }
 
     </style>
   </head>
 <body>
 <h1>Do you want to study with me?</h1>
+<h2>This website helps for you to find study buddies!</h2>
 {% if user.is_authenticated %}
   <p>Welcome, You are logged in as {{ user.username }}</p>
   <a href="{% url 'studybuddy:addAccount' %}">Go to Home Page</a>
@@ -166,13 +171,9 @@
     <a name="myBtn">Login with Google</a></button>
 </form> 
 </div>
-  {% comment %} <a href="{% provider_login_url 'google' %}">Login with Google</a> {% endcomment %}
 {% endif %}
 <footer class="footer-container">
   <div class="text-center">&copy; Team B-15</div>
 </footer>
 </body>
 </html>
-
-{% comment %} citation for text animation
-https://www.youtube.com/watch?v=V18Rvcxj1iA&t=1688s {% endcomment %}
