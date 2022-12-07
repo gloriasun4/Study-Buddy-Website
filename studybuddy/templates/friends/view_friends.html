@@ -273,6 +273,11 @@
                   }
             
                   .content .msg {
+                    {% comment %} margin-top: 15px; {% endcomment %}
+                    font-size: 18px;
+                }
+
+                .content .msg2 {
                     margin-top: 15px;
                     font-size: 18px;
                 }
@@ -394,10 +399,11 @@
                                 </form>
                             {% endfor %}
                         {% else %}
-                            <p class="msg">You currently have no accepted any friend requests</p>
+                            <p class="msg2">You currently have no accepted any friend requests</p>
                         {% endif %}
                     </div>
                 </div>
+
                 <br>
 
                 <div class="dropdown">
@@ -421,16 +427,14 @@
                                     <input name='accept' type="submit" value="Accept" class="btn btn-sm btn-primary"> &nbsp &nbsp
                                     <input name='decline' type="submit" value="Decline" class="btn btn-sm btn-danger">
                                     </li>
-                                </form> <br>
+                                </form>
                             {% endfor %}
                         {% else %}
-                            <p class="msg">You currently do not have any friend requests from other users</p>
+                            <p class="msg2">You currently do not have any friend requests from other users</p>
                         {% endif %}
                     </div>
                 </div>
-
                 <br>
-
                 <div class="dropdown">
                     <button type="button" class="collapsible">
                         <span class="arrowdown">&#8964</span> Sent Friend Requests
@@ -444,12 +448,12 @@
                     <div class="content">
                         {% if sent_requests %}
                             {% for sent_request in sent_requests %}
-                                <li style="list-style-type: none" class="msg">
+                                <li style="list-style-type: none" class="msg2">
                                     {{ sent_request.to_user | linebreaksbr }}
                                 </li> <br>
                             {% endfor %}
                         {% else %}
-                            <p class="msg">You have not sent any friend requests to other users</p>
+                            <p class="msg2">You have not sent any friend requests to other users</p>
                         {% endif %}
                     </div>
                 </div>
