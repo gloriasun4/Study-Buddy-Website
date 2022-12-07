@@ -355,7 +355,7 @@
                         </span>
                     </button>
                     <div class="content">
-                        {% if pending_sessions %}
+                        {% if pending_sessions %}<br>
                             {% for session in pending_sessions %}
                                 <li style="list-style-type: none">
                                     {{ session | linebreaksbr }}
